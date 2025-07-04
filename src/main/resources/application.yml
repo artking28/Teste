@@ -1,0 +1,23 @@
+
+spring:
+   datasource:
+      url: jdbc:postgresql://localhost:5432/tokioTeste
+      username: postgres
+      password: postgres
+      driver-class-name: org.postgresql.Driver
+   jpa:
+      database-platform: org.tokio.teste.arthur.config.MyPostgresDialect
+      hibernate:
+         ddl-auto: update
+      show-sql: false
+
+server:
+   port: 3000
+   error:
+      include-stacktrace: always
+      
+management:
+   endpoints:
+      web:
+         exposure:
+            include: mappings
