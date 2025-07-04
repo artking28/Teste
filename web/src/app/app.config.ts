@@ -1,0 +1,62 @@
+import {ApplicationConfig, importProvidersFrom, provideZoneChangeDetection} from '@angular/core';
+import {provideRouter} from '@angular/router';
+import {routes} from './app.routes';
+import {HttpClient, provideHttpClient} from "@angular/common/http";
+import {MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS, MatDialogRef} from "@angular/material/dialog";
+import { ToastrModule } from 'ngx-toastr';
+import {provideAnimations} from "@angular/platform-browser/animations";
+import {BrowserModule} from "@angular/platform-browser";
+import {CommonModule} from "@angular/common";
+import {provideEnvironmentNgxMask} from "ngx-mask";
+import {StructsModule} from "@app/share/components/structs.module";
+import {HttpUtils} from "@app/share/founding-files/http.utils";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {UserCache} from "@app/share/cache/UserCache";
+import {HttpService} from "@app/share/founding-files/http.service";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+export const appConfig: ApplicationConfig = {
+    providers: [
+        importProvidersFrom(
+            BrowserModule,
+            StructsModule,
+            CommonModule,
+            ToastrModule.forRoot(),
+            TranslateModule.forRoot({
+                loader: {
+                    provide: TranslateLoader,
+                    useFactory: HttpLoaderFactory,
+                    deps: [HttpClient]
+                }
+            }),
+        ),
+        {
+            provide: MAT_DIALOG_DEFAULT_OPTIONS,
+            useValue: {}
+        },
+        {
+            provide: MAT_DIALOG_DATA,
+            useValue: {}
+        },
+        {
+            provide: MatDialogRef,
+            useValue: {}
+        },
+        {
+            provide: Location,
+            useValue: {}
+        },
+        {provide: HttpService},
+        {provide: HttpUtils},
+        {provide: UserCache},
+        provideEnvironmentNgxMask(),
+        provideAnimations(),
+        provideHttpClient(),
+        provideZoneChangeDetection({eventCoalescing: true}),
+        provideRouter(routes)
+    ]
+};

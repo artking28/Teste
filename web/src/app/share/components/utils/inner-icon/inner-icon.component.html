@@ -1,0 +1,16 @@
+
+
+<div>
+    <!--  GOOGLE  -->
+    <span id="google" class="material-symbols-rounded"
+          [ngStyle]="{'font-size': this.size}"
+          *ngIf="this.origin == 'google'" >
+        {{ this.identifier }}
+    </span>
+
+    <!--  FONT AWESOME  -->
+    <i id="fontAwesome" class="{{ this.identifier }}"
+       [ngStyle]="{'font-size': this.size}"
+       *ngIf="this.origin == 'fontAwesome'">
+    </i>
+</div>

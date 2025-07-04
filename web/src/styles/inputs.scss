@@ -1,0 +1,79 @@
+
+input[type="number"][hideButtons] {
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type="number"] {
+        -moz-appearance: textfield; /* Firefox */
+    }
+}
+
+div.inputGrid {
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    display: flex;
+    width: 100%;
+    gap: 15px;
+
+    div.inputBox-25,
+    div.inputBox-33,
+    div.inputBox-50,
+    div.inputBox-66,
+    div.inputBox-75,
+    div.inputBox-100 {
+        background-color: transparent;
+        box-sizing: border-box;
+        font-size: 16px;
+        display: grid;
+        row-gap: 5px;
+        flex: 1;
+
+        label.inputLabel {
+            margin-left: 5px;
+            font-size: 10pt;
+        }
+
+        select,
+        input.textInput {
+            background-color: var(--oposite-020);
+            caret-color: var(--font_color);
+            color: var(--font_color);
+            filter: brightness(2.5);
+            border-radius: 7px;
+            transition: none;
+            padding: 10px;
+            border: 0;
+
+            //&:focus {
+            //    background-color: var(--oposite-030);
+            //}
+        }
+    }
+
+    div.inputBox-25 {
+        flex-basis: calc(25% - 16px);
+    }
+
+    div.inputBox-33 {
+        flex-basis: calc(33.333% - 16px);
+    }
+
+    div.inputBox-50 {
+        flex-basis: calc(50% - 16px);
+    }
+
+    div.inputBox-66 {
+        flex-basis: calc(66.666% - 16px);
+    }
+
+    div.inputBox-75 {
+        flex-basis: calc(75% - 16px);
+    }
+
+    div.inputBox-100 {
+        flex-basis: calc(100% - 16px);
+    }
+}

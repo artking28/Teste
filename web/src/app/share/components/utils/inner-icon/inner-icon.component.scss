@@ -1,0 +1,19 @@
+
+
+div {
+    display: grid;
+
+    span#google {
+        align-self: center;
+        scale: 1.1;
+
+        &.material-symbols-rounded {
+            color: inherit;
+        }
+    }
+
+    i#fontAwesome {
+        margin: 0 5px;
+        color: inherit;
+    }
+}

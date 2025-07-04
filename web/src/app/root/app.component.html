@@ -1,0 +1,25 @@
+
+
+<section id="root">
+
+   <!-- Menu bar -->
+   <side-bar z3></side-bar>
+
+   <section>
+
+      <div id="upperBar">
+         <h1>{{ this.title | translate }}</h1>
+         <section id="rightIcons">
+            <inner-icon pointCursor origin="google" identifier="routine"
+               (click)="this.swipTheme()"></inner-icon>
+         </section>
+      </div>
+
+      <!-- Router result -->
+      <div>
+         <router-outlet ></router-outlet>
+      </div>
+
+   </section>
+
+</section>

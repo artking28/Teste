@@ -1,0 +1,7 @@
+
+div.float-box {
+    grid-template-rows: min-content auto min-content;
+    display: grid;
+    width: 100%;
+    gap: 10px;
+}

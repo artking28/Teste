@@ -1,0 +1,78 @@
+@use './mixins';
+
+button.customButton {
+    background-color: var(--highlight-100);
+    border-radius: 10px;
+    box-shadow: none;
+    font-weight: 400;
+    padding: 0 25px;
+    cursor: pointer;
+    color: white;
+    height: 35px;
+    width: 130px;
+    border: 0;
+
+    &.noPadding {
+        padding: unset;
+    }
+
+    &.danger:hover {
+        background-color: var(--error_color);
+        color: white;
+    }
+
+    &.error {
+        background-color: var(--error_color);
+    }
+
+    &.warning {
+        background-color: var(--warning_color);
+        color: black;
+    }
+
+    &.opaque {
+        background-color: var(--oposite-010);
+        backdrop-filter: blur(5px);
+        color: var(--font_color);
+    }
+
+    &.noColor {
+        background-color: transparent;
+        color: black;
+    }
+}
+
+div.button-group {
+    justify-content: flex-end;
+    height: min-content;
+    padding: 20px 0 0;
+    display: flex;
+    gap: 10px;
+
+    @include mobile {
+        flex-wrap: wrap-reverse;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+div.button-group-column {
+    height: min-content;
+    grid-auto-flow: row;
+    padding: 20px 0 0;
+    display: grid;
+    gap: 10px;
+
+    div.group-line {
+        grid-auto-flow: column;
+        display: grid;
+        gap: 10px;
+    }
+
+    div.group-line,
+    button {
+        width: 100%;
+    }
+}

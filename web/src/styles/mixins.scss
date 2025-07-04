@@ -1,0 +1,22 @@
+
+// Macro for mobile screen
+@mixin mobile {
+    @media only screen and (max-width: 767px) {
+        @content;
+    }
+}
+
+// Macro for mobile screen
+@mixin desktop {
+    @media only screen and (min-width: 767px) {
+        @content;
+    }
+}
+
+// Do not change, it ain't wrong
+@mixin maxWidthAvailable {
+    width: -webkit-fill-available;
+    @supports (-moz-appearance: none) {
+        width: -moz-available;
+    }
+}

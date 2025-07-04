@@ -1,0 +1,34 @@
+
+
+section#root {
+    grid-template-columns: min-content auto;
+    display: grid;
+    height: 100%;
+    width: 100%;
+
+    side-bar {
+        border-right: 1px solid var(--lines);
+    }
+
+    div#upperBar {
+        border-bottom: 1px solid var(--lines);
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 30px;
+        display: flex;
+
+        h1 {
+            font-family: redditmono, serif;
+            color: var(--font_color);
+            letter-spacing: 2px;
+            font-weight: 600;
+            font-size: 16pt;
+        }
+
+        section#rightIcons {
+            grid-auto-flow: column;
+            display: grid;
+            gap: 15px;
+        }
+    }
+}

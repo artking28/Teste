@@ -1,0 +1,48 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+   "compileOnSave": false,
+   "compilerOptions": {
+      "baseUrl": "./",
+      "moduleResolution": "node",
+      "skipLibCheck": false,
+      "downlevelIteration": true,
+      "outDir": "./dist/out-tsc",
+      "sourceMap": true,
+      "declaration": false,
+      "module": "ESNext",
+      "strict": true,
+      "strictPropertyInitialization": false,
+      "forceConsistentCasingInFileNames": true,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+      "allowSyntheticDefaultImports": true,
+      "noImplicitAny": false,
+      "experimentalDecorators": true,
+      "importHelpers": true,
+      "target": "ESNext",
+      "lib": [
+         "ESNext",
+         "dom"
+      ],
+      "paths": {
+         "@app/*": [
+            "src/app/*"
+         ],
+         "@core/*": [
+            "src/app/core/*"
+         ],
+         "crypto": [
+            "./node_modules/crypto-browserify"
+         ],
+         "stream": [
+            "./node_modules/stream-browserify"
+         ]
+      }
+   },
+   "angularCompilerOptions": {
+      "enableI18nLegacyMessageIdFormat": false,
+      "strictInjectionParameters": true,
+      "strictInputAccessModifiers": true,
+      "strictTemplates": true
+   }
+}
