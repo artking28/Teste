@@ -16,7 +16,7 @@ import {HttpService} from "@app/share/founding-files/http.service";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 
 export function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+    return new TranslateHttpLoader(http, './public/i18n/', '.json');
 }
 
 export const appConfig: ApplicationConfig = {

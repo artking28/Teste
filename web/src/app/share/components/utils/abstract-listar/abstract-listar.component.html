@@ -1,0 +1,119 @@
+<!--  Header with title and buttons  -->
+<div id="header">
+   <div id="buttons" class="button-group">
+
+      <button defButton color="opaque" (click)="this.list()">{{ "filter" | translate }}</button>
+
+      <button defButton color="blue" (click)="this.edit(null)">{{ "add" | translate }}</button>
+
+   </div>
+</div>
+
+<ng-container *ngIf="this.data && this.data.length > 0; else noContent">
+
+   <!--  CRUD for mobile devices  -->
+   <div mobileOnly id="cards">
+      <ng-container *ngFor="let element of this.data">
+
+         <mat-card class="elementCard" appearance="outlined">
+
+            <!--  CARD CONTENT  -->
+            <mat-card-content>
+               <div class="atrsLines">
+                  <ng-container *ngFor="let attr of this.getTableColumns()">
+                     <div class="cardAtrLine">
+                        <span>{{ Utils.upperCaseFirst(attr) }}:</span>
+                        <span>{{ this.getValue(element, attr) }}</span>
+                     </div>
+                  </ng-container>
+               </div>
+            </mat-card-content>
+
+            <!--  CARD FOOTER  -->
+            <mat-card-footer>
+               <mat-chip-set aria-label="Chihuahua traits">
+                  <section class="cardbuttons">
+                     <button defButton color="opaque"
+                             (click)="this.edit(element)">Edit</button>
+
+                     <button defButton color="error"
+                             (click)="this.delete(element)">Delete</button>
+                  </section>
+               </mat-chip-set>
+            </mat-card-footer>
+         </mat-card>
+      </ng-container>
+   </div>
+
+   <!--  CRUD for desktop devices  -->
+   <div style="min-width: 350px">
+      <table mat-table [dataSource]="this.data">
+
+         <!--  Each column  -->
+         <ng-container *ngFor="let attr of this.getTableColumns()">
+            <ng-container matColumnDef="{{ attr }}">
+
+               <!--  Columns names  -->
+               <th mat-header-cell *matHeaderCellDef>
+                  {{ Utils.upperCaseFirst(attr) }}
+                  <span mobileOnly>:</span>
+               </th>
+
+               <!--  Row value  -->
+               <td mat-cell *matCellDef="let element">
+                  {{ this.getValue(element, attr) }}
+               </td>
+
+            </ng-container>
+         </ng-container>
+
+         <!--  Buttons column  -->
+         <ng-container matColumnDef="Buttons" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions">Edit</th>
+
+            <td mat-cell *matCellDef="let element;">
+               <div class="buttonsMenu">
+
+                  <inner-icon pointCursor
+                              (click)="this.edit(element); $event.stopPropagation()"
+                              origin="google" identifier="visibility"/>
+
+                  <inner-icon pointCursor
+                              (click)="this.delete(element); $event.stopPropagation()"
+                              origin="google" identifier="delete_forever"/>
+
+                  <inner-icon *ngIf="this.additionalButtons().length > 0"
+                              [matMenuTriggerFor]="menu"
+                              pointCursor size="12pt"
+                              origin="fontAwesome" identifier="fa-solid fa-ellipsis"/>
+
+                  <!--  Hidden menu  -->
+                  <mat-menu #menu="matMenu">
+                     <button mat-menu-item *ngFor="let but of this.additionalButtonsVec"
+                             (click)="but.f()">
+                        <span>{{ but.label }}</span>
+                     </button>
+                  </mat-menu>
+
+               </div>
+
+               <section class="cardbuttons">
+                  <button defButton color="opaque"
+                          (click)="this.edit(element)">Edit</button>
+
+                  <button defButton color="error"
+                          (click)="this.delete(element)">Delete</button>
+               </section>
+            </td>
+         </ng-container>
+
+         <tr mat-header-row *matHeaderRowDef="this.getTableColumnsAddons()"></tr>
+         <tr mat-row class="row" *matRowDef="let row; columns: this.getTableColumnsAddons();" (click)="edit(row)"></tr>
+      </table>
+   </div>
+
+</ng-container>
+
+<ng-template #noContent>
+    <label id="noContent">{{ 'No content' | translate }}</label>
+</ng-template>

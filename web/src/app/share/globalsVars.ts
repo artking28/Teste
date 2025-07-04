@@ -12,4 +12,12 @@ export class GlobalsVars {
     public static PAGE_TITLE_CONTROL: EventEmitter<string> = new EventEmitter<string>();
 
     public static EMAIL_PATTERN: string = '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
+
+    public static SWAL_COFIRM_LABELS: Map<string, string> = new Map<string, string>([
+        ['areYouSure', 'areYouSure'],
+        ['yes', 'yes'],
+        ['cancel', 'cancel'],
+        ['youCannotRevertThisAction', 'youCannotRevertThisAction'],
+    ])
+
 }

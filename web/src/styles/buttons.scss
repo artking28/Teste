@@ -1,44 +1,84 @@
 @use './mixins';
 
-button.customButton {
-    background-color: var(--highlight-100);
-    border-radius: 10px;
-    box-shadow: none;
-    font-weight: 400;
-    padding: 0 25px;
+button.defButton,
+button[defButton],
+button.swal-confirm-btn,
+button.swal-cancel-btn {
+
+    transition: background 0.3s ease, transform 0.2s ease;
+    background-color: var(--highlight);
+    border-radius: 8px;
+    padding: 8px 24px;
+    font-size: 14px;
     cursor: pointer;
-    color: white;
+    color: #ffffff;
+    border: unset;
     height: 35px;
-    width: 130px;
-    border: 0;
 
-    &.noPadding {
-        padding: unset;
+    &:hover {
+        filter: brightness(0.9);
     }
 
-    &.danger:hover {
-        background-color: var(--error_color);
-        color: white;
+    &[color*='angular'] {
+        &[color*='error'] {
+            color: var(--red);
+        }
+
+        &[disabled] {
+            color: var(--mid_gray_color);
+
+            &:hover {
+                background-color: unset;
+            }
+        }
     }
 
-    &.error {
-        background-color: var(--error_color);
-    }
+    &:not([color*='angular'], .mtx-calendar-header-hours, .mtx-calendar-header-minutes, .mtx-time-cancel-button) {
+        background-color: var(--highlight);
+        color: whitesmoke;
+        box-shadow: none;
+        padding: 0 25px;
 
-    &.warning {
-        background-color: var(--warning_color);
-        color: black;
-    }
+        &[color*="primary"] {
+            background-color: var(--highlight);
+            color: whitesmoke;
+        }
 
-    &.opaque {
-        background-color: var(--oposite-010);
-        backdrop-filter: blur(5px);
-        color: var(--font_color);
-    }
+        &[color*="error"] {
+            background-color: var(--red);
+            color: white;
+        }
 
-    &.noColor {
-        background-color: transparent;
-        color: black;
+        &[color*='warning'] {
+            background-color: var(--warning_color);
+        }
+
+        &[color*='blue'] {
+            background-color: var(--blue);
+        }
+
+        &[color*='success'] {
+            background-color: var(--success_color);
+            color: white;
+        }
+
+        &.swal-cancel-btn,
+        &[color*='opaque'] {
+            background-color: var(--opaque-020_color);
+            color: var(--font_color);
+            backdrop-filter: blur(5px);
+        }
+
+        &[color*='dangerous']:hover {
+            background-color: var(--error_color);
+            color: white;
+        }
+
+        &[disabled] {
+            background-color: var(--highlight-020);
+            backdrop-filter: blur(5px);
+            color: white;
+        }
     }
 }
 
@@ -54,7 +94,12 @@ div.button-group {
     }
 
     button {
+        @extend .defButton;
+        white-space: nowrap;
         width: 100%;
+
+        @include mobile {
+        }
     }
 }
 
@@ -63,6 +108,7 @@ div.button-group-column {
     grid-auto-flow: row;
     padding: 20px 0 0;
     display: grid;
+    width: 100%;
     gap: 10px;
 
     div.group-line {
@@ -73,6 +119,6 @@ div.button-group-column {
 
     div.group-line,
     button {
-        width: 100%;
+        @extend .defButton;
     }
 }

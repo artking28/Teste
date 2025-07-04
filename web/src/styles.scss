@@ -18,15 +18,15 @@
     --highlight: rgba(149, 10, 70, 1.0);
 
     --success_color: #85c69a;
-    --warning_color: #ecca71;
+    --warning_color: #755d19;
     --error_color: #c54e66;
-    --info_color: #76a4e8;
+    --info_color: #5285d0;
 
     --logo_color: #ffa0c6;
 
     --yellow: #ecca71;
     --green: #85c69a;
-    --blue: #76a4e8;
+    --blue: #5285d0;
     --purple: #9e73e7;
     --red: #c54e66;
 
@@ -34,15 +34,15 @@
     --lines: #232323;
     --background: #0a0a0a;
 
-    --oposite-010: rgba(255, 255, 255, .1);
-    --oposite-020: rgba(255, 255, 255, .1);
-    --oposite-030: rgba(255, 255, 255, .3);
-    --oposite-040: rgba(255, 255, 255, .4);
-    --oposite-050: rgba(255, 255, 255, .5);
-    --oposite-060: rgba(255, 255, 255, .6);
-    --oposite-070: rgba(255, 255, 255, .7);
-    --oposite-080: rgba(255, 255, 255, .8);
-    --oposite-090: rgba(255, 255, 255, .9);
+    --opaque-010_color: rgba(255, 255, 255, .1);
+    --opaque-020_color: rgba(255, 255, 255, .2);
+    --opaque-030_color: rgba(255, 255, 255, .3);
+    --opaque-040_color: rgba(255, 255, 255, .4);
+    --opaque-050_color: rgba(255, 255, 255, .5);
+    --opaque-060_color: rgba(255, 255, 255, .6);
+    --opaque-070_color: rgba(255, 255, 255, .7);
+    --opaque-080_color: rgba(255, 255, 255, .8);
+    --opaque-090_color: rgba(255, 255, 255, .9);
 }
 
 * {
@@ -55,7 +55,7 @@
     }
 
     &::selection {
-        background-color: var(--highlight_color_40);
+        background-color: var(--warning_color);
     }
 
     &:disabled,
@@ -99,7 +99,7 @@ a {
 }
 
 h1, h2, h3, h4, h5, h6, label {
-    color: var(--highlight_font_color);
+    //color: var(--font_color);
     width: fit-content;
 }
 
@@ -284,7 +284,7 @@ div.float-menu {
         }
 
         &:hover {
-            background-color: var(--oposite-020);
+            background-color: var(--opaque-020_color);
             color: var(--highlight_font_color);
         }
 

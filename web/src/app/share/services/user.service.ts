@@ -1,14 +1,14 @@
-import {IRootService} from "@app/share/IService.service";
 import {Injectable} from "@angular/core";
-import {Entry} from "@app/share/models/Entry";
+import {IRootService} from "@app/share/IService.service";
+import {User} from "@app/share/models/User";
 
 @Injectable({
     providedIn: 'root'
 })
-export class EntryService extends IRootService<Entry> {
+export class UserService extends IRootService<User> {
 
     getServiceUrl(): string {
-        return "/entry"
+        return "/users"
     }
 
     isGetByIdPublic(): boolean {
@@ -19,7 +19,7 @@ export class EntryService extends IRootService<Entry> {
         return false
     }
 
-    prepareSave(newObj: Entry): Entry {
+    prepareSave(newObj: User): User {
         return newObj
     }
 }

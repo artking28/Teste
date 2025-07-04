@@ -1,11 +1,11 @@
 module.exports = [
     {
-        context: ['/proxy/entry'],
-        target: 'http://localhost:1110/',
+        context: ['/proxy/user'],
+        target: 'http://localhost:3000/',
         secure: false,
         logLevel: 'debug',
         changeOrigin: true,
-        pathRewrite: {'^/proxy/entry': '/entry'},
+        pathRewrite: {'^/proxy/user': '/user'},
         verbose: true
     },
 
@@ -19,12 +19,4 @@ module.exports = [
         pathRewrite: {'^/proxy/viaCep': ''},
         verbose: true
     },
-    // {
-    //     context: ['/proxy/biErp'],
-    //     target: 'http://bierp.unikasistemas.com:8082/api/v1/',
-    //     secure: false,
-    //     logLevel: 'debug',
-    //     changeOrigin: true,
-    //     pathRewrite: {'^/proxy/biErp': ''}
-    // },
 ];

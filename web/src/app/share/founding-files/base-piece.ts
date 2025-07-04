@@ -45,10 +45,10 @@ export abstract class BasePiece {
     public userCache: UserCache = inject(UserCache)
 
     // Utils provides quick access for use in HTML, since static classes aren't accessible in Angular templates.
-    public Utils: typeof Utils = Utils
+    public readonly Utils: typeof Utils = Utils
 
     // GlobalsVars provides quick access for use in HTML, since static classes aren't accessible in Angular templates.
-    public GlobalsVars: typeof GlobalsVars = GlobalsVars
+    public readonly GlobalsVars: typeof GlobalsVars = GlobalsVars
 }
 
 @Injectable({
@@ -126,7 +126,7 @@ export abstract class ModalEditor<T extends Indexable<T>> extends Modal<DataUtil
         super();
 
         // console.log(this.data)
-        if(this.data && this.data.start && this.data.start.isIdNull()) {
+        if(this.data && this.data.start && this.data.start.getId() != null) {
             this.isEditing = true
             this.object = clone(this.data.start)
         }

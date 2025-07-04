@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatButtonModule} from '@angular/material/button';
-import {MatChipsModule} from '@angular/material/chips';
+import {MatChipSet, MatChipsModule} from '@angular/material/chips';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -37,6 +37,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {NgxMaskDirective} from "ngx-mask";
+import {TranslatePipe} from "@ngx-translate/core";
 
 const primeMaterials: any[] = [
 ]
@@ -61,6 +62,7 @@ const angularMaterials: any[] = [
     NgxMaskDirective,
     MatButtonToggleGroup,
     MatButtonToggle,
+    MatChipSet,
 ];
 
 @NgModule({

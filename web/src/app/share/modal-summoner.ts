@@ -1,9 +1,26 @@
-import {EventEmitter, inject, Injectable} from "@angular/core";
+import {EventEmitter, Injectable} from "@angular/core";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {DataUtil} from "@app/share/models/utility/DataUtil";
-import {Entry} from "@app/share/models/Entry";
-import {EntryEditorComponent} from "@app/share/components/editors/entryEditor/entryEditor.component";
+import {UserEditorComponent} from "@app/share/components/editors/userEditor/userEditor.component";
 import {Result} from "@app/share/models/utility/Result";
+import {Uuid} from "@app/share/models/utility/Uuid";
+import {User} from "@app/share/models/User";
+
+
+export class ModalObject {
+
+    name: string = new Uuid().toString();
+    component: any;
+    data: any
+    customConfigs: Map<string, string> = new Map<string, string>();
+    emitter: EventEmitter<Result> = new EventEmitter()
+
+    constructor(name: string, customConfigs: Map<string, string>, component: any) {
+        this.name = name;
+        this.customConfigs = customConfigs;
+        this.component = component;
+    }
+}
 
 @Injectable({
     providedIn: 'root'
@@ -29,17 +46,14 @@ export class ModalSummoner {
         return false
     }
 
-    private static openModal(dialogConfig: MatDialogConfig, component: any, triggerClose: EventEmitter<any>): void {
+    private static openModal(dialogConfig: MatDialogConfig, component: any, triggerClose?: EventEmitter<any>): void {
 
-        const html = document.getElementsByTagName("html")[0]
         const body = document.body
         body.style.overflow = 'hidden'
-        html.style.height = `${window.innerHeight + window.scrollY}px`
 
         this.dialog.open(component, dialogConfig).afterClosed().subscribe((result) => {
             body.style.overflow = ''
-            html.style.height = ''
-            triggerClose.emit(result);
+            if(triggerClose) triggerClose.emit(result);
         });
     }
 
@@ -49,16 +63,27 @@ export class ModalSummoner {
             disableClose: false,
             minHeight: 'unset',
             maxWidth: 'unset',
+            height: 'min-content',
             autoFocus: autoFocus,
             data: data
         }
     }
 
-    public static openEntryEditor(emitter: EventEmitter<Result>, data: DataUtil<Entry>) {
-        if (this.controlDuplicate("openEntryEditor", emitter)) {
+    public static openFromModalObject(modal: ModalObject): void {
+        if (this.controlDuplicate(modal.name, modal.emitter)) {
+            const conf = ModalSummoner.getDefaultDialogConfig(modal.data, true)
+            Array.from(modal.customConfigs.keys()).forEach((key) => {
+                (conf as any)[key] = modal.customConfigs.get(key)
+            })
+            this.openModal(conf, modal.component, modal.emitter)
+        }
+    }
+
+    public static openUserEditor(emitter: EventEmitter<Result>, data: DataUtil<User>) {
+        if (this.controlDuplicate("openUserEditor", emitter)) {
             const conf = ModalSummoner.getDefaultDialogConfig(data, false)
             conf.height = 'min-content'
-            this.openModal(conf, EntryEditorComponent, emitter)
+            this.openModal(conf, UserEditorComponent, emitter)
         }
     }
 }

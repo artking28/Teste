@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
+import {CommonModule, NgFor, NgIf} from "@angular/common";
 // import {LoaderService} from "@src/app/share/components/utils/loader/loader.service";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {FormsModule} from "@angular/forms";
@@ -7,14 +7,14 @@ import {TranslatePipe} from "@ngx-translate/core";
 import {MaterialModule} from "@app/material.module";
 import {InnerIconComponent} from "@app/share/components/utils/inner-icon/inner-icon.component";
 import {SideBarComponent} from "@app/share/components/utils/side-bar/side-bar.component";
-import {EntryEditorComponent} from "@app/share/components/editors/entryEditor/entryEditor.component";
+import {UserEditorComponent} from "@app/share/components/editors/userEditor/userEditor.component";
 
 const selectors: any[] = [
     // GeneralSelector
 ]
 
 const editors: any[] = [
-    EntryEditorComponent
+    UserEditorComponent
 ]
 
 const all: any[] = [
@@ -29,8 +29,10 @@ const all: any[] = [
         ...all
     ],
     exports: [
+        ...all,
         MaterialModule,
-        ...all
+        TranslatePipe,
+        CommonModule,
     ],
     imports: [
         CommonModule,

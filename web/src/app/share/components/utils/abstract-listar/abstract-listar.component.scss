@@ -1,0 +1,97 @@
+@import "src/styles.scss";
+
+div#header {
+    align-items: center;
+    margin-bottom: 15px;
+    display: grid;
+
+    @include desktop {
+        grid-template-columns: auto min-content;
+    }
+
+    @include mobile {
+        grid-auto-flow: row;
+    }
+
+    div#buttons {
+        padding: 0;
+    }
+}
+
+div.buttonsMenu {
+    grid-auto-flow: column;
+    border-radius: 15px;
+    text-align: center;
+    display: none;
+    height: 30px;
+    width: 30px;
+    gap: 10px;
+
+    @include desktop {
+        display: grid;
+    }
+
+    inner-icon {
+        align-self: center;
+    }
+}
+
+div#cards {
+    gap: 15px;
+
+    @include mobile {
+        display: grid;
+    }
+
+    mat-card {
+        border-radius: 10px;
+
+        h4 {
+            height: min-content;
+            margin: 11px 0;
+        }
+
+        div.cardAtrLine {
+            justify-content: space-between;
+            padding: 5px 10px;
+            display: flex;
+
+            span {
+                font-size: 10pt;
+            }
+        }
+
+        mat-chip-set {
+            display: unset;
+        }
+
+    }
+}
+
+section.cardbuttons {
+    justify-content: flex-end;
+    padding: 15px 15px 8px;
+    display: flex;
+    width: 100%;
+
+    @include desktop {
+        display: none;
+    }
+
+    button:not(:last-child) {
+        margin-right: 10px;
+    }
+}
+
+label#noContent {
+    text-align: center;
+    margin: 20vh auto;
+    color: #3b3b3b;
+    display: table;
+    width: 100%;
+}
+
+tr.row:hover {
+    background-color: white;
+    filter: brightness(.9);
+}

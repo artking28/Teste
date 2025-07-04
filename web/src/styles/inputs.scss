@@ -38,9 +38,9 @@ div.inputGrid {
 
         select,
         input.textInput {
-            background-color: var(--oposite-020);
-            caret-color: var(--font_color);
-            color: var(--font_color);
+            background-color: var(--opaque-020_color);
+            caret-color: var(--opaque-090_color);
+            color: var(--opaque-090_color);
             filter: brightness(2.5);
             border-radius: 7px;
             transition: none;
@@ -48,7 +48,7 @@ div.inputGrid {
             border: 0;
 
             //&:focus {
-            //    background-color: var(--oposite-030);
+            //    background-color: var(----opaque-030_color);
             //}
         }
     }

@@ -1,5 +1,5 @@
 <div class="float-box">
-   <h2>{{ (this.isEditing ? 'Editing' : 'Creating new') + ' entry' }}</h2>
+   <h2>{{ (this.isEditing ? 'Editing' : 'Creating new') + ' user' }}</h2>
    <div class="modal-content">
       <div class="inputGrid">
          <div class="inputBox-25">
@@ -20,16 +20,15 @@
             <input class="textInput" type="text">
          </div>
       </div>
-      <div class="inputGrid">
-         <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-            <mat-button-toggle value="bold">Bold</mat-button-toggle>
-            <mat-button-toggle value="italic">Italic</mat-button-toggle>
-            <mat-button-toggle value="underline">Underline</mat-button-toggle>
+      <div>
+         <mat-button-toggle-group>
+            <mat-button-toggle value="admin">{{ 'admin' | translate }}</mat-button-toggle>
+            <mat-button-toggle value="member">{{ 'member' | translate }}</mat-button-toggle>
          </mat-button-toggle-group>
       </div>
    </div>
    <div class="button-group">
-      <button class="customButton opaque" (click)="this.close()">Cancel</button>
-      <button class="customButton" (click)="this.save()">Save</button>
+      <button color="opaque" (click)="this.close()">Cancel</button>
+      <button (click)="this.save()">Save</button>
    </div>
 </div>

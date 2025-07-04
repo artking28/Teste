@@ -35,8 +35,8 @@ export const enum Color {
     LIGHT_LINES = "#8a8a8a",
 
     // Backgrounds colors
-    LIGHT_BACKGROUND = "#eeeeee",
     DARK_BACKGROUND = "#0a0a0a",
+    LIGHT_BACKGROUND = "#eeeeee",
 }
 
 @Injectable({
@@ -57,37 +57,16 @@ export class CSS_Support {
             document.documentElement.style.setProperty('--logo_color', Color.LIGHT_LOGO_COLOR.toString());
         }
 
-        let col = (theme == "angular-dark" ? Color.DARK_BACKGROUND.toString() : Color.LIGHT_BACKGROUND.toString())
-        document.documentElement.style.setProperty('--opaque_005_color', `${col}0a`);
-        document.documentElement.style.setProperty('--opaque_010_color', `${col}19`);
-        document.documentElement.style.setProperty('--opaque_020_color', `${col}33`);
-        document.documentElement.style.setProperty('--opaque_030_color', `${col}4c`);
-        document.documentElement.style.setProperty('--opaque_040_color', `${col}66`);
-        document.documentElement.style.setProperty('--opaque_050_color', `${col}7f`);
-        document.documentElement.style.setProperty('--opaque_060_color', `${col}99`);
-        document.documentElement.style.setProperty('--opaque_070_color', `${col}b2`);
-        document.documentElement.style.setProperty('--opaque_080_color', `${col}cc`);
-        document.documentElement.style.setProperty('--opaque_090_color', `${col}e5`);
-    }
-
-    public static defColors() {
-        document.documentElement.style.setProperty('--success_color', Color.GREEN.toString());
-        document.documentElement.style.setProperty('--warning_color', Color.YELLOW.toString());
-        document.documentElement.style.setProperty('--error_color', Color.RED.toString());
-        document.documentElement.style.setProperty('--info_color', Color.BLUE.toString());
-
-        const highlight = Color.HIGHLIGHT_DEFAULT.toString()
-        document.documentElement.style.setProperty('--highlight-010', `${highlight}19`);
-        document.documentElement.style.setProperty('--highlight-020', `${highlight}33`);
-        document.documentElement.style.setProperty('--highlight-030', `${highlight}4c`);
-        document.documentElement.style.setProperty('--highlight-040', `${highlight}66`);
-        document.documentElement.style.setProperty('--highlight-050', `${highlight}7f`);
-        document.documentElement.style.setProperty('--highlight-060', `${highlight}99`);
-        document.documentElement.style.setProperty('--highlight-070', `${highlight}b2`);
-        document.documentElement.style.setProperty('--highlight-080', `${highlight}cc`);
-        document.documentElement.style.setProperty('--highlight-090', `${highlight}e5`);
-        document.documentElement.style.setProperty('--highlight-100', `${highlight}ff`);
-        document.documentElement.style.setProperty('--highlight', highlight);
+        let color: string = (theme != "angular-dark" ? Color.DARK_BACKGROUND.toString() : Color.LIGHT_BACKGROUND.toString())
+        document.documentElement.style.setProperty('--opaque-010_color', `${color}0a`);
+        document.documentElement.style.setProperty('--opaque-020_color', `${color}19`);
+        document.documentElement.style.setProperty('--opaque-030_color', `${color}33`);
+        document.documentElement.style.setProperty('--opaque-040_color', `${color}4c`);
+        document.documentElement.style.setProperty('--opaque-050_color', `${color}66`);
+        document.documentElement.style.setProperty('--opaque-060_color', `${color}7f`);
+        document.documentElement.style.setProperty('--opaque-070_color', `${color}99`);
+        document.documentElement.style.setProperty('--opaque-080_color', `${color}b2`);
+        document.documentElement.style.setProperty('--opaque-090_color', `${color}cc`);
     }
 }
 
