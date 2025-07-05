@@ -5,6 +5,7 @@ import {UserEditorComponent} from "@app/share/components/editors/userEditor/user
 import {Result} from "@app/share/models/utility/Result";
 import {Uuid} from "@app/share/models/utility/Uuid";
 import {User} from "@app/share/models/User";
+import {LoginDialogComponent} from "@app/share/components/login-dialog/login-dialog.component";
 
 
 export class ModalObject {
@@ -76,6 +77,15 @@ export class ModalSummoner {
                 (conf as any)[key] = modal.customConfigs.get(key)
             })
             this.openModal(conf, modal.component, modal.emitter)
+        }
+    }
+
+    public static openLogin(): void {
+        let emitter = new EventEmitter()
+        if (this.controlDuplicate("openLogin", emitter)) {
+            const conf = ModalSummoner.getDefaultDialogConfig(null, true)
+            conf.height = 'min-content'
+            this.openModal(conf, LoginDialogComponent, emitter)
         }
     }
 

@@ -21,6 +21,10 @@ public class AddressDTO extends AbstractObject implements IAbstractDTO<Address> 
 
     private String street;
 
+    private String city;
+
+    private String state;
+
     private String district;
 
     private String postalCode;
@@ -37,6 +41,8 @@ public class AddressDTO extends AbstractObject implements IAbstractDTO<Address> 
         ret.setNumber(this.getNumber());
         ret.setAddition(this.getAddition());
         ret.setStreet(this.getStreet());
+        ret.setCity(this.getCity());
+        ret.setState(this.getState());
         ret.setDistrict(this.getDistrict());
         ret.setPostalCode(this.getPostalCode());
         ret.setActive(this.getActive());

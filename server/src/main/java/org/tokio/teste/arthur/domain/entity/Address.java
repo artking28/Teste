@@ -20,7 +20,7 @@ public class Address extends AbstractObject implements IAbstractEntity<Address, 
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = true)
+    @Column(name = "name")
     private String name;
 
     @Column(name = "number", nullable = false)
@@ -31,6 +31,12 @@ public class Address extends AbstractObject implements IAbstractEntity<Address, 
 
     @Column(name = "street", nullable = false)
     private String street;
+
+    @Column(name = "city", nullable = false)
+    private String city;
+
+    @Column(name = "state", nullable = false)
+    private String state;
 
     @Column(name = "district", nullable = false)
     private String district;
@@ -52,13 +58,17 @@ public class Address extends AbstractObject implements IAbstractEntity<Address, 
         ret.setName(this.getName());
         ret.setNumber(this.getNumber());
         ret.setAddition(this.getAddition());
+        ret.setCity(this.getCity());
+        ret.setState(this.getState());
         ret.setStreet(this.getStreet());
         ret.setDistrict(this.getDistrict());
         ret.setPostalCode(this.getPostalCode());
         ret.setActive(this.getActive());
-        ret.setUser(this.getUser().toDTO());
         ret.setUuidCheck(getUuidCheck());
         ret.setCheckAccessControl(getCheckAccessControl());
+        if(ret.getUser() != null) {
+            ret.setUser(this.getUser().toDTO());
+        }
         return ret;
     }
 

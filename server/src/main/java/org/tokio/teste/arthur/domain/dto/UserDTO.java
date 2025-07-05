@@ -9,6 +9,7 @@ import org.tokio.teste.arthur.domain.entity.Address;
 import org.tokio.teste.arthur.domain.entity.User;
 import org.tokio.teste.arthur.domain.interfaces.IAbstractDTO;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class UserDTO extends AbstractObject implements IAbstractDTO<User> {
 
     private String password;
 
+    private Boolean darkTheme;
+
     private String language;
 
     private String kind;
@@ -34,9 +37,9 @@ public class UserDTO extends AbstractObject implements IAbstractDTO<User> {
 
     private UserDTO father;
 
-    private List<UserDTO> children;
+    private List<UserDTO> children = new ArrayList<>();
 
-    private List<AddressDTO> addresses;
+    private List<AddressDTO> addresses = new ArrayList<>();
 
     @Override
     public User toEntity() {
@@ -46,6 +49,7 @@ public class UserDTO extends AbstractObject implements IAbstractDTO<User> {
         ret.setNickname(this.getNickname());
         ret.setEmail(this.getEmail());
         ret.setPassword(this.getPassword());
+        ret.setDarkTheme(this.getDarkTheme());
         ret.setKind(this.getKind());
         ret.setCreatedAt(this.getCreatedAt());
         ret.setLanguage(this.getLanguage());

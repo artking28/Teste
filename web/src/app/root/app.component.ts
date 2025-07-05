@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, HostBinding} from '@angular/core';
+import {ChangeDetectorRef, Component, HostBinding, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {ModalSummoner} from "@app/share/modal-summoner";
 import {StructsModule} from "@app/share/components/structs.module";
@@ -9,6 +9,9 @@ import {OverlayContainer} from "@angular/cdk/overlay";
 import {AngularTheme} from "@app/share/models/utility/angular-theme";
 import Utils from "@app/share/utils";
 import {CSS_Support} from "@app/share/models/utility/Color";
+import {User} from "@app/share/models/User";
+import {UserCache} from "@app/share/cache/UserCache";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'app-root',
@@ -25,11 +28,14 @@ export class AppComponent {
     @HostBinding('class')
     activeThemeCssClass: AngularTheme = 'angular-light'
 
+    user: User = UserCache.getUserLocalStorage()
+
     title: string = '';
 
     constructor(private overlayContainer: OverlayContainer,
                 private dialog: MatDialog,
-                private translateService: TranslateService ) {
+                private translateService: TranslateService) {
+
 
         GlobalsVars.PAGE_TITLE_CONTROL.subscribe((title: string): void => {
             this.title = title

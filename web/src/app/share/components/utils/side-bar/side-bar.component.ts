@@ -1,5 +1,7 @@
 import {Component} from "@angular/core";
 import {BasePiece} from "@app/share/founding-files/base-piece";
+import {UserCache} from "@app/share/cache/UserCache";
+import {User} from "@app/share/models/User";
 
 
 @Component({
@@ -12,8 +14,6 @@ export class SideBarComponent extends BasePiece {
 
     constructor() {
         super();
-
-
     }
 
     isThisActive(...opts: string[]): boolean {

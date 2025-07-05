@@ -7,6 +7,7 @@ import org.hibernate.Hibernate;
 import org.tokio.teste.arthur.domain.dto.UserDTO;
 import org.tokio.teste.arthur.domain.interfaces.IAbstractEntity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -37,6 +38,9 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "darkTheme", nullable = false)
+    private Boolean darkTheme = false;
+
     @Column(name = "language", nullable = false)
     private String language;
 
@@ -48,10 +52,10 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
     private User father;
 
     @OneToMany(mappedBy = "father", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<User> children;
+    private List<User> children = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Address> addresses;
+    private List<Address> addresses  = new ArrayList<>();
 
     public UserDTO toDTO() {
         UserDTO ret = new UserDTO();
@@ -61,14 +65,17 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
         ret.setEmail(this.getEmail());
         ret.setKind(this.getKind());
         ret.setCreatedAt(this.getCreatedAt());
+        ret.setDarkTheme(this.getDarkTheme());
         ret.setEmail(this.getEmail());
         ret.setPassword(this.getPassword());
         ret.setLanguage(this.getLanguage());
-        ret.setFather(this.getFather().toDTO());
         ret.setChildren(this.getChildren().parallelStream().map(User::toDTO).toList());
         ret.setAddresses(this.getAddresses().parallelStream().map(Address::toDTO).toList());;
         ret.setUuidCheck(getUuidCheck());
         ret.setCheckAccessControl(getCheckAccessControl());
+        if(this.getFather() != null) {
+            ret.setFather(this.getFather().toDTO());
+        }
         return ret;
     }
 

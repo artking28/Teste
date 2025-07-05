@@ -4,7 +4,7 @@ import {routes} from './app.routes';
 import {HttpClient, provideHttpClient} from "@angular/common/http";
 import {MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS, MatDialogRef} from "@angular/material/dialog";
 import { ToastrModule } from 'ngx-toastr';
-import {provideAnimations} from "@angular/platform-browser/animations";
+import {BrowserAnimationsModule, provideAnimations} from "@angular/platform-browser/animations";
 import {BrowserModule} from "@angular/platform-browser";
 import {CommonModule} from "@angular/common";
 import {provideEnvironmentNgxMask} from "ngx-mask";
@@ -23,6 +23,7 @@ export const appConfig: ApplicationConfig = {
     providers: [
         importProvidersFrom(
             BrowserModule,
+            BrowserAnimationsModule,
             StructsModule,
             CommonModule,
             ToastrModule.forRoot(),

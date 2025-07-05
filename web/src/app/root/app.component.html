@@ -3,11 +3,11 @@
 <section id="root">
 
    <!-- Menu bar -->
-   <side-bar z3></side-bar>
+   <side-bar z3 *ngIf="this.user.isValidID()"></side-bar>
 
    <section>
 
-      <div id="upperBar">
+      <div id="upperBar" *ngIf="this.user.isValidID()">
          <h1>{{ this.title | translate }}</h1>
          <section id="rightIcons">
             <inner-icon pointCursor origin="google" identifier="routine"
