@@ -17,7 +17,6 @@ export class UserEditorComponent extends ModalEditor<User> {
         this.object = User.adapt(this.object)
         this.form = this.object.toFormGroup()
 
-        console.log(this.form.get('kind')?.value);
         if (this.isEditing) {
             return
         }

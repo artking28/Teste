@@ -1,5 +1,5 @@
 <div class="float-box">
-    <h2>{{ (this.isEditing ? 'Editing' : 'Creating new') + ' user' }}</h2>
+    <h2>{{ ((this.isEditing ? 'editing' : 'creating') + '.user') | translate }}</h2>
     <div class="modal-content">
         <form [formGroup]="this.form">
             <div class="inputGrid">

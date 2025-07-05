@@ -3,11 +3,12 @@ package org.tokio.teste.arthur.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
+import org.hibernate.Hibernate;
 import org.tokio.teste.arthur.domain.dto.UserDTO;
 import org.tokio.teste.arthur.domain.interfaces.IAbstractEntity;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -27,6 +28,9 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
     @Column(name = "nickname", nullable = false)
     private String nickname;
 
+    @Column(name = "createdAt", nullable = false)
+    private Date createdAt = new Date();
+
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
@@ -39,9 +43,15 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
     @Column(name = "kind", nullable = false)
     private String kind;
 
-    @Column(name = "createdAt", nullable = false)
-    private Date createdAt = new Date();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "father_id")
+    private User father;
 
+    @OneToMany(mappedBy = "father", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<User> children;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Address> addresses;
 
     public UserDTO toDTO() {
         UserDTO ret = new UserDTO();
@@ -54,6 +64,9 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
         ret.setEmail(this.getEmail());
         ret.setPassword(this.getPassword());
         ret.setLanguage(this.getLanguage());
+        ret.setFather(this.getFather().toDTO());
+        ret.setChildren(this.getChildren().parallelStream().map(User::toDTO).toList());
+        ret.setAddresses(this.getAddresses().parallelStream().map(Address::toDTO).toList());;
         ret.setUuidCheck(getUuidCheck());
         ret.setCheckAccessControl(getCheckAccessControl());
         return ret;
@@ -63,10 +76,11 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
     public final boolean equals(Object o) {
         if (this == o) return true;
         if (o == null) return false;
-        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-        if (thisEffectiveClass != oEffectiveClass) return false;
-        return getId() != null && Objects.equals(getId(), ((User) o).getId());
+        Class<?> thisClass = Hibernate.getClass(this);
+        Class<?> otherClass = Hibernate.getClass(o);
+        if (!thisClass.equals(otherClass)) return false;
+        User other = (User) o;
+        return id != null && id.equals(other.id);
     }
 
     @Override

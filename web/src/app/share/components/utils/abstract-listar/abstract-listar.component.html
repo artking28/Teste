@@ -55,7 +55,7 @@
 
                <!--  Columns names  -->
                <th mat-header-cell *matHeaderCellDef>
-                  {{ Utils.upperCaseFirst(attr) }}
+                  {{ attr | translate }}
                   <span mobileOnly>:</span>
                </th>
 
@@ -69,7 +69,7 @@
 
          <!--  Buttons column  -->
          <ng-container matColumnDef="Buttons" stickyEnd>
-            <th mat-header-cell *matHeaderCellDef aria-label="row actions">Edit</th>
+            <th mat-header-cell *matHeaderCellDef aria-label="row actions">{{ 'edit' | translate }}</th>
 
             <td mat-cell *matCellDef="let element;">
                <div class="buttonsMenu">

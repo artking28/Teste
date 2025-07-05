@@ -48,8 +48,6 @@ export class Button {
 @Directive()
 export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece implements OnInit, IAbstractListarComponent<T> {
 
-    title: string = "Title"
-
     data: T[] = []
 
     additionalButtonsVec: Button[]
@@ -73,12 +71,6 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
     }
 
     async ngOnInit() {
-        this.translateService.get(this.title).subscribe((res) => {
-            this.title = res
-        })
-        GlobalsVars.PAGE_TITLE_CONTROL.emit(this.title)
-
-        // console.log(this.userCache)
 
         const originalWords: string[] = [
             "areYouSure",

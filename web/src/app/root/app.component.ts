@@ -1,10 +1,10 @@
-import {Component, HostBinding} from '@angular/core';
+import {ChangeDetectorRef, Component, HostBinding} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {ModalSummoner} from "@app/share/modal-summoner";
 import {StructsModule} from "@app/share/components/structs.module";
 import {RouterOutlet} from "@angular/router";
 import {GlobalsVars} from "@app/share/globalsVars";
-import {TranslatePipe} from "@ngx-translate/core";
+import {TranslatePipe, TranslateService} from "@ngx-translate/core";
 import {OverlayContainer} from "@angular/cdk/overlay";
 import {AngularTheme} from "@app/share/models/utility/angular-theme";
 import Utils from "@app/share/utils";
@@ -28,7 +28,8 @@ export class AppComponent {
     title: string = '';
 
     constructor(private overlayContainer: OverlayContainer,
-                private dialog: MatDialog) {
+                private dialog: MatDialog,
+                private translateService: TranslateService ) {
 
         GlobalsVars.PAGE_TITLE_CONTROL.subscribe((title: string): void => {
             this.title = title
@@ -46,6 +47,13 @@ export class AppComponent {
             this.activeThemeCssClass = theme
             CSS_Support.defTheme(theme)
         })
+
+        const browserLang = this.translateService.getBrowserLang();
+        if(browserLang){
+            this.translateService.setDefaultLang(browserLang);
+        }else{
+            this.translateService.setDefaultLang("pt");
+        }
 
         // Define a listener to browser theme changes, if user is null, match browser theme
         // #################################################################################################

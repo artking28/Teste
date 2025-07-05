@@ -18,7 +18,7 @@ export class UsersComponent extends AbstractListarComponent<User> {
 
     constructor(private userService: UserService) {//398a40
         super(User, userService);
-        GlobalsVars.PAGE_TITLE_CONTROL.emit("Users")
+        GlobalsVars.PAGE_TITLE_CONTROL.emit("my.users")
     }
 
     public override getTableColumns(): string[] {

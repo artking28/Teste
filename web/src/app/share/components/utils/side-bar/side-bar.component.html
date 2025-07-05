@@ -3,22 +3,28 @@
 <nav desktopOnly id="sidebar">
    <a href="#"><h1 desktopOnly>TokioTeste</h1></a>
    <ul>
+       <a href="/profile">
+           <li pointCursor [ngClass]="{'active': this.isThisActive('profile')}">
+               <inner-icon origin="google" identifier="account_circle"></inner-icon>
+               <label>{{ "my.profile" | translate }}</label>
+           </li>
+       </a>
        <a href="/users">
            <li pointCursor [ngClass]="{'active': this.isThisActive('users')}">
                <inner-icon origin="google" identifier="group"></inner-icon>
-               <label>{{ "Users" | translate }}</label>
+               <label>{{ "my.users" | translate }}</label>
            </li>
        </a>
        <a href="/addresses">
            <li pointCursor [ngClass]="{'active': this.isThisActive('addresses')}">
                <inner-icon origin="google" identifier="distance"></inner-icon>
-               <label>{{ "Addresses" | translate }}</label>
+               <label>{{ "my.addresses" | translate }}</label>
            </li>
        </a>
       <a href="/settings">
          <li pointCursor [ngClass]="{'active': this.isThisActive('settings')}">
             <inner-icon origin="google" identifier="settings"></inner-icon>
-            <label>{{ "Settings" | translate }}</label>
+            <label>{{ "settings" | translate }}</label>
          </li>
       </a>
       <a href="#">
