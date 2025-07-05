@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import Utils from "@app/share/utils";
 // import {LoaderService} from "@app/share/components/misc/loader/loader.service";
 import {RequestOptions} from "@app/share/models/utility/RequestOptions";
+import {UserCache} from "@app/share/cache/UserCache";
 
 
 @Injectable()
@@ -71,7 +72,7 @@ export class HttpService {
 
     private prepareOptions(options: RequestOptions = new RequestOptions()): RequestOptions {
         let l = {
-            'Authorization': 'Bearer ' + localStorage.getItem('Token'),
+            'Authorization': 'Bearer ' + UserCache.getInstance()?.token,
             'contentType': 'application/json',
             'timeout': `${Utils.minutes(10)}`,
         }

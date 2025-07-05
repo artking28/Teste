@@ -11,7 +11,6 @@ import Utils from "@app/share/utils";
 import {CSS_Support} from "@app/share/models/utility/Color";
 import {User} from "@app/share/models/User";
 import {UserCache} from "@app/share/cache/UserCache";
-import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'app-root',
@@ -27,8 +26,6 @@ export class AppComponent {
 
     @HostBinding('class')
     activeThemeCssClass: AngularTheme = 'angular-light'
-
-    user: User = UserCache.getUserLocalStorage()
 
     title: string = '';
 
@@ -85,4 +82,6 @@ export class AppComponent {
         const novo = (this.activeThemeCssClass == 'angular-light') ? 'angular-dark' : 'angular-light'
         GlobalsVars.ANGULAR_THEME_CONTROL.emit(novo)
     }
+
+    protected readonly UserCache = UserCache;
 }

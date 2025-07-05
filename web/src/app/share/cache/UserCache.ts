@@ -1,21 +1,32 @@
 import {User} from "@app/share/models/User";
+import {LoginResponseDTO} from "@app/share/models/utility/LoginResponseDTO";
 
 
 export class UserCache {
 
+    public static USER_INFO: string = "USER_INFO"
 
-    static signOutCache(reload: boolean): void {
-        localStorage.removeItem("Token")
-        localStorage.removeItem("Commerce")
-        localStorage.setItem("User", JSON.stringify(new User()))
-        // localStorage.removeItem("Cart")
-        if (reload) {
-            location.replace("account");
-            // this.router.navigateByUrl("/dashboard")
+    static signInCache(lrd: LoginResponseDTO,  reload: boolean): void {
+        localStorage.setItem(this.USER_INFO, JSON.stringify(lrd));
+        if(reload) {
+            location.reload();
         }
+
     }
 
-    static getUserLocalStorage(): User {
+    static signOutCache(reload: boolean): void {
+
+    }
+
+    static getInstance(): LoginResponseDTO | undefined {
+        const cache = localStorage.getItem(this.USER_INFO)
+        if(cache) {
+            Object.assign(JSON.parse(cache), LoginResponseDTO);
+        }
+        return undefined
+    }
+
+    static isUserOk(): User {
         const raw = new User()
         const user = localStorage.getItem("User")
         if (user != null) {

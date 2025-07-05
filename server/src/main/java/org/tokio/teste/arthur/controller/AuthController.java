@@ -9,18 +9,16 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.tokio.teste.arthur.domain.dto.UserDTO;
-import org.tokio.teste.arthur.domain.entity.User;
 import org.tokio.teste.arthur.domain.exception.BusinessRuleException;
 import org.tokio.teste.arthur.domain.noData.GenericResponse;
 import org.tokio.teste.arthur.security.JwtHelper;
-import org.tokio.teste.arthur.service.IService;
 import org.tokio.teste.arthur.service.UserService;
 import org.tokio.teste.arthur.utils.LoginRequestDTO;
 
 
 @RestController
-@RequestMapping("/auth")
-public class AuthController extends AbstractController<User, UserDTO> {
+@RequestMapping("/api/auth")
+public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
@@ -31,11 +29,6 @@ public class AuthController extends AbstractController<User, UserDTO> {
     public AuthController(AuthenticationManager authenticationManager, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
-    }
-
-    @Override
-    protected IService<User, UserDTO> getService() {
-        return this.userService;
     }
 
     @PostMapping("/login")
