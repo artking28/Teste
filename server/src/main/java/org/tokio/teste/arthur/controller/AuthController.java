@@ -53,4 +53,13 @@ public class AuthController extends AbstractController<User, UserDTO> {
         return ResponseEntity.ok(new GenericResponse(user.toLoginResponseDTO(token)));
     }
 
+    @PostMapping("/signup")
+    public ResponseEntity<GenericResponse> signUp(@RequestBody UserDTO userDTO) throws BusinessRuleException {
+        if (userService.existsByNickname(userDTO.getNickname(), userDTO.getEmail())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(new GenericResponse("user.already_exists"));
+        }
+
+        UserDTO savedUser = userService.save(userDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new GenericResponse(savedUser));
+    }
 }

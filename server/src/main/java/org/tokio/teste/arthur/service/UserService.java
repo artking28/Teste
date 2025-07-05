@@ -2,12 +2,9 @@ package org.tokio.teste.arthur.service;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -16,9 +13,6 @@ import org.tokio.teste.arthur.domain.entity.User;
 import org.tokio.teste.arthur.domain.exception.AccessDeniedRuleException;
 import org.tokio.teste.arthur.domain.exception.BusinessRuleException;
 import org.tokio.teste.arthur.repository.IUserRepository;
-import org.tokio.teste.arthur.security.UserContextHolder;
-import org.tokio.teste.arthur.utils.LoginRequestDTO;
-import org.tokio.teste.arthur.utils.LoginResponseDTO;
 
 
 import static org.tokio.teste.arthur.domain.enums.ResponseCodeEnum.TYPE_ERROR;
@@ -33,23 +27,36 @@ public class UserService extends AbstractService<User, UserDTO> {
 
     private final AuthenticationManager authenticationManager;
 
+    private final PasswordEncoder passwordEncoder;
+
     public UserService(IUserRepository repository,
-                       AuthenticationManager authenticationManager) {
+                       AuthenticationManager authenticationManager,
+                       PasswordEncoder passwordEncoder) {
         this.repository = repository;
         this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public UserDTO findByNickname(String nickname) throws AccessDeniedRuleException {
-        return repository.findByNickname(nickname).toDTO();
+    public UserDTO findByNickname(String nickname) {
+        return this.repository.findByNickname(nickname)
+                .orElseThrow(() -> new BadCredentialsException("auth.bad_credentials"))
+                .toDTO();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean existsByNickname(String nickname, String email) {
+        return this.repository.existsByNicknameOrEmail(nickname, email);
     }
 
     @Override
-    protected void beforeCreate(User entity) throws BusinessRuleException, AccessDeniedRuleException {
+    protected void beforeCreate(User entity) throws AccessDeniedRuleException {
+
     }
 
     @Override
-    protected void beforeSave(User user) throws BusinessRuleException {
+    protected void beforeSave(User user) {
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
     }
 
     public void commonValidations(User user) throws BusinessRuleException {

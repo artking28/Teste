@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class JwtHelper {
 
     private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
     private static final int MINUTES = 60;
 
     public static String generateToken(String email) {
