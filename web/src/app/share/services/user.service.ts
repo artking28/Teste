@@ -8,7 +8,7 @@ import {User} from "@app/share/models/User";
 export class UserService extends IRootService<User> {
 
     getServiceUrl(): string {
-        return "/users"
+        return "/user"
     }
 
     isGetByIdPublic(): boolean {

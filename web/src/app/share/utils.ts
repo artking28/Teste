@@ -1,4 +1,4 @@
-import {UntypedFormGroup} from "@angular/forms";
+import {AbstractControl, FormArray, FormGroup, UntypedFormGroup, ValidatorFn} from "@angular/forms";
 import Swal from "sweetalert2";
 import {TranslateService} from "@ngx-translate/core";
 import {firstValueFrom} from "rxjs";
@@ -25,6 +25,73 @@ export default class Utils {
 
     public static upperCaseFirst(value: string) {
         return value.substring(0, 1).toUpperCase() + value.substring(1);
+    }
+
+    public static getFieldError(form: FormGroup, translate: TranslateService, fieldName: string): string | null {
+        if(!form) {
+            return null
+        }
+
+        const control: AbstractControl | null = form.get(fieldName);
+        if (!control || !control.touched || !control.errors) return null
+
+        const errorKeys = Object.keys(control.errors);
+        if (errorKeys.length === 0) return null;
+
+        const firstError = errorKeys[0];
+
+        switch (firstError) {
+            case 'required':
+            case 'pattern':
+            case 'minlength':
+            case 'maxlength':
+            case 'email':
+            case 'min':
+            case 'max':
+            case 'diffFields':
+                return translate.instant(`field.error.${firstError}`);
+            default:
+                return firstError;
+        }
+    }
+
+    static printFirstError(control: AbstractControl, path: string = ''): boolean {
+        if (control.errors) {
+            console.log(`Erro em "${path}":`, control.errors);
+            return true;
+        }
+
+        if (control instanceof FormGroup) {
+            for (const key of Object.keys(control.controls)) {
+                const found = Utils.printFirstError(control.controls[key], path ? `${path}.${key}` : key);
+                if (found) return true;
+            }
+        }
+
+        if (control instanceof FormArray) {
+            for (let i = 0; i < control.controls.length; i++) {
+                const found = Utils.printFirstError(control.controls[i], `${path}[${i}]`);
+                if (found) return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static diffFields(field1: string, field2: string): ValidatorFn {
+        return (control: AbstractControl): { [key: string]: boolean } | null => {
+
+            const controls = control?.parent?.controls as { [key: string]: AbstractControl };
+            if (!controls?.[field1]?.value || !controls?.[field2]?.value) {
+                return null;
+            }
+
+            controls[field1].markAsTouched();
+            controls[field2].markAsTouched();
+
+            const diff: boolean = controls[field1].value !== controls[field2].value
+            return diff ? {diffFields: true} : null;
+        }
     }
 
     public static async bulkTranslate(words: string[], translateService: TranslateService): Promise<Map<string, string>> {

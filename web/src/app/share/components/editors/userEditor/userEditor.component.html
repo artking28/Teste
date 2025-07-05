@@ -1,34 +1,58 @@
 <div class="float-box">
-   <h2>{{ (this.isEditing ? 'Editing' : 'Creating new') + ' user' }}</h2>
-   <div class="modal-content">
-      <div class="inputGrid">
-         <div class="inputBox-25">
-            <label class="inputLabel">Title</label>
-            <input class="textInput" type="text">
-         </div>
-         <div class="inputBox-25">
-            <label class="inputLabel">Value</label>
-            <input autocomplete="off" prefix="R$ "
-                   mask="separator.2" thousandSeparator="."
-                   separatorLimit="999999999999999"
-                   class="textInput" type="text">
-         </div>
-      </div>
-      <div class="inputGrid">
-         <div class="inputBox-25">
-            <label class="inputLabel">Description</label>
-            <input class="textInput" type="text">
-         </div>
-      </div>
-      <div>
-         <mat-button-toggle-group>
-            <mat-button-toggle value="admin">{{ 'admin' | translate }}</mat-button-toggle>
-            <mat-button-toggle value="member">{{ 'member' | translate }}</mat-button-toggle>
-         </mat-button-toggle-group>
-      </div>
-   </div>
-   <div class="button-group">
-      <button color="opaque" (click)="this.close()">Cancel</button>
-      <button (click)="this.save()">Save</button>
-   </div>
+    <h2>{{ (this.isEditing ? 'Editing' : 'Creating new') + ' user' }}</h2>
+    <div class="modal-content">
+        <form [formGroup]="this.form">
+            <div class="inputGrid">
+                <div class="inputBox-25">
+                    <label class="inputLabel">{{ 'name' | translate }}</label>
+                    <div class="divInput"><input formControlName="name" class="textInput" type="text" autocomplete="off"></div>
+                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'name')">
+                        {{ Utils.getFieldError(form, translateService, 'name') }}.
+                    </div>
+                </div>
+                <div class="inputBox-25">
+                    <label class="inputLabel">{{ 'nickname' | translate }}</label>
+                    <div class="divInput"><input formControlName="nickname" class="textInput" type="text" autocomplete="off"></div>
+                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'nickname')">
+                        {{ Utils.getFieldError(form, translateService, 'nickname') }}.
+                    </div>
+                </div>
+            </div>
+            <div class="inputGrid">
+                <div class="inputBox-100">
+                    <label class="inputLabel">{{ 'email' | translate }}</label>
+                    <div class="divInput"><input formControlName="email" class="textInput" type="text" autocomplete="off"></div>
+                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'email')">
+                        {{ Utils.getFieldError(form, translateService, 'email') }}.
+                    </div>
+                </div>
+            </div>
+            <div class="inputGrid" *ngIf="!this.isEditing">
+                <div class="inputBox-50">
+                    <label class="inputLabel">{{ 'password' | translate }}</label>
+                    <div class="divInput"><input formControlName="password" class="textInput" type="password" autocomplete="off"></div>
+                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'password')">
+                        {{ Utils.getFieldError(form, translateService, 'password') }}.
+                    </div>
+                </div>
+                <div class="inputBox-50">
+                    <label class="inputLabel">{{ 'confirm' | translate }}</label>
+                    <div class="divInput"><input formControlName="confirm" class="textInput" type="password" autocomplete="off"></div>
+                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'confirm')">
+                        {{ Utils.getFieldError(form, translateService, 'confirm') }}.
+                    </div>
+                </div>
+            </div>
+            <div>
+                <mat-button-toggle-group [multiple]=false formControlName="kind">
+                    <mat-button-toggle [value]="'admin'">{{ 'admin' | translate }}</mat-button-toggle>
+                    <mat-button-toggle [value]="'member'">{{ 'member' | translate }}</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </form>
+    </div>
+    <div class="button-group">
+        <button color="opaque" (click)="this.close()">Cancel</button>
+        <button (click)="this.save()">Save</button>
+    </div>
 </div>

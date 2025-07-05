@@ -1,0 +1,67 @@
+@use '@angular/material' as mat;
+@import "src/styles.scss";
+
+@include mat.core();
+
+.angular-light {
+
+    @include mat.all-component-themes(mat.m2-define-light-theme((
+        //color: (
+        //          primary: $my-primary,
+        //          accent: $my-accent,
+        //          warn: $my-warn,
+        //),
+            typography: null,
+            density: null,
+    )));
+
+    @extend .general;
+}
+
+.angular-dark {
+
+    @include mat.all-component-themes(mat.m2-define-dark-theme((
+        //color: (
+        //          primary: $my-primary,
+        //          accent: $my-accent,
+        //          warn: $my-warn,
+        //),
+            typography: null,
+            density: null,
+    )));
+
+    @extend .general;
+}
+
+.general {
+
+    .cdk-overlay-pane:not(.mat-mdc-select-panel-above) div.mat-mdc-select-panel {
+        border-radius: 10px;
+        display: grid;
+        gap: 5px;
+    }
+
+    div.mat-mdc-select-panel {
+        border-radius: 10px;
+        padding: 8px;
+    }
+
+    input,
+    mat-select {
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #d1d5db;
+        box-sizing: border-box;
+        border-radius: 8px;
+        font-size: 16px;
+        padding: 12px;
+        width: 100%;
+    }
+
+    mat-option {
+        border-radius: 6px;
+    }
+
+    .mdc-layout-grid__inner {
+        grid-gap: 5px;
+    }
+}

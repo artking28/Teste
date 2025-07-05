@@ -42,7 +42,8 @@
                      }
                   ],
                   "styles": [
-                     "src/styles.scss"
+                     "src/styles.scss",
+                     "src/styles/theme.scss"
                   ],
                   "scripts": []
                },
@@ -109,6 +110,7 @@
                   ],
                   "styles": [
                      "src/styles.scss",
+                     "src/styles/theme.scss",
                      "node_modules/ngx-toastr/toastr.css"
                   ],
                   "scripts": []

@@ -16,13 +16,17 @@ import {StructsModule} from "@app/share/components/structs.module";
 })
 export class UsersComponent extends AbstractListarComponent<User> {
 
-    constructor(private userService: UserService) {
+    constructor(private userService: UserService) {//398a40
         super(User, userService);
         GlobalsVars.PAGE_TITLE_CONTROL.emit("Users")
     }
 
     public override getTableColumns(): string[] {
-        return ['name']
+        return ['id', 'name', 'email', 'nickname']
+    }
+
+    public beforeEdit(obj: User): User {
+        return User.adapt(obj)
     }
 
     override getEditModalConfig(): ModalObject {

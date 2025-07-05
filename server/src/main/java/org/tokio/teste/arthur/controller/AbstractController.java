@@ -2,6 +2,7 @@ package org.tokio.teste.arthur.controller;
 
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.tokio.teste.arthur.domain.exception.BusinessRuleException;
@@ -35,7 +36,7 @@ public abstract class AbstractController<T extends IAbstractEntity<T, DTO>, DTO 
     }
 
     @PostMapping("select")
-    public ResponseEntity<GenericResponse> list(@RequestBody DTO dto) throws BusinessRuleException {
+    public ResponseEntity<GenericResponse> list(@Nullable @RequestBody DTO dto) throws BusinessRuleException {
         var ret = getService().select(dto);
         return ResponseEntity.ok(new GenericResponse(ret));
     }

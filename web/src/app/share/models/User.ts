@@ -9,6 +9,7 @@ export class User extends IndexableID<User> {
     public email: string;
     public password: string;
     public language: string;
+    public kind: 'member' | 'admin' = 'member';
 
     constructor(nickname?: string) {
         super();
@@ -36,6 +37,7 @@ export class User extends IndexableID<User> {
             email: new FormControl(this.email, validators.fields.get("email") ?? [Validators.required, Validators.email, Validators.pattern(GlobalsVars.EMAIL_PATTERN)]),
             password: new FormControl(this.password, validators.fields.get("password") ?? [Validators.required]),
             language: new FormControl(this.language, validators.fields.get("language") ?? [Validators.required]),
+            kind: new FormControl(this.kind, validators.fields.get("kind") ?? [Validators.required]),
         });
     }
 }

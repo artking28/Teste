@@ -7,6 +7,7 @@ import org.hibernate.proxy.HibernateProxy;
 import org.tokio.teste.arthur.domain.dto.UserDTO;
 import org.tokio.teste.arthur.domain.interfaces.IAbstractEntity;
 
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -35,11 +36,21 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
     @Column(name = "language", nullable = false)
     private String language;
 
+    @Column(name = "kind", nullable = false)
+    private String kind;
+
+    @Column(name = "createdAt", nullable = false)
+    private Date createdAt = new Date();
+
+
     public UserDTO toDTO() {
         UserDTO ret = new UserDTO();
         ret.setId(this.id);
         ret.setName(this.getName());
         ret.setNickname(this.getNickname());
+        ret.setEmail(this.getEmail());
+        ret.setKind(this.getKind());
+        ret.setCreatedAt(this.getCreatedAt());
         ret.setEmail(this.getEmail());
         ret.setPassword(this.getPassword());
         ret.setLanguage(this.getLanguage());

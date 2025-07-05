@@ -113,7 +113,7 @@ export abstract class Modal<T> extends BasePiece implements OnInit  {
 @Directive()
 export abstract class ModalEditor<T extends Indexable<T>> extends Modal<DataUtil<T>> {
 
-    form?: FormGroup
+    form: FormGroup
 
     isEditing: boolean = false
 
@@ -146,22 +146,26 @@ export abstract class ModalEditor<T extends Indexable<T>> extends Modal<DataUtil
     }
 
     // Override 'beforeSave' and do whatever u want to change the object
-    beforeSave(value: T): T {
+    async beforeSave(value: T): Promise<T> {
         return value
     }
 
     // Close the dialog and respond object
     save(msg?: string, adds: Map<any, any> = new Map()) {
         if (!this.isValid()) {
-            if(this.form != undefined) {
-                this.form.markAllAsTouched()
-            }
+            this.form.markAllAsTouched()
+            Utils.printFirstError(this.form)
             return
         }
         if(!adds.has('edit')) {
             adds.set('edit', this.isEditing)
         }
-        const value = this.beforeSave(this.prepareToSave())
-        this.dialogRef.close(new Some(value, msg, adds));
+        if(this.data && this.data.returns) {
+            adds.set("returns", this.data.returns ?? new Map())
+        }
+        this.beforeSave(this.prepareToSave()).then((value) => {
+            let final = new Some(value, msg, adds)
+            this.dialogRef.close(final);
+        })
     }
 }

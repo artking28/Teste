@@ -160,9 +160,9 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
             }
 
             const newObj = this.beforeEdit(obj) ?? obj
-            if (newObj) {
-                this.data[pos] = newObj
-            }
+            // if (newObj) {
+            //     this.data[pos] = newObj
+            // }
             conf.data = new DataUtil<T>(newObj)
         }
 
@@ -278,7 +278,6 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
     public get getTableColumnsAddons(): () => string[] {
         return () => {
             let columns = [...this.getTableColumns()];
-            if (this.allowSelection() && !columns.includes("select")) columns.unshift("Select");
             if (this.allowButtons() && !columns.includes("Buttons")) columns.push("Buttons");
             return columns
         }

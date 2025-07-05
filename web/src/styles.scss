@@ -17,12 +17,16 @@
     --highlight-100: rgba(149, 10, 70, 1.0);
     --highlight: rgba(149, 10, 70, 1.0);
 
+    --logo_color: #ffa0c6;
+
+    --extra1: #183a37;
+    --extra2: rgba(196, 73, 0, 0.53);
+    --extra3: #04151f;
+
     --success_color: #85c69a;
     --warning_color: #755d19;
     --error_color: #c54e66;
     --info_color: #5285d0;
-
-    --logo_color: #ffa0c6;
 
     --yellow: #ecca71;
     --green: #85c69a;
@@ -35,7 +39,7 @@
     --background: #0a0a0a;
 
     --opaque-010_color: rgba(255, 255, 255, .1);
-    --opaque-020_color: rgba(255, 255, 255, .2);
+    --opaque-020_color: rgba(117, 117, 117, 0.2);
     --opaque-030_color: rgba(255, 255, 255, .3);
     --opaque-040_color: rgba(255, 255, 255, .4);
     --opaque-050_color: rgba(255, 255, 255, .5);
@@ -55,7 +59,7 @@
     }
 
     &::selection {
-        background-color: var(--warning_color);
+        background-color: var(--extra2);
     }
 
     &:disabled,

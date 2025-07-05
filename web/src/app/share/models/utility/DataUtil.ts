@@ -1,9 +1,8 @@
 
 export class DataUtil<T> {
-
     start?: T
-
     adds: Map<string, any>
+    returns: Map<string, any> = new Map()
 
     constructor(start: T | null, adds: Map<string, any> = new Map()) {
         if (start) {

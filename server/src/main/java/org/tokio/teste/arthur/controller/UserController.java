@@ -1,0 +1,29 @@
+package org.tokio.teste.arthur.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.tokio.teste.arthur.domain.dto.UserDTO;
+import org.tokio.teste.arthur.domain.entity.User;
+import org.tokio.teste.arthur.service.IService;
+import org.tokio.teste.arthur.service.UserService;
+
+
+@RestController
+@RequestMapping("/user")
+public class UserController extends AbstractController<User, UserDTO> {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Override
+    protected IService<User, UserDTO> getService() {
+        return this.userService;
+    }
+}

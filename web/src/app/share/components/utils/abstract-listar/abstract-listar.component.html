@@ -4,7 +4,7 @@
 
       <button defButton color="opaque" (click)="this.list()">{{ "filter" | translate }}</button>
 
-      <button defButton color="blue" (click)="this.edit(null)">{{ "add" | translate }}</button>
+      <button defButton color="extra1" (click)="this.edit(null)">{{ "add" | translate }}</button>
 
    </div>
 </div>
@@ -46,7 +46,7 @@
    </div>
 
    <!--  CRUD for desktop devices  -->
-   <div style="min-width: 350px">
+   <div desktopOnly style="min-width: 350px">
       <table mat-table [dataSource]="this.data">
 
          <!--  Each column  -->

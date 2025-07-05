@@ -33,14 +33,12 @@ public abstract class AbstractService<T extends IAbstractEntity<T, DTO>, DTO ext
     }
 
     public List<DTO> select(DTO dto) throws BusinessRuleException, ObjectNotFoundException {
+        List<T> ret;
         if (dto == null) {
-            throw new BusinessRuleException(new JsonMessage("error.select.invalidFilter", TYPE_ERROR));
-        }
-
-        Example<T> example = Example.of(dto.toEntity());
-        List<T> ret = this.getRepository().findAll(example);
-        if(ret.isEmpty()){
-            throw new ObjectNotFoundException("error.list.objectNotFound", TYPE_ERROR);
+            ret = this.getRepository().findAll();
+        } else {
+            Example<T> example = Example.of(dto.toEntity());
+            ret = this.getRepository().findAll(example);
         }
 
         return ret.parallelStream().map(IAbstractEntity::toDTO).toList();
