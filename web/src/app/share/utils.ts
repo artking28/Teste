@@ -4,15 +4,16 @@ import {TranslateService} from "@ngx-translate/core";
 import {firstValueFrom} from "rxjs";
 import {GlobalsVars} from "@app/share/globalsVars";
 import {Color} from "@app/share/models/utility/Color";
+import {ToastrService} from "ngx-toastr";
 
 export default class Utils {
 
     public static minutes(n: number) {
-        return n*this.seconds(60)
+        return n * this.seconds(60)
     }
 
     public static seconds(n: number) {
-        return n*1000
+        return n * 1000
     }
 
     static pad(value: any) {
@@ -20,15 +21,55 @@ export default class Utils {
     }
 
     public static call(f: undefined | (() => void)) {
-        if(f) f()
+        if (f) f()
     }
 
     public static upperCaseFirst(value: string) {
         return value.substring(0, 1).toUpperCase() + value.substring(1);
     }
 
+    static showMessages(messages: Array<any>[], toastrService: ToastrService): void {
+        let varMensagem: any;
+        if (!messages || messages.length <= 0) {
+            return
+        }
+
+        toastrService.clear();
+        for (varMensagem of messages) {
+
+            let timeout: number = Utils.minutes(5);
+            if (varMensagem.timeout && varMensagem.timeout > 0) {
+                timeout = varMensagem.timeout
+            }
+
+            //console.log(varMensagem)
+
+            switch (varMensagem.type) {
+                case "TYPE_INFORMATION": // Erro
+                    toastrService.info("", varMensagem.message, {
+                        timeOut: timeout,
+                    });
+                    break;
+                case "TYPE_QUEST": // Sucesso
+                    toastrService.success("", varMensagem.message, {
+                        timeOut: timeout,
+                    });
+                    break;
+                case "TYPE_WARN": // Alerta
+                    toastrService.info("", varMensagem.message, {
+                        timeOut: timeout,
+                    });
+                    break;
+                case "TYPE_ERROR":
+                    toastrService.error(varMensagem.message, "", {
+                        timeOut: timeout,
+                    });
+            }
+        }
+    }
+
     public static getFieldError(form: FormGroup, translate: TranslateService, fieldName: string): string | null {
-        if(!form) {
+        if (!form) {
             return null
         }
 

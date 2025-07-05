@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -67,6 +68,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<GenericResponse> handleNoResourceFoundException(Exception e) {
         return buildResponse(HttpStatus.NOT_FOUND, "error.resource.not.found", e);
+    }
+
+    @ExceptionHandler(InternalAuthenticationServiceException.class)
+    public ResponseEntity<GenericResponse> handleInternalAuthenticationServiceException(Exception e) {
+        return buildResponse(HttpStatus.UNAUTHORIZED, "auth.bad_credentials", e);
     }
 
     @ExceptionHandler(Exception.class)

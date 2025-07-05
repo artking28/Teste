@@ -1,7 +1,7 @@
 import {ApplicationConfig, importProvidersFrom, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter} from '@angular/router';
 import {routes} from './app.routes';
-import {HttpClient, provideHttpClient} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, provideHttpClient} from "@angular/common/http";
 import {MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS, MatDialogRef} from "@angular/material/dialog";
 import { ToastrModule } from 'ngx-toastr';
 import {BrowserAnimationsModule, provideAnimations} from "@angular/platform-browser/animations";
@@ -14,6 +14,7 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {UserCache} from "@app/share/cache/UserCache";
 import {HttpService} from "@app/share/founding-files/http.service";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {Interceptor} from "@app/share/interceptor";
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, '/i18n/', '.json');
@@ -35,6 +36,11 @@ export const appConfig: ApplicationConfig = {
                 }
             }),
         ),
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: Interceptor,
+            multi: true
+        },
         {
             provide: MAT_DIALOG_DEFAULT_OPTIONS,
             useValue: {}

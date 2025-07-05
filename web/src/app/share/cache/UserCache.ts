@@ -26,13 +26,7 @@ export class UserCache {
         return undefined
     }
 
-    static isUserOk(): User {
-        const raw = new User()
-        const user = localStorage.getItem("User")
-        if (user != null) {
-            return User.adapt(JSON.parse(user))
-        }
-        localStorage.setItem("User", JSON.stringify(raw))
-        return raw
+    static isUserOk(): boolean {
+        return this.getInstance() != undefined
     }
 }

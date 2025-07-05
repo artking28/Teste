@@ -16,13 +16,13 @@ export class AuthService extends Service {
         return "/api/auth"
     }
 
-    login(login: string, password: string): Observable<GenericResponse<LoginResponseDTO>> {
-        return this.httpClient.post<GenericResponse<LoginResponseDTO>>(`/proxy${this.getServiceUrl}/login`, { login, password }, new RequestOptions(false))
+    login(nickname: string, password: string): Observable<GenericResponse<LoginResponseDTO>> {
+        return this.httpClient.post<GenericResponse<LoginResponseDTO>>(`/proxy${this.getServiceUrl()}/login`, { nickname, password }, new RequestOptions(false))
             .pipe(map(response => GenericResponse.adapt(response)))
     }
 
     signup(user: User): Observable<GenericResponse<User>> {
-        return this.httpClient.post<GenericResponse<User>>(`/proxy${this.getServiceUrl}/signUp`, user, new RequestOptions(false))
+        return this.httpClient.post<GenericResponse<User>>(`/proxy${this.getServiceUrl()}/signUp`, user, new RequestOptions(false))
             .pipe(map(response => GenericResponse.adapt(response)));
     }
 }

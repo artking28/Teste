@@ -12,7 +12,7 @@ export class AppGuard implements CanActivate {
     }
 
     canActivate(): boolean {
-        if (!UserCache.isUserOk().isValidID()) {
+        if (!UserCache.isUserOk()) {
             location.replace('/login')
         }
         return true;
