@@ -10,7 +10,6 @@ import org.tokio.teste.arthur.domain.entity.Address;
 import org.tokio.teste.arthur.domain.exception.AccessDeniedRuleException;
 import org.tokio.teste.arthur.domain.exception.BusinessRuleException;
 import org.tokio.teste.arthur.repository.IAddressRepository;
-import org.tokio.teste.arthur.security.JwtTokenProvider;
 
 import static org.tokio.teste.arthur.domain.enums.ResponseCodeEnum.TYPE_ERROR;
 
@@ -24,14 +23,11 @@ public class AddressService extends AbstractService<Address, AddressDTO> {
 
     private final AuthenticationManager authenticationManager;
 
-    private final JwtTokenProvider jwtTokenProvider;
 
     public AddressService(IAddressRepository repository,
-                          AuthenticationManager authenticationManager,
-                          JwtTokenProvider jwtTokenProvider) {
+                          AuthenticationManager authenticationManager) {
         this.repository = repository;
         this.authenticationManager = authenticationManager;
-        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override

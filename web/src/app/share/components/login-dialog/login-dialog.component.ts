@@ -22,7 +22,6 @@ export class LoginDialogComponent extends BasePiece implements OnInit {
     }
 
     ngOnInit() {
-        this.toastrService.warning("warn.invalid.form", "Warn");
     }
 
     login() {

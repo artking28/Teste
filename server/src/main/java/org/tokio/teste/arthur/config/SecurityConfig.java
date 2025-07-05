@@ -19,7 +19,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.tokio.teste.arthur.security.CustomUserDetailsService;
 import org.tokio.teste.arthur.security.JwtAuthFilter;
-import org.tokio.teste.arthur.security.JwtTokenProvider;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,30 +28,28 @@ import java.util.List;
 public class SecurityConfig {
 
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-
-    @Autowired
     private CustomUserDetailsService userDetailsService;
 
     @Bean
     public JwtAuthFilter jwtAuthenticationFilter() {
-        return new JwtAuthFilter(jwtTokenProvider, userDetailsService);
+        return new JwtAuthFilter(userDetailsService);
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
-//                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Adiciona configuração CORS
+//                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 //                .csrf(AbstractHttpConfigurer::disable)
 //                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/ping", "/auth/login", "/auth/signUp")
-//                        .permitAll().anyRequest().authenticated()
-//                );
+//                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Adiciona configuração CORS
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/ping", "/auth/login", "/auth/signUp")
+                        .permitAll().anyRequest().authenticated()
+                );
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();

@@ -8,6 +8,7 @@ import org.tokio.teste.arthur.domain.entity.AbstractObject;
 import org.tokio.teste.arthur.domain.entity.Address;
 import org.tokio.teste.arthur.domain.entity.User;
 import org.tokio.teste.arthur.domain.interfaces.IAbstractDTO;
+import org.tokio.teste.arthur.utils.LoginResponseDTO;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,6 +59,16 @@ public class UserDTO extends AbstractObject implements IAbstractDTO<User> {
         ret.setAddresses(getAddresses().parallelStream().map(AddressDTO::toEntity).toList());;
         ret.setUuidCheck(getUuidCheck());
         ret.setCheckAccessControl(getCheckAccessControl());
+        return ret;
+    }
+
+    public LoginResponseDTO toLoginResponseDTO(String token) {
+        LoginResponseDTO ret = new LoginResponseDTO();
+        ret.setToken(token);
+        ret.setName(this.name);
+        ret.setLanguage(this.language);
+        ret.setDark(this.darkTheme);
+        ret.setLoginAt(new Date());
         return ret;
     }
 }

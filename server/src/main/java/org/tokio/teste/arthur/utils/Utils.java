@@ -9,4 +9,8 @@ public class Utils {
     public static Long minutes(Long n) {
         return n*seconds(60L);
     }
+
+    public static Long hours(Long n) {
+        return n*minutes(60L);
+    }
 }
