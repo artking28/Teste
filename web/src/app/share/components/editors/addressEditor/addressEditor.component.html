@@ -1,12 +1,78 @@
+
 <div class="float-box">
     <h2>{{ ((this.isEditing ? 'editing' : 'creating') + '.address') | translate }}</h2>
     <div class="modal-content">
         <form [formGroup]="this.form">
-
+            <div class="inputGrid">
+                <div class="inputBox-100">
+                    <label class="inputLabel">{{ 'name' | translate }}</label>
+                    <div class="divInput"><input formControlName="name" class="textInput" type="text" autocomplete="off"></div>
+                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'name')">
+                        {{ Utils.getFieldError(form, translateService, 'name') }}.
+                    </div>
+                </div>
+            </div>
+            <div class="inputGrid">
+                <div class="inputBox-33">
+                    <label class="inputLabel">{{ 'postalCode' | translate }}</label>
+                    <div class="divInput"><input formControlName="postalCode" class="textInput" type="text" autocomplete="off"></div>
+                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'postalCode')">
+                        {{ Utils.getFieldError(form, translateService, 'postalCode') }}.
+                    </div>
+                </div>
+                <div class="inputBox-33">
+                    <label class="inputLabel">{{ 'city' | translate }}</label>
+                    <div class="divInput">
+<!--                        <input formControlName="city" class="textInput" type="text" autocomplete="off">-->
+                        <mat-select formControlName="cityId" class="textInput">
+                            <mat-option [value]="0">{{ 'none' | translate }}</mat-option>
+                            <ng-container *ngIf="this.cities">
+                                <mat-option *ngFor="let c of this.cities"
+                                        [value]="null">{{c.name}}</mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </div>
+                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'city')">
+                        {{ Utils.getFieldError(form, translateService, 'city') }}.
+                    </div>
+                </div>
+                <div class="inputBox-33">
+                    <label class="inputLabel">{{ 'number' | translate }}</label>
+                    <div class="divInput"><input formControlName="number" class="textInput" type="number" max="9999" autocomplete="off"></div>
+                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'number')">
+                        {{ Utils.getFieldError(form, translateService, 'number') }}.
+                    </div>
+                </div>
+            </div>
+            <div class="inputGrid">
+                <div class="inputBox-25">
+                    <label class="inputLabel">{{ 'street' | translate }}</label>
+                    <div class="divInput"><input formControlName="street" class="textInput" type="text" autocomplete="off"></div>
+                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'street')">
+                        {{ Utils.getFieldError(form, translateService, 'street') }}.
+                    </div>
+                </div>
+                <div class="inputBox-25">
+                    <label class="inputLabel">{{ 'district' | translate }}</label>
+                    <div class="divInput"><input formControlName="district" class="textInput" type="text" autocomplete="off"></div>
+                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'district')">
+                        {{ Utils.getFieldError(form, translateService, 'district') }}.
+                    </div>
+                </div>
+            </div>
+            <div class="inputGrid">
+                <div class="inputBox-100">
+                    <label class="inputLabel">{{ 'addition' | translate }}</label>
+                    <div class="divInput"><input formControlName="addition" class="textInput" type="text" autocomplete="off"></div>
+                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'addition')">
+                        {{ Utils.getFieldError(form, translateService, 'addition') }}.
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <div class="button-group">
-        <button color="opaque" (click)="this.close()">Cancel</button>
-        <button (click)="this.save()">Save</button>
+        <button color="opaque" (click)="this.close()">{{ 'cancel' | translate}}</button>
+        <button (click)="this.save()">{{ 'save' | translate }}</button>
     </div>
 </div>

@@ -24,10 +24,10 @@ div.inputGrid {
     div.inputBox-66,
     div.inputBox-75,
     div.inputBox-100 {
-        grid-template-rows: min-content 43px;
+        grid-template-rows: min-content min-content;
         background-color: transparent;
         box-sizing: border-box;
-        font-size: 16px;
+        font-size: 11pt;
         display: grid;
         row-gap: 5px;
         z-index: 0;
@@ -38,16 +38,32 @@ div.inputGrid {
             font-size: 10pt;
         }
 
-        select,
+        mat-select,
         input.textInput {
             background-color: var(--opaque-020_color);
             caret-color: var(--opaque-090_color);
             color: var(--opaque-090_color);
+            padding: 11px 10px;
             border-radius: 7px;
             transition: none;
-            padding: 10px;
             z-index: 1;
             border: 0;
+
+            &:focus {
+                background-color: var(--opaque-010_color);
+                caret-color: var(--extra1);
+                color: var(--extra2);
+            }
+
+            div.mat-mdc-select-arrow-wrapper {
+                height: unset;
+            }
+
+            .mat-mdc-select-trigger {
+                align-items: center;
+                display: flex;
+                height: 100%;
+            }
         }
 
         &:has(> div.inputDivError) > div.divInput {
@@ -67,7 +83,8 @@ div.inputGrid {
             border-bottom-left-radius: 7px;
             width: -webkit-fill-available;
             background-color: var(--red);
-            padding: 13px 10px 3px;
+            padding: 8px 10px 3px;
+            white-space: nowrap;
             margin-top: -15px;
             text-align: left;
             font-size: 9pt;

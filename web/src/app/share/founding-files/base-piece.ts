@@ -1,5 +1,5 @@
 
-import {Directive, inject, Injectable, OnInit} from "@angular/core";
+import {Directive, HostListener, inject, Injectable, OnInit} from "@angular/core";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import Swal from "sweetalert2";
 import {clone} from "underscore";
@@ -97,6 +97,7 @@ export abstract class Modal<T> extends BasePiece implements OnInit  {
         });
     }
 
+    @HostListener('document:keydown.escape', ['$event'])
     close(response?: Result) {
         if (!this.useCancelConfirmation) {
             this.dialogRef.close(this.getCancelResponse())

@@ -11,6 +11,8 @@ import {Address} from "@app/share/models/Address";
 })
 export class AddressEditorComponent extends ModalEditor<Address> {
 
+    cities: {name: string}[] = []
+
     ngOnInit(): void {
         this.object = Address.adapt(this.object)
         this.form = this.object.toFormGroup()

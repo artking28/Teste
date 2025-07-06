@@ -30,12 +30,19 @@
    "email": "Email",
    "nickname": "Nickname",
    "password": "Password",
+   "number": "Number",
+   "postalCode": "Postal code",
+   "street": "Street",
+   "district": "District",
+   "addition": "Addition",
+   "city": "City",
 
    "already.user": "Already a user?",
    "im.not.user": "I'm not a user",
 
    "yes": "Yes",
    "no": "No",
+   "none": "None",
 
    "login.invalid_credentials": "Login failed. Please try again.",
 

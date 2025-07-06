@@ -59,7 +59,8 @@
     }
 
     &::selection {
-        background-color: var(--extra2);
+        background-color: var(--yellow);
+        color: black;
     }
 
     &:disabled,

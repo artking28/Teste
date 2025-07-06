@@ -10,6 +10,7 @@ export class Address extends IndexableID<Address> {
     street: string = ""
     district: string = ""
     postalCode: string = ""
+    city: any = ""
 
     public static adapt(object: Address): Address {
         return Object.assign(new Address(), object);
@@ -31,6 +32,7 @@ export class Address extends IndexableID<Address> {
             street: new FormControl(this.street, validators.fields.get("street") ?? [Validators.required]),
             district: new FormControl(this.district, validators.fields.get("district") ?? [Validators.required]),
             postalCode: new FormControl(this.postalCode, validators.fields.get("postalCode") ?? [Validators.required]),
+            cityId: new FormControl(this.city.id ?? 0, validators.fields.get("cityId") ?? [Validators.required]),
         });
     }
 }

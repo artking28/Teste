@@ -30,12 +30,19 @@
    "email": "E-mail",
    "nickname": "Apelido",
    "password": "Senha",
+   "number": "Número",
+   "postalCode": "CEP",
+   "street": "Rua",
+   "district": "Bairro",
+   "addition": "Complemento",
+   "city": "Cidade",
 
    "already.user": "Já tenho uma conta",
    "im.not.user": "Não tenho uma conta",
 
    "yes": "Sim",
    "no": "Não",
+   "none": "Nenhum",
 
    "login.invalid_credentials": "Login falhou. Por favor tente novamente.",
 
