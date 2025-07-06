@@ -54,8 +54,5 @@ public class AddressService extends AbstractService<Address, AddressDTO> {
         if (!StringUtils.hasText(address.getPostalCode())) {
             throw new BusinessRuleException("address.error.postalCode.required", TYPE_ERROR);
         }
-        if (address.getActive() == null) {
-            throw new BusinessRuleException("address.error.active.required", TYPE_ERROR);
-        }
     }
 }

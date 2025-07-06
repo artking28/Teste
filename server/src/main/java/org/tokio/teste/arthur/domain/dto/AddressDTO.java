@@ -45,7 +45,6 @@ public class AddressDTO extends AbstractObject implements IAbstractDTO<Address> 
         ret.setState(this.getState());
         ret.setDistrict(this.getDistrict());
         ret.setPostalCode(this.getPostalCode());
-        ret.setActive(this.getActive());
         ret.setUser(this.getUser().toEntity());
         ret.setUuidCheck(getUuidCheck());
         ret.setCheckAccessControl(getCheckAccessControl());

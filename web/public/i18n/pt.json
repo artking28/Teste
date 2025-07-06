@@ -22,6 +22,10 @@
    "creating.user": "Criando novo usuário",
    "editing.user": "Editando usuário",
 
+   "address": "Endereço",
+   "creating.address": "Criando novo endereço",
+   "editing.address": "Editando endereço",
+
    "name": "Nome",
    "email": "E-mail",
    "nickname": "Apelido",

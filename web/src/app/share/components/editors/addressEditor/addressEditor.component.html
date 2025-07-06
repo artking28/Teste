@@ -1,0 +1,12 @@
+<div class="float-box">
+    <h2>{{ ((this.isEditing ? 'editing' : 'creating') + '.address') | translate }}</h2>
+    <div class="modal-content">
+        <form [formGroup]="this.form">
+
+        </form>
+    </div>
+    <div class="button-group">
+        <button color="opaque" (click)="this.close()">Cancel</button>
+        <button (click)="this.save()">Save</button>
+    </div>
+</div>

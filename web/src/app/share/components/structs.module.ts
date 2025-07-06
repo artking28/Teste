@@ -9,13 +9,15 @@ import {SideBarComponent} from "@app/share/components/utils/side-bar/side-bar.co
 import {UserEditorComponent} from "@app/share/components/editors/userEditor/userEditor.component";
 import {LoginDialogComponent} from "@app/share/components/login-dialog/login-dialog.component";
 import {RegisterDialogComponent} from "@app/share/components/register-dialog/register-dialog.component";
+import {AddressEditorComponent} from "@app/share/components/editors/addressEditor/addressEditor.component";
 
 const selectors: any[] = [
     // GeneralSelector
 ]
 
 const editors: any[] = [
-    UserEditorComponent
+    UserEditorComponent,
+    AddressEditorComponent
 ]
 
 const all: any[] = [

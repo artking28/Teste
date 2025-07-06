@@ -44,9 +44,6 @@ public class Address extends AbstractObject implements IAbstractEntity<Address, 
     @Column(name = "postalCode", nullable = false)
     private String postalCode;
 
-    @Column(name = "active", nullable = false)
-    private Boolean active;
-
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "user_id", updatable = false)
     private User user;
@@ -63,7 +60,6 @@ public class Address extends AbstractObject implements IAbstractEntity<Address, 
         ret.setStreet(this.getStreet());
         ret.setDistrict(this.getDistrict());
         ret.setPostalCode(this.getPostalCode());
-        ret.setActive(this.getActive());
         ret.setUuidCheck(getUuidCheck());
         ret.setCheckAccessControl(getCheckAccessControl());
         if(ret.getUser() != null) {

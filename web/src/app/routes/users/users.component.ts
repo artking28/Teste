@@ -9,7 +9,7 @@ import {StructsModule} from "@app/share/components/structs.module";
 
 
 @Component({
-    selector: 'dashboard',
+    selector: 'user-component',
     templateUrl: '../../share/components/utils/abstract-listar/abstract-listar.component.html',
     styleUrls: ['users.component.scss', '../../share/components/utils/abstract-listar/abstract-listar.component.scss'],
     imports: [StructsModule,]
