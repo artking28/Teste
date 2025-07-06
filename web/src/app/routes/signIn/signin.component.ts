@@ -10,6 +10,7 @@ import {ModalSummoner} from "@app/share/modal-summoner";
 export class SignInComponent {
 
     constructor() {
+        console.log("SignIn Component constructor");
         ModalSummoner.openLogin()
     }
 }

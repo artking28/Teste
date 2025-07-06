@@ -72,9 +72,11 @@ export class HttpService {
 
     private prepareOptions(options: RequestOptions = new RequestOptions()): RequestOptions {
         let l = {
-            'Authorization': 'Bearer ' + UserCache.getInstance()?.token,
             'contentType': 'application/json',
             'timeout': `${Utils.minutes(10)}`,
+        }
+        if(UserCache.isUserOk()) {
+            l["Authorization"] = 'Bearer ' + UserCache.getInstance()!.token;
         }
         options.headers.keys().forEach((key) => {
             l[key] = options.headers.get(key)

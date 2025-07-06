@@ -20,4 +20,6 @@ export class SideBarComponent extends BasePiece {
         const where: string = location.pathname.substring(1)
         return opts.includes(where)
     }
+
+    protected readonly UserCache = UserCache;
 }

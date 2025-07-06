@@ -84,6 +84,7 @@ export class ModalSummoner {
         let emitter = new EventEmitter()
         if (this.controlDuplicate("openLogin", emitter)) {
             const conf = ModalSummoner.getDefaultDialogConfig(null, true)
+            conf.disableClose = true
             conf.height = 'min-content'
             this.openModal(conf, LoginDialogComponent, emitter)
         }

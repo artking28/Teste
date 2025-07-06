@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {BasePiece} from "@app/share/founding-files/base-piece";
+import {BasePiece, Modal} from "@app/share/founding-files/base-piece";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "@app/share/services/auth.service";
 import {UserCache} from "@app/share/cache/UserCache";
@@ -11,7 +11,7 @@ import {UserCache} from "@app/share/cache/UserCache";
     templateUrl: 'login-dialog.component.html',
     styleUrl: 'login-dialog.component.scss',
 })
-export class LoginDialogComponent extends BasePiece implements OnInit {
+export class LoginDialogComponent extends Modal<any> implements OnInit {
 
     form: FormGroup;
 
@@ -40,6 +40,7 @@ export class LoginDialogComponent extends BasePiece implements OnInit {
                 this.httpUtils.httpService.hideLoader()
                 if (res.isOk(true)) {
                     UserCache.signInCache(res.result, true)
+                    this.close()
                 }
             },
             error: (_) => this.httpUtils.httpService.hideLoader()

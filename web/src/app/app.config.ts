@@ -1,7 +1,13 @@
 import {ApplicationConfig, importProvidersFrom, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter} from '@angular/router';
 import {routes} from './app.routes';
-import {HTTP_INTERCEPTORS, HttpClient, provideHttpClient} from "@angular/common/http";
+import {
+    HTTP_INTERCEPTORS,
+    HttpClient,
+    HttpClientModule,
+    provideHttpClient,
+    withInterceptorsFromDi
+} from "@angular/common/http";
 import {MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS, MatDialogRef} from "@angular/material/dialog";
 import { ToastrModule } from 'ngx-toastr';
 import {BrowserAnimationsModule, provideAnimations} from "@angular/platform-browser/animations";
@@ -36,6 +42,7 @@ export const appConfig: ApplicationConfig = {
                 }
             }),
         ),
+        provideHttpClient(withInterceptorsFromDi()),
         {
             provide: HTTP_INTERCEPTORS,
             useClass: Interceptor,

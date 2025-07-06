@@ -12,6 +12,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {Injectable, Injector} from "@angular/core";
 import Utils from "@app/share/utils";
 import {ModalSummoner} from "@app/share/modal-summoner";
+import {UserCache} from "@app/share/cache/UserCache";
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
@@ -60,8 +61,10 @@ export class Interceptor implements HttpInterceptor {
                     case 401:
                     case 403:
                         if (!req.url.endsWith("/api/auth/signUp") && !req.url.endsWith("/login")) {
-                            ModalSummoner.openLogin()
+                            UserCache.signOutCache()
+                            return
                         }
+                        Utils.showMessages(error.error.messages, this.toastrService);
                         break;
                     case 409:
                         this.toastrService.clear();

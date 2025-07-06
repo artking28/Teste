@@ -9,19 +9,20 @@ export class UserCache {
     static signInCache(lrd: LoginResponseDTO,  reload: boolean): void {
         localStorage.setItem(this.USER_INFO, JSON.stringify(lrd));
         if(reload) {
-            location.reload();
+            location.assign('/users')
         }
 
     }
 
-    static signOutCache(reload: boolean): void {
-
+    static signOutCache(): void {
+        localStorage.clear()
+        location.reload()
     }
 
     static getInstance(): LoginResponseDTO | undefined {
         const cache = localStorage.getItem(this.USER_INFO)
         if(cache) {
-            Object.assign(JSON.parse(cache), LoginResponseDTO);
+            return Object.assign(JSON.parse(cache), LoginResponseDTO);
         }
         return undefined
     }
