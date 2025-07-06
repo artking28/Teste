@@ -45,4 +45,12 @@ nav#sidebar {
             }
         }
     }
+
+    li#logout {
+        color: var(--red);
+
+        &:hover {
+            color: white;
+        }
+    }
 }

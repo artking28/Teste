@@ -15,6 +15,8 @@
    "delete": "Remover",
    "delete_all": "Remover todos",
    "cancel": "Cancelar",
+   "signup": "Cadastro",
+   "confirm": "Confirmar",
 
    "user": "Usuário",
    "creating.user": "Criando novo usuário",
@@ -23,6 +25,10 @@
    "name": "Nome",
    "email": "E-mail",
    "nickname": "Apelido",
+   "password": "Senha",
+
+   "already.user": "Já tenho uma conta",
+   "im.not.user": "Não tenho uma conta",
 
    "yes": "Sim",
    "no": "Não",

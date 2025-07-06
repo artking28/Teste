@@ -99,6 +99,10 @@ app-root {
 
 a {
     text-decoration: none;
+    color: var(--highlight);
+}
+
+a:not([link]) {
     color: unset;
 }
 

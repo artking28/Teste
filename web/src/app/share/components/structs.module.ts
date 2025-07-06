@@ -8,6 +8,7 @@ import {InnerIconComponent} from "@app/share/components/utils/inner-icon/inner-i
 import {SideBarComponent} from "@app/share/components/utils/side-bar/side-bar.component";
 import {UserEditorComponent} from "@app/share/components/editors/userEditor/userEditor.component";
 import {LoginDialogComponent} from "@app/share/components/login-dialog/login-dialog.component";
+import {RegisterDialogComponent} from "@app/share/components/register-dialog/register-dialog.component";
 
 const selectors: any[] = [
     // GeneralSelector
@@ -22,6 +23,7 @@ const all: any[] = [
     ...editors,
     InnerIconComponent,
     LoginDialogComponent,
+    RegisterDialogComponent,
     SideBarComponent,
 ]
 

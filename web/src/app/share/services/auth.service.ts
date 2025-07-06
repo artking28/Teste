@@ -21,8 +21,8 @@ export class AuthService extends Service {
             .pipe(map(response => GenericResponse.adapt(response)))
     }
 
-    signup(user: User): Observable<GenericResponse<User>> {
-        return this.httpService.post<GenericResponse<User>>(`/proxy${this.getServiceUrl()}/signUp`, user, new RequestOptions(false))
+    signup(user: User): Observable<GenericResponse<LoginResponseDTO>> {
+        return this.httpService.post<GenericResponse<LoginResponseDTO>>(`/proxy${this.getServiceUrl()}/signUp`, user, new RequestOptions(false))
             .pipe(map(response => GenericResponse.adapt(response)));
     }
 }

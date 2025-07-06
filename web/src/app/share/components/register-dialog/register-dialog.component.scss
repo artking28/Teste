@@ -1,0 +1,12 @@
+@import 'src/styles.scss';
+
+div.float-box {
+
+    form {
+        margin-bottom: 25px;
+
+        @include desktop {
+            max-width: 360px;
+        }
+    }
+}
