@@ -29,7 +29,10 @@ export class LoginDialogComponent extends Modal<any> implements OnInit {
     login() {
         if (!this.form.valid) {
             this.form.markAllAsTouched();
-            this.toastrService.warning("warn.invalid.form", "Warn");
+            this.toastrService.warning(
+                this.translateService.instant("warn.invalid.form"),
+                this.translateService.instant("warn")
+            );
             return
         }
 

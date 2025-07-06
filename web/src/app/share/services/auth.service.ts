@@ -22,7 +22,7 @@ export class AuthService extends Service {
     }
 
     signup(user: User): Observable<GenericResponse<LoginResponseDTO>> {
-        return this.httpService.post<GenericResponse<LoginResponseDTO>>(`/proxy${this.getServiceUrl()}/signUp`, user, new RequestOptions(false))
+        return this.httpService.post<GenericResponse<LoginResponseDTO>>(`/proxy${this.getServiceUrl()}/signup`, user, new RequestOptions(false))
             .pipe(map(response => GenericResponse.adapt(response)));
     }
 }

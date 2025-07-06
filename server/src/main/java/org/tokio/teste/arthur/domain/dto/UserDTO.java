@@ -28,9 +28,9 @@ public class UserDTO extends AbstractObject implements IAbstractDTO<User> {
 
     private String password;
 
-    private Boolean darkTheme;
+    private Boolean darkTheme = false;
 
-    private String language;
+    private String language = "pt";
 
     private String kind;
 
@@ -54,11 +54,14 @@ public class UserDTO extends AbstractObject implements IAbstractDTO<User> {
         ret.setKind(this.getKind());
         ret.setCreatedAt(this.getCreatedAt());
         ret.setLanguage(this.getLanguage());
-        ret.setFather(this.getFather().toEntity());
         ret.setChildren(this.getChildren().parallelStream().map(UserDTO::toEntity).toList());
         ret.setAddresses(getAddresses().parallelStream().map(AddressDTO::toEntity).toList());;
         ret.setUuidCheck(getUuidCheck());
         ret.setCheckAccessControl(getCheckAccessControl());
+        if(this.getFather() != null) {
+            ret.setFather(this.getFather().toEntity());
+        }
+
         return ret;
     }
 

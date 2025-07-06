@@ -38,6 +38,20 @@ public class UserService extends AbstractService<User, UserDTO> {
     }
 
     @Transactional(rollbackFor = Exception.class)
+    public UserDTO save(UserDTO dto) throws BusinessRuleException, AccessDeniedRuleException {
+
+        User entity = dto.toEntity();
+        commonValidations(entity);
+        if(entity.getId() == null) {
+            beforeCreate(entity);
+        } else {
+            validateUpdatePermission(entity);
+            beforeSave(entity);
+        }
+        return getRepository().save(entity).toDTO();
+    }
+
+    @Transactional(rollbackFor = Exception.class)
     public UserDTO findByNickname(String nickname) {
         return this.repository.findByNickname(nickname)
                 .orElseThrow(() -> new BadCredentialsException("auth.bad_credentials"))
@@ -50,13 +64,12 @@ public class UserService extends AbstractService<User, UserDTO> {
     }
 
     @Override
-    protected void beforeCreate(User entity) throws AccessDeniedRuleException {
-
+    protected void beforeCreate(User user) {
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
     }
 
     @Override
     protected void beforeSave(User user) {
-        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
     }
 
     public void commonValidations(User user) throws BusinessRuleException {

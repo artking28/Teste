@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "@app/share/services/auth.service";
 import {UserCache} from "@app/share/cache/UserCache";
 import {User} from "@app/share/models/User";
+import Utils from "@app/share/utils";
 
 
 @Component({
@@ -19,6 +20,9 @@ export class RegisterDialogComponent extends Modal<any> implements OnInit {
     constructor(private authService: AuthService) {
         super();
         this.form = new User().toFormGroup()
+        this.form.addControl("password", new FormControl(null, [Validators.required, Utils.diffFields("password", "confirm")]))
+        this.form.addControl("confirm", new FormControl(null, [Validators.required, Utils.diffFields("password", "confirm")]))
+        this.form.removeControl("language")
     }
 
     ngOnInit() {
@@ -27,7 +31,11 @@ export class RegisterDialogComponent extends Modal<any> implements OnInit {
     register() {
         if (!this.form.valid) {
             this.form.markAllAsTouched();
-            this.toastrService.warning("warn.invalid.form", "Warn");
+            Utils.printFirstError(this.form)
+            this.toastrService.warning(
+                this.translateService.instant("warn.invalid.form"),
+                this.translateService.instant("warn")
+            );
             return
         }
 

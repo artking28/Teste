@@ -2,11 +2,13 @@ package org.tokio.teste.arthur.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.tokio.teste.arthur.domain.dto.UserDTO;
 import org.tokio.teste.arthur.domain.exception.BusinessRuleException;
@@ -35,7 +37,9 @@ public class AuthController {
     public ResponseEntity<GenericResponse> login(@RequestBody LoginRequestDTO loginRequest) throws BusinessRuleException {
 
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getNickname(), loginRequest.getPassword()));
+            UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(loginRequest.getNickname(), loginRequest.getPassword());
+            authenticationManager.authenticate(upat);
+            SecurityContextHolder.getContext().setAuthentication(upat);
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GenericResponse("login.invalid_credentials"));
         }
@@ -49,10 +53,12 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<GenericResponse> signUp(@RequestBody UserDTO userDTO) throws BusinessRuleException {
         if (userService.existsByNickname(userDTO.getNickname(), userDTO.getEmail())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(new GenericResponse("user.already_exists"));
+            throw new DuplicateKeyException("");
         }
 
         UserDTO savedUser = userService.save(userDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new GenericResponse(savedUser));
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userDTO.getNickname(), userDTO.getPassword()));
+        String token = JwtHelper.generateToken(savedUser.getNickname());
+        return ResponseEntity.status(HttpStatus.CREATED).body(new GenericResponse(savedUser.toLoginResponseDTO(token)));
     }
 }

@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -68,6 +69,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<GenericResponse> handleNoResourceFoundException(Exception e) {
         return buildResponse(HttpStatus.NOT_FOUND, "error.resource.not.found", e);
+    }
+
+    @ExceptionHandler(DuplicateKeyException.class)
+    public ResponseEntity<GenericResponse> handleDuplicateKeyException(Exception e) {
+        return buildResponse(HttpStatus.CONFLICT, "error.user.already_exists", e);
     }
 
     @ExceptionHandler(InternalAuthenticationServiceException.class)

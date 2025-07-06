@@ -42,7 +42,7 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
     private Boolean darkTheme = false;
 
     @Column(name = "language", nullable = false)
-    private String language;
+    private String language = "pt";
 
     @Column(name = "kind", nullable = false)
     private String kind;

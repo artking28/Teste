@@ -72,10 +72,7 @@ export class Interceptor implements HttpInterceptor {
                         break;
                     case 500:
                         this.toastrService.clear();
-                        this.translateService.get("error.internal.failure").subscribe((translatedMessage: string) => {
-                            this.toastrService.clear();
-                            this.toastrService.error(translatedMessage, title);
-                        });
+                        Utils.showMessages(error.error.messages, this.toastrService);
                         break;
                     case 503:
                         this.toastrService.clear();

@@ -56,4 +56,11 @@ public enum ActionPermissionEnum {
         return ret.orElseThrow(() -> new BusinessRuleException("error.actionPermission.notFound", TYPE_ERROR));
     }
 
+    public static List<ActionPermissionEnum> getAdminRole() {
+        return List.of(values()); // Admin tem todas as permissões
+    }
+
+    public static List<ActionPermissionEnum> getMemberRole() {
+        return List.of(ADDRESS_READ, ADDRESS_CREATE, ADDRESS_UPDATE, ADDRESS_DELETE);
+    }
 }
