@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 import {Color} from "@app/share/models/utility/Color";
 import {MatSort, Sort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
 
 
 type Proc = (...args: any) => any;
@@ -54,6 +55,8 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
     private _liveAnnouncer = inject(LiveAnnouncer);
 
     @ViewChild(MatSort) sort: MatSort;
+
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     data: T[] = []
 
@@ -155,8 +158,9 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
         this.data = content
         this.dataSource = new MatTableDataSource(this.data)
         const inter = setInterval(() => {
-            if(this.sort) {
+            if(this.sort && this.paginator) {
                 this.dataSource.sort = this.sort;
+                this.dataSource.paginator = this.paginator
                 clearInterval(inter);
             }
         }, 200)

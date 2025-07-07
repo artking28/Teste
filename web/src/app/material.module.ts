@@ -44,6 +44,7 @@ const primeMaterials: any[] = [
 
 const angularMaterials: any[] = [
     MatCheckboxModule,
+    MatPaginatorModule,
     MatMenuModule,
     MatTableModule,
     MatTable,

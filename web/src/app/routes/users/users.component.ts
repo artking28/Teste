@@ -7,13 +7,14 @@ import {ModalObject} from "@app/share/modal-summoner";
 import {UserEditorComponent} from "@app/share/components/editors/userEditor/userEditor.component";
 import {StructsModule} from "@app/share/components/structs.module";
 import {MatSort, MatSortHeader} from "@angular/material/sort";
+import {MatPaginator} from "@angular/material/paginator";
 
 
 @Component({
     selector: 'user-component',
     templateUrl: '../../share/components/utils/abstract-listar/abstract-listar.component.html',
     styleUrls: ['users.component.scss', '../../share/components/utils/abstract-listar/abstract-listar.component.scss'],
-    imports: [StructsModule, MatSortHeader, MatSort,]
+    imports: [StructsModule, MatSortHeader, MatSort, MatPaginator,]
 })
 export class UsersComponent extends AbstractListarComponent<User> {
 

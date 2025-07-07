@@ -107,9 +107,10 @@
             </td>
          </ng-container>
 
-         <tr mat-header-row *matHeaderRowDef="this.getTableColumnsAddons()"></tr>
-         <tr mat-row class="row" *matRowDef="let row; columns: this.getTableColumnsAddons();" (click)="edit(row)"></tr>
+          <tr mat-header-row *matHeaderRowDef="this.getTableColumnsAddons()"></tr>
+          <tr mat-row class="row" *matRowDef="let row; columns: this.getTableColumnsAddons();" (click)="edit(row)"></tr>
       </table>
+       <mat-paginator [pageSizeOptions]="[10, 20, 40]"></mat-paginator>
    </div>
 
 </ng-container>
