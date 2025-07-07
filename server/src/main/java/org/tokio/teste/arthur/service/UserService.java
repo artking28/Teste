@@ -61,7 +61,14 @@ public class UserService extends AbstractService<User, UserDTO> {
                 .toDTO();
     }
 
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional
+    public void changeTheme(String nickname) {
+        User user = repository.findByNickname(nickname)
+                .orElseThrow(() -> new BadCredentialsException("auth.bad_credentials"));
+        user.setDarkTheme(!Boolean.TRUE.equals(user.getDarkTheme()));
+        repository.save(user);
+    }
+
     public List<UserDTO> findChildren(String nickname) {
         var res = this.repository.findByNickname(nickname);
 		return res.map((User user) -> user.getChildren().stream().map(User::toDTO).toList()).orElseGet(ArrayList::new);

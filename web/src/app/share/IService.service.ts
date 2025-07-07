@@ -54,7 +54,7 @@ export abstract class IRootService<T extends Indexable<T>> extends Service {
         ))
     }
 
-    list(fltr: FilteredPageRequest<T> | null): Observable<Response<T[]>> {
+    list(fltr?: FilteredPageRequest<T>): Observable<Response<T[]>> {
         let pub: string = this.isListPublic() ? "/api" : ""
         let obs: Observable<Response> = this.httpService.post<Response>('/proxy' + this.getServiceUrl() + pub + '/select', fltr)
         return obs.pipe(map((data) =>
@@ -62,7 +62,7 @@ export abstract class IRootService<T extends Indexable<T>> extends Service {
         ))
     }
 
-    getFirst(fltr: FilteredPageRequest<T> | null): Observable<Response<T>> {
+    getFirst(fltr?: FilteredPageRequest<T>): Observable<Response<T>> {
         return this.list(fltr).pipe(map((data: Response<T[]>): Response<T> => {
             let res = Response.adapt<T[]>(data)
             let newRes = new Response<T>()

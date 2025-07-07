@@ -31,6 +31,14 @@ public class UserController extends AbstractController<User, UserDTO> {
         this.userService = userService;
     }
 
+    @GetMapping("/changeTheme")
+    public ResponseEntity<GenericResponse> changeTheme() {
+        Object cache = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String nickname = ((org.springframework.security.core.userdetails.User) cache).getUsername();
+        this.userService.changeTheme(nickname);
+        return ResponseEntity.ok(new GenericResponse());
+    }
+
     @GetMapping("/findChildren")
     public ResponseEntity<GenericResponse> findChildren() {
         Object cache = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -11,7 +11,6 @@ export class UserCache {
         if(reload) {
             location.assign('/users')
         }
-
     }
 
     static signOutCache(): void {
@@ -29,5 +28,15 @@ export class UserCache {
 
     static isUserOk(): boolean {
         return this.getInstance() != undefined
+    }
+
+    static changeTheme() {
+        let actual = this.getInstance()
+        if(!actual) {
+            UserCache.signOutCache()
+            return
+        }
+        actual.dark = !actual.dark
+        UserCache.signInCache(actual, false)
     }
 }

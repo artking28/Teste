@@ -58,6 +58,11 @@
         width: 100%;
     }
 
+    th, td, tr {
+        border-bottom-color: var(--opaque-030_color);
+        color: var(--font_color);
+    }
+
     mat-option {
         border-radius: 6px;
     }

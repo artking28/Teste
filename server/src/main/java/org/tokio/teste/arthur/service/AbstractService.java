@@ -46,6 +46,10 @@ public abstract class AbstractService<T extends IAbstractEntity<T, DTO>, DTO ext
     }
 
     public List<DTO> select(FilteredPageRequest<DTO> request) throws BusinessRuleException {
+        if(request == null) {
+            return this.getRepository().findAll().stream().map(IAbstractEntity::toDTO).toList();
+        }
+
         var pageable = request.toSpringPageRequest();
         DTO filter = request.getContent();
 

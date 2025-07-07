@@ -12,6 +12,8 @@ import {CSS_Support} from "@app/share/models/utility/Color";
 import {User} from "@app/share/models/User";
 import {UserCache} from "@app/share/cache/UserCache";
 import {LoaderComponent} from "@app/share/components/utils/loader/loader.component";
+import {UserService} from "@app/share/services/user.service";
+import {LoginResponseDTO} from "@app/share/models/utility/LoginResponseDTO";
 
 @Component({
     selector: 'app-root',
@@ -33,6 +35,7 @@ export class AppComponent {
 
     constructor(private overlayContainer: OverlayContainer,
                 private dialog: MatDialog,
+                private userService: UserService,
                 private translateService: TranslateService) {
 
 
@@ -54,17 +57,18 @@ export class AppComponent {
         })
 
         const browserLang = this.translateService.getBrowserLang();
-        if(browserLang){
+        if (browserLang) {
             this.translateService.setDefaultLang(browserLang);
-        }else{
+        } else {
             this.translateService.setDefaultLang("pt");
         }
 
         // Define a listener to browser theme changes, if user is null, match browser theme
         // #################################################################################################
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (_) => {
-            const theme: AngularTheme = Utils.isBrowserThemeDark() ? 'angular-dark' : 'angular-light'
-            GlobalsVars.ANGULAR_THEME_CONTROL.emit(theme)
+            if (!UserCache.isUserOk()) {
+                GlobalsVars.ANGULAR_THEME_CONTROL.emit(Utils.isBrowserThemeDark() ? 'angular-dark' : 'angular-light')
+            }
         });
 
         // Ensure the web page will always render with no scroll
@@ -73,7 +77,9 @@ export class AppComponent {
 
         // Define initial theme
         // #################################################################################################
-        GlobalsVars.ANGULAR_THEME_CONTROL.emit('angular-light')
+        const cache = UserCache.getInstance()
+        const theme = Utils.isBrowserThemeDark() ? 'angular-dark' : 'angular-light'
+        GlobalsVars.ANGULAR_THEME_CONTROL.emit(cache == undefined ? theme : cache.dark ? 'angular-dark' : 'angular-light')
 
         // Initializes the static class 'ModalSummoner'
         // #################################################################################################
@@ -81,8 +87,17 @@ export class AppComponent {
     }
 
     swipTheme() {
-        const novo = (this.activeThemeCssClass == 'angular-light') ? 'angular-dark' : 'angular-light'
-        GlobalsVars.ANGULAR_THEME_CONTROL.emit(novo)
+        this.userService.changeTheme().subscribe({
+            next: (res) => {
+                this.userService.httpService.hideLoader()
+                if (res.isOk(false)) {
+                    UserCache.changeTheme()
+                    const novo = (this.activeThemeCssClass == 'angular-light') ? 'angular-dark' : 'angular-light'
+                    GlobalsVars.ANGULAR_THEME_CONTROL.emit(novo)
+                }
+            },
+            error: _ => this.userService.httpService.hideLoader()
+        })
     }
 
     protected readonly UserCache = UserCache;
