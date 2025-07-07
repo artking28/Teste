@@ -38,6 +38,8 @@
    "city": "City",
    "state": "State",
 
+   "pleaseWait": "Please, wait",
+
    "already.user": "Already a user?",
    "im.not.user": "I'm not a user",
 

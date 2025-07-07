@@ -21,6 +21,8 @@ import {UserCache} from "@app/share/cache/UserCache";
 import {HttpService} from "@app/share/founding-files/http.service";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {Interceptor} from "@app/share/interceptor";
+import {LoaderService} from "@app/share/components/utils/loader/loader.service";
+import {AppComponent} from "@app/root/app.component";
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, '/i18n/', '.json');
@@ -67,6 +69,7 @@ export const appConfig: ApplicationConfig = {
         {provide: HttpService},
         {provide: HttpUtils},
         {provide: UserCache},
+        {provide: LoaderService},
         provideEnvironmentNgxMask(),
         provideAnimations(),
         provideHttpClient(),

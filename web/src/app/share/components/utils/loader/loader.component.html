@@ -1,0 +1,13 @@
+
+<div [class.loader-hidden]="!show">
+    <div class="loader-overlay" style="height: 100vh; position: fixed">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+
+        <div id="indicator" class="jgrowl-indicator" style="height: inherit">
+            <div class="spinner-container" style="display: grid;height: 0">
+                <mat-spinner style="align-self: center"></mat-spinner>
+                <h3 style="font-size: 20px; line-height: 25px; user-select: none;">{{ 'pleaseWait' | translate }}</h3>
+            </div>
+        </div>
+    </div>
+</div>

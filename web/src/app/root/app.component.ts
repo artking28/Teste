@@ -11,6 +11,7 @@ import Utils from "@app/share/utils";
 import {CSS_Support} from "@app/share/models/utility/Color";
 import {User} from "@app/share/models/User";
 import {UserCache} from "@app/share/cache/UserCache";
+import {LoaderComponent} from "@app/share/components/utils/loader/loader.component";
 
 @Component({
     selector: 'app-root',
@@ -18,7 +19,8 @@ import {UserCache} from "@app/share/cache/UserCache";
     imports: [
         StructsModule,
         RouterOutlet,
-        TranslatePipe
+        TranslatePipe,
+        LoaderComponent
     ],
     styleUrl: './app.component.scss'
 })

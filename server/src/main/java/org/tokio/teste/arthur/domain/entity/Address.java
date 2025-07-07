@@ -38,7 +38,7 @@ public class Address extends AbstractObject implements IAbstractEntity<Address, 
     @Column(name = "postalCode", nullable = false)
     private String postalCode;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
     private City city;
 

@@ -5,21 +5,22 @@ import Utils from "@app/share/utils";
 // import {LoaderService} from "@app/share/components/misc/loader/loader.service";
 import {RequestOptions} from "@app/share/models/utility/RequestOptions";
 import {UserCache} from "@app/share/cache/UserCache";
+import {LoaderService} from "@app/share/components/utils/loader/loader.service";
 
 
 @Injectable()
 export class HttpService {
 
-    public constructor(public httpClient: HttpClient/*, public loaderService: LoaderService*/) {
+    public constructor(public httpClient: HttpClient, public loaderService: LoaderService) {
 
     }
 
     public showLoader(): void {
-        // this.loaderService.show();
+        this.loaderService.show();
     }
 
     public hideLoader(): void {
-        // this.loaderService.hideLoader();
+        this.loaderService.hideLoader();
     }
 
     /**

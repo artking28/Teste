@@ -42,7 +42,7 @@
                     <label class="inputLabel">{{ 'city' | translate }}</label>
                     <div class="divInput">
 <!--                        <input formControlName="city" class="textInput" type="text" autocomplete="off">-->
-                        <mat-select [disabled]="this.form.controls['cityId'].disabled" formControlName="cityId" class="textInput">
+                        <mat-select formControlName="cityId" class="textInput">
                             <mat-option [value]="-1">{{ 'none' | translate }}</mat-option>
                             <ng-container *ngIf="this.selectedState > -1">
                                 <mat-option *ngFor="let city of this.states.get(this.selectedState)?.cities"

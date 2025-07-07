@@ -202,16 +202,7 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
                                     this.translatedWords.get("success")
                                 );
 
-                                if(!someObj.value.isValidID()) {
-                                    this.list()
-                                }
-
-                                if (pos > 0) {
-                                    let temp = structuredClone(this.data)
-                                    temp[pos] = someObj.value
-                                    this.data = temp
-                                    return
-                                }
+                                this.list()
                             }
                         },
                         error: (_) => {
@@ -229,9 +220,7 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
                             return
                         }
 
-                        let temp = structuredClone(this.data)
-                        temp.splice(n, 1)
-                        this.data = temp
+                        this.list()
                     }
                     break
                 case (Err):
