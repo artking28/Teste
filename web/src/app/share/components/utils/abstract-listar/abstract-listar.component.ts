@@ -1,8 +1,9 @@
-import {Directive, OnInit } from "@angular/core";
+import {AfterContentInit, AfterViewInit, Directive, inject, OnInit, ViewChild} from "@angular/core";
 import { BasePiece } from "@app/share/founding-files/base-piece";
 import { IRootService } from "@app/share/IService.service";
 import {Indexable} from "@app/share/models/utility/Indexable";
 import {firstValueFrom, Observable} from "rxjs";
+import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {GlobalsVars} from "@app/share/globalsVars";
 import Utils from "@app/share/utils";
 import {ModalObject, ModalSummoner} from "@app/share/modal-summoner";
@@ -11,6 +12,8 @@ import {DataUtil} from "@app/share/models/utility/DataUtil";
 import {Err, None, Some} from "@app/share/models/utility/Result";
 import Swal from "sweetalert2";
 import {Color} from "@app/share/models/utility/Color";
+import {MatSort, Sort} from "@angular/material/sort";
+import {MatTableDataSource} from "@angular/material/table";
 
 
 type Proc = (...args: any) => any;
@@ -46,9 +49,15 @@ export class Button {
 
 
 @Directive()
-export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece implements OnInit, IAbstractListarComponent<T> {
+export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece implements OnInit, AfterViewInit, IAbstractListarComponent<T> {
+
+    private _liveAnnouncer = inject(LiveAnnouncer);
+
+    @ViewChild(MatSort) sort: MatSort;
 
     data: T[] = []
+
+    dataSource: MatTableDataSource<T>;
 
     additionalButtonsVec: Button[]
 
@@ -83,7 +92,9 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
             "cancel"
         ]
         this.translatedWords = await Utils.bulkTranslate(originalWords, this.translateService);
+    }
 
+    ngAfterViewInit() {
         this.list()
     }
 
@@ -133,11 +144,28 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
             next: (res) => {
                 this.httpUtils.httpService.hideLoader();
                 if (res.isOk(true)) {
-                    this.data = res.result
+                    this.defineNewData(res.result)
                 }
 
             }, error: (_) => this.httpUtils.httpService.hideLoader()
         })
+    }
+
+    defineNewData(content: T[]) {
+        this.data = content
+        this.dataSource = new MatTableDataSource(this.data)
+        const inter = setInterval(() => {
+            if(this.sort) {
+                this.dataSource.sort = this.sort;
+                clearInterval(inter);
+            }
+        }, 200)
+        this.dataSource.sortingDataAccessor = (item, property) => {
+            switch (property) {
+                case 'createdAt': return new Date(item["createdAt"]);
+                default: return item[property];
+            }
+        };
     }
 
     edit(obj: T | null): void {
@@ -267,6 +295,19 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
         })
     }
 
+    /** Announce the change in sort state for assistive technology. */
+    announceSortChange(sortState) {
+        // This example uses English messages. If your application supports
+        // multiple language, you would internationalize these strings.
+        // Furthermore, you can customize the message to add additional
+        // details about the values being sorted.
+        if (sortState.direction) {
+            this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+        } else {
+            this._liveAnnouncer.announce('Sorting cleared');
+        }
+    }
+
     public get getTableColumnsAddons(): () => string[] {
         return () => {
             let columns = [...this.getTableColumns()];
@@ -277,6 +318,10 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
 
     public get getValue(): (item: any, key: string) => string {
         return (item: any, key: string) => {
+            const datePatterns = ["createdAt", "updatedAt", "deletedAt"];
+            if (datePatterns.includes(key)) {
+                return new Date(item[key]).toLocaleString('pt-BR');
+            }
             return item[key];
         }
     }

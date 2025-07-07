@@ -1,4 +1,8 @@
 
+.cdk-overlay-pane:has(.mat-mdc-select-panel) {
+    min-width: fit-content;
+}
+
 input[type="number"][hideButtons] {
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
@@ -38,31 +42,33 @@ div.inputGrid {
             font-size: 10pt;
         }
 
-        mat-select,
-        input.textInput {
-            background-color: var(--opaque-020_color);
-            caret-color: var(--opaque-090_color);
-            color: var(--opaque-090_color);
-            padding: 11px 10px;
-            border-radius: 7px;
-            transition: none;
-            z-index: 1;
-            border: 0;
+        div.divInput {
+            mat-select.textInput,
+            input.textInput {
+                background-color: var(--opaque-020_color);
+                caret-color: var(--opaque-090_color);
+                color: var(--opaque-090_color);
+                padding: 11px 10px;
+                border-radius: 7px;
+                transition: none;
+                z-index: 1;
+                border: 0;
 
-            &:focus {
-                background-color: var(--opaque-010_color);
-                caret-color: var(--extra1);
-                color: var(--extra2);
-            }
+                &:focus {
+                    background-color: var(--opaque-010_color);
+                    caret-color: var(--extra1);
+                    color: var(--extra2);
+                }
 
-            div.mat-mdc-select-arrow-wrapper {
-                height: unset;
-            }
+                div.mat-mdc-select-arrow-wrapper {
+                    height: unset;
+                }
 
-            .mat-mdc-select-trigger {
-                align-items: center;
-                display: flex;
-                height: 100%;
+                .mat-mdc-select-trigger {
+                    align-items: center;
+                    display: flex;
+                    height: 100%;
+                }
             }
         }
 
@@ -81,11 +87,11 @@ div.inputGrid {
         div.inputDivError {
             border-bottom-right-radius: 7px;
             border-bottom-left-radius: 7px;
-            width: -webkit-fill-available;
             background-color: var(--red);
             padding: 8px 10px 3px;
             white-space: nowrap;
             margin-top: -15px;
+            overflow: hidden;
             text-align: left;
             font-size: 9pt;
             color: white;

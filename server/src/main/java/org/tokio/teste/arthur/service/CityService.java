@@ -9,6 +9,8 @@ import org.tokio.teste.arthur.domain.exception.AccessDeniedRuleException;
 import org.tokio.teste.arthur.domain.exception.BusinessRuleException;
 import org.tokio.teste.arthur.repository.ICityRepository;
 
+import java.util.Optional;
+
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -19,6 +21,18 @@ public class CityService extends AbstractService<City, CityDTO> {
 
     public CityService(ICityRepository repository) {
         this.repository = repository;
+    }
+
+    public CityDTO findByCodigoIBGE(String codigoIBGE) {
+        Optional<City> city = repository.findByCodigoIBGEWithState(codigoIBGE);
+        var res = city.orElse(null);
+        if(res == null || city.get().getState() == null) {
+            return null;
+        };
+        var ret = res.toDTO();
+        ret.setState(city.get().getState());
+        res.getState().setCities(null);
+        return ret;
     }
 
     @Override

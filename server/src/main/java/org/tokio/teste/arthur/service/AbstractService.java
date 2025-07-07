@@ -41,7 +41,7 @@ public abstract class AbstractService<T extends IAbstractEntity<T, DTO>, DTO ext
             ret = this.getRepository().findAll(example);
         }
 
-        return ret.parallelStream().map(IAbstractEntity::toDTO).toList();
+        return ret.stream().map(IAbstractEntity::toDTO).toList();
     }
 
     @Transactional(rollbackFor = Exception.class)

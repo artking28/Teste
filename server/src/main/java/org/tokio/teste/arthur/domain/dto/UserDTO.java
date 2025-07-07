@@ -54,14 +54,17 @@ public class UserDTO extends AbstractObject implements IAbstractDTO<User> {
         ret.setKind(this.getKind());
         ret.setCreatedAt(this.getCreatedAt());
         ret.setLanguage(this.getLanguage());
-        ret.setChildren(this.getChildren().parallelStream().map(UserDTO::toEntity).toList());
-        ret.setAddresses(getAddresses().parallelStream().map(AddressDTO::toEntity).toList());;
         ret.setUuidCheck(getUuidCheck());
         ret.setCheckAccessControl(getCheckAccessControl());
-        if(this.getFather() != null) {
-            ret.setFather(this.getFather().toEntity());
+        if(this.children != null) {
+            ret.setChildren(this.children.stream().map(UserDTO::toEntity).toList());
         }
-
+        if(this.addresses != null) {
+            ret.setAddresses(this.addresses.stream().map(AddressDTO::toEntity).toList());
+        }
+        if(this.father != null) {
+            ret.setFather(this.father.toEntity());
+        }
         return ret;
     }
 

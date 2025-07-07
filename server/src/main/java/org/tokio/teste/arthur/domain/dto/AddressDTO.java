@@ -21,15 +21,13 @@ public class AddressDTO extends AbstractObject implements IAbstractDTO<Address> 
 
     private String street;
 
-    private String city;
-
-    private String state;
-
     private String district;
 
     private String postalCode;
 
     private Boolean active;
+
+    private CityDTO city;
 
     private UserDTO user;
 
@@ -41,13 +39,16 @@ public class AddressDTO extends AbstractObject implements IAbstractDTO<Address> 
         ret.setNumber(this.getNumber());
         ret.setAddition(this.getAddition());
         ret.setStreet(this.getStreet());
-        ret.setCity(this.getCity());
-        ret.setState(this.getState());
         ret.setDistrict(this.getDistrict());
         ret.setPostalCode(this.getPostalCode());
-        ret.setUser(this.getUser().toEntity());
         ret.setUuidCheck(getUuidCheck());
         ret.setCheckAccessControl(getCheckAccessControl());
+        if(this.getCity() != null) {
+            ret.setCity(this.getCity().toEntity());
+        }
+//        if(this.getUser() != null) {
+//            ret.setUser(this.getUser().toEntity());
+//        }
         return ret;
     }
 }

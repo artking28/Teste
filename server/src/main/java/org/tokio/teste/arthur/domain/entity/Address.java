@@ -32,19 +32,17 @@ public class Address extends AbstractObject implements IAbstractEntity<Address, 
     @Column(name = "street", nullable = false)
     private String street;
 
-    @Column(name = "city", nullable = false)
-    private String city;
-
-    @Column(name = "state", nullable = false)
-    private String state;
-
     @Column(name = "district", nullable = false)
     private String district;
 
     @Column(name = "postalCode", nullable = false)
     private String postalCode;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "city_id")
+    private City city;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", updatable = false)
     private User user;
 
@@ -55,15 +53,13 @@ public class Address extends AbstractObject implements IAbstractEntity<Address, 
         ret.setName(this.getName());
         ret.setNumber(this.getNumber());
         ret.setAddition(this.getAddition());
-        ret.setCity(this.getCity());
-        ret.setState(this.getState());
         ret.setStreet(this.getStreet());
         ret.setDistrict(this.getDistrict());
         ret.setPostalCode(this.getPostalCode());
         ret.setUuidCheck(getUuidCheck());
         ret.setCheckAccessControl(getCheckAccessControl());
-        if(ret.getUser() != null) {
-            ret.setUser(this.getUser().toDTO());
+        if(this.getCity() != null) {
+            ret.setCity(this.city.toDTO());
         }
         return ret;
     }

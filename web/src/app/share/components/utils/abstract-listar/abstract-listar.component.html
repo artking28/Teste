@@ -47,14 +47,14 @@
 
    <!--  CRUD for desktop devices  -->
    <div desktopOnly style="min-width: 350px">
-      <table mat-table [dataSource]="this.data">
+      <table mat-table [dataSource]="this.dataSource" matSort (matSortChange)="announceSortChange($event)">
 
          <!--  Each column  -->
          <ng-container *ngFor="let attr of this.getTableColumns()">
             <ng-container matColumnDef="{{ attr }}">
 
                <!--  Columns names  -->
-               <th mat-header-cell *matHeaderCellDef>
+               <th mat-header-cell *matHeaderCellDef mat-sort-header>
                   {{ attr | translate }}
                   <span mobileOnly>:</span>
                </th>

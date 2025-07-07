@@ -25,7 +25,7 @@ public class City extends AbstractObject implements IAbstractEntity<City, CityDT
     @Column(name = "codigoIBGE", nullable = false)
     private String codigoIBGE;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "state_id")
     private State state;
 
@@ -37,7 +37,6 @@ public class City extends AbstractObject implements IAbstractEntity<City, CityDT
         ret.setId(this.id);
         ret.setName(this.name);
         ret.setCodigoIBGE(this.codigoIBGE);
-        ret.setState(this.state);
         return ret;
     }
 

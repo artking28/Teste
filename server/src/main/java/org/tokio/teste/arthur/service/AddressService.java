@@ -2,14 +2,26 @@ package org.tokio.teste.arthur.service;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.ObjectNotFoundException;
+import org.springframework.data.domain.Example;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.tokio.teste.arthur.domain.dto.AddressDTO;
 import org.tokio.teste.arthur.domain.entity.Address;
+import org.tokio.teste.arthur.domain.entity.User;
 import org.tokio.teste.arthur.domain.exception.AccessDeniedRuleException;
 import org.tokio.teste.arthur.domain.exception.BusinessRuleException;
+import org.tokio.teste.arthur.domain.interfaces.IAbstractEntity;
 import org.tokio.teste.arthur.repository.IAddressRepository;
+import org.tokio.teste.arthur.repository.ICityRepository;
+import org.tokio.teste.arthur.repository.IStateRepository;
+import org.tokio.teste.arthur.repository.IUserRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.tokio.teste.arthur.domain.enums.ResponseCodeEnum.TYPE_ERROR;
 
@@ -21,17 +33,26 @@ public class AddressService extends AbstractService<Address, AddressDTO> {
 
     private final IAddressRepository repository;
 
+    private final ICityRepository cityRepository;
+
+    private final IUserRepository userRepository;
+
     private final AuthenticationManager authenticationManager;
 
-
     public AddressService(IAddressRepository repository,
+                          ICityRepository cityRepository,
+                          IUserRepository userRepository,
                           AuthenticationManager authenticationManager) {
         this.repository = repository;
+        this.cityRepository = cityRepository;
+        this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
     }
 
     @Override
-    protected void beforeCreate(Address entity) throws BusinessRuleException, AccessDeniedRuleException {
+    protected void beforeCreate(Address entity) throws AccessDeniedRuleException {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        this.userRepository.findByNickname(userDetails.getUsername()).ifPresent(user -> entity.setUser(new User(user.getId())));
     }
 
     @Override
@@ -39,6 +60,9 @@ public class AddressService extends AbstractService<Address, AddressDTO> {
     }
 
     public void commonValidations(Address address) throws BusinessRuleException {
+        if(address.getCity() == null || address.getCity().getId() == null) {
+            throw new BusinessRuleException("address.error.city.required", TYPE_ERROR);
+        }
         if (!StringUtils.hasText(address.getStreet())) {
             throw new BusinessRuleException("address.error.street.required", TYPE_ERROR);
         }

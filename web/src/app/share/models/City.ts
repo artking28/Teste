@@ -5,6 +5,7 @@ import {State} from "@app/share/models/State";
 
 export class City extends IndexableID<City> {
     public name: string;
+    public codigoIBGE: string;
     public state: State;
 
     public static adapt(object: City): City {

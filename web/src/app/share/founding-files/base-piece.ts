@@ -10,7 +10,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {HttpUtils} from "@app/share/founding-files/http.utils";
 import {GlobalsVars} from "@app/share/globalsVars";
 import {UserCache} from "@app/share/cache/UserCache";
-import {Indexable} from "@app/share/models/utility/Indexable";
+import {Indexable, IndexableID, IndexableUUID} from "@app/share/models/utility/Indexable";
 import {DataUtil} from "@app/share/models/utility/DataUtil";
 import {None, Result, Some} from "@app/share/models/utility/Result";
 import {Color} from "@app/share/models/utility/Color";
@@ -126,10 +126,12 @@ export abstract class ModalEditor<T extends Indexable<T>> extends Modal<DataUtil
     constructor() {
         super();
 
-        // console.log(this.data)
-        if(this.data && this.data.start && this.data.start.getId() != null) {
-            this.isEditing = true
+        if(this.data && this.data.start) {
             this.object = clone(this.data.start)
+            if((this.data.start instanceof IndexableID || this.data.start instanceof  IndexableUUID) && !this.data.start.id) {
+                return
+            }
+            this.isEditing = true
         }
     }
 

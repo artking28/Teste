@@ -6,13 +6,14 @@ import {UserService} from "@app/share/services/user.service";
 import {ModalObject} from "@app/share/modal-summoner";
 import {UserEditorComponent} from "@app/share/components/editors/userEditor/userEditor.component";
 import {StructsModule} from "@app/share/components/structs.module";
+import {MatSort, MatSortHeader} from "@angular/material/sort";
 
 
 @Component({
     selector: 'user-component',
     templateUrl: '../../share/components/utils/abstract-listar/abstract-listar.component.html',
     styleUrls: ['users.component.scss', '../../share/components/utils/abstract-listar/abstract-listar.component.scss'],
-    imports: [StructsModule,]
+    imports: [StructsModule, MatSortHeader, MatSort,]
 })
 export class UsersComponent extends AbstractListarComponent<User> {
 
@@ -22,7 +23,7 @@ export class UsersComponent extends AbstractListarComponent<User> {
     }
 
     public override getTableColumns(): string[] {
-        return ['id', 'name', 'email', 'nickname']
+        return ['id', 'name', 'email', 'createdAt']
     }
 
     public beforeEdit(obj: User): User {

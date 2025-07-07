@@ -79,7 +79,7 @@ export abstract class IRootService<T extends Indexable<T>> extends Service {
     save(newObj: T): Observable<Response> {
         let one = clone(newObj)
         this.prepareSave(one)
-        let obs: Observable<Response> = this.httpService.post<Response>("/proxy" + this.getServiceUrl() + '/', one);
+        let obs: Observable<Response> = this.httpService.post<Response>("/proxy" + this.getServiceUrl() + '/save', one);
         return obs.pipe(map((data) =>
             Response.adapt(data)
         ))

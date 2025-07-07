@@ -36,6 +36,7 @@
    "district": "District",
    "addition": "Addition",
    "city": "City",
+   "state": "State",
 
    "already.user": "Already a user?",
    "im.not.user": "I'm not a user",

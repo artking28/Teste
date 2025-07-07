@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.tokio.teste.arthur.domain.dto.AddressDTO;
 import org.tokio.teste.arthur.domain.entity.Address;
+import org.tokio.teste.arthur.domain.entity.City;
+import org.tokio.teste.arthur.domain.noData.GenericResponse;
 import org.tokio.teste.arthur.service.AddressService;
+import org.tokio.teste.arthur.service.CityService;
 import org.tokio.teste.arthur.service.IService;
 import org.tokio.teste.arthur.utils.ViaCepResponse;
 
@@ -26,10 +29,13 @@ public class AddressController extends AbstractController<Address, AddressDTO> {
 
     private final AddressService addressService;
 
+    private final CityService cityService;
+
     private final WebClient.Builder webClientBuilder;
 
-    public AddressController(AddressService addressService, WebClient.Builder webClientBuilder) {
+    public AddressController(AddressService addressService, CityService cityService, WebClient.Builder webClientBuilder) {
         this.addressService = addressService;
+        this.cityService = cityService;
         this.webClientBuilder = webClientBuilder;
     }
 
@@ -39,7 +45,7 @@ public class AddressController extends AbstractController<Address, AddressDTO> {
     }
 
     @GetMapping("/cep/{cep}")
-    public ResponseEntity<AddressDTO> getAddressFromCep(@PathVariable String cep) {
+    public ResponseEntity<GenericResponse> getAddressFromCep(@PathVariable String cep) {
 
         ViaCepResponse response = webClientBuilder.build()
                 .get().uri(String.format("https://viacep.com.br/ws/%s/json/", cep))
@@ -54,9 +60,8 @@ public class AddressController extends AbstractController<Address, AddressDTO> {
         AddressDTO dto = new AddressDTO();
         dto.setStreet(response.getLogradouro());
         dto.setDistrict(response.getBairro());
-        dto.setState(response.getUf());
-        dto.setCity(response.getLocalidade());
+        dto.setCity(this.cityService.findByCodigoIBGE(response.getIbge()));
         dto.setPostalCode(response.getCep());
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(new GenericResponse(dto));
     }
 }

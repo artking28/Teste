@@ -4,31 +4,49 @@
     <div class="modal-content">
         <form [formGroup]="this.form">
             <div class="inputGrid">
-                <div class="inputBox-100">
+                <div class="inputBox-66">
                     <label class="inputLabel">{{ 'name' | translate }}</label>
                     <div class="divInput"><input formControlName="name" class="textInput" type="text" autocomplete="off"></div>
                     <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'name')">
                         {{ Utils.getFieldError(form, translateService, 'name') }}.
                     </div>
                 </div>
+                <div class="inputBox-33">
+                    <label class="inputLabel">{{ 'postalCode' | translate }}</label>
+                    <div class="divInput"><input formControlName="postalCode" maxlength="9" mask="00000-000" placeholder="00000-000"
+                                                 class="textInput" type="text" autocomplete="off"></div>
+                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'postalCode')">
+                        {{ Utils.getFieldError(form, translateService, 'postalCode') }}.
+                    </div>
+                </div>
             </div>
             <div class="inputGrid">
                 <div class="inputBox-33">
-                    <label class="inputLabel">{{ 'postalCode' | translate }}</label>
-                    <div class="divInput"><input formControlName="postalCode" class="textInput" type="text" autocomplete="off"></div>
-                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'postalCode')">
-                        {{ Utils.getFieldError(form, translateService, 'postalCode') }}.
+                    <label class="inputLabel">{{ 'state' | translate }}</label>
+                    <div class="divInput">
+                        <!--                        <input formControlName="city" class="textInput" type="text" autocomplete="off">-->
+                        <mat-select (selectionChange)="this.selectedState = $event.value"
+                                formControlName="stateId" class="textInput">
+                            <mat-option [value]="-1">{{ 'none' | translate }}</mat-option>
+                            <ng-container *ngIf="this.states.size > 0">
+                                <mat-option *ngFor="let state of Array.from(this.states.values())"
+                                            [value]="state.id">{{state.acronym}}</mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </div>
+                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'city')">
+                        {{ Utils.getFieldError(form, translateService, 'city') }}.
                     </div>
                 </div>
                 <div class="inputBox-33">
                     <label class="inputLabel">{{ 'city' | translate }}</label>
                     <div class="divInput">
 <!--                        <input formControlName="city" class="textInput" type="text" autocomplete="off">-->
-                        <mat-select formControlName="cityId" class="textInput">
-                            <mat-option [value]="0">{{ 'none' | translate }}</mat-option>
-                            <ng-container *ngIf="this.cities">
-                                <mat-option *ngFor="let c of this.cities"
-                                        [value]="null">{{c.name}}</mat-option>
+                        <mat-select [disabled]="this.form.controls['cityId'].disabled" formControlName="cityId" class="textInput">
+                            <mat-option [value]="-1">{{ 'none' | translate }}</mat-option>
+                            <ng-container *ngIf="this.selectedState > -1">
+                                <mat-option *ngFor="let city of this.states.get(this.selectedState)?.cities"
+                                        [value]="city.id">{{city.name}}</mat-option>
                             </ng-container>
                         </mat-select>
                     </div>

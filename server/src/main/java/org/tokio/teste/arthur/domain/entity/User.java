@@ -57,6 +57,13 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Address> addresses  = new ArrayList<>();
 
+    public User() {
+    }
+
+    public User(Long id) {
+        this.id = id;
+    }
+
     public UserDTO toDTO() {
         UserDTO ret = new UserDTO();
         ret.setId(this.id);
@@ -69,10 +76,14 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
         ret.setEmail(this.getEmail());
         ret.setPassword(this.getPassword());
         ret.setLanguage(this.getLanguage());
-        ret.setChildren(this.getChildren().parallelStream().map(User::toDTO).toList());
-        ret.setAddresses(this.getAddresses().parallelStream().map(Address::toDTO).toList());;
         ret.setUuidCheck(getUuidCheck());
         ret.setCheckAccessControl(getCheckAccessControl());
+        if(this.children != null) {
+            ret.setChildren(this.children.stream().map(User::toDTO).toList());
+        }
+        if(this.addresses != null) {
+            ret.setAddresses(this.addresses.stream().map(Address::toDTO).toList());
+        }
         if(this.getFather() != null) {
             ret.setFather(this.getFather().toDTO());
         }
