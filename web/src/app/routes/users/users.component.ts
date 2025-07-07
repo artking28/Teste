@@ -8,6 +8,8 @@ import {UserEditorComponent} from "@app/share/components/editors/userEditor/user
 import {StructsModule} from "@app/share/components/structs.module";
 import {MatSort, MatSortHeader} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
+import {Observable} from "rxjs";
+import {GenericResponse} from "@app/share/models/generic-response";
 
 
 @Component({
@@ -21,6 +23,10 @@ export class UsersComponent extends AbstractListarComponent<User> {
     constructor(private userService: UserService) {//398a40
         super(User, userService);
         GlobalsVars.PAGE_TITLE_CONTROL.emit("my.users")
+    }
+
+    public override getDefaultListObservable(): Observable<GenericResponse<User[]>> {
+        return this.userService.findChildren();
     }
 
     public override getTableColumns(): string[] {

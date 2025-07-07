@@ -15,6 +15,9 @@ import org.tokio.teste.arthur.domain.exception.BusinessRuleException;
 import org.tokio.teste.arthur.repository.IUserRepository;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.tokio.teste.arthur.domain.enums.ResponseCodeEnum.TYPE_ERROR;
 
 
@@ -57,6 +60,12 @@ public class UserService extends AbstractService<User, UserDTO> {
                 .orElseThrow(() -> new BadCredentialsException("auth.bad_credentials"))
                 .toDTO();
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public List<UserDTO> findChildren(String nickname) {
+        var res = this.repository.findByNickname(nickname);
+		return res.map((User user) -> user.getChildren().stream().map(User::toDTO).toList()).orElseGet(ArrayList::new);
+	}
 
     @Transactional(rollbackFor = Exception.class)
     public Boolean existsByNickname(String nickname, String email) {

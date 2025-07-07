@@ -6,6 +6,7 @@ import org.tokio.teste.arthur.domain.exception.AccessDeniedRuleException;
 import org.tokio.teste.arthur.domain.exception.BusinessRuleException;
 import org.tokio.teste.arthur.domain.interfaces.IAbstractDTO;
 import org.tokio.teste.arthur.domain.interfaces.IAbstractEntity;
+import org.tokio.teste.arthur.utils.FilteredPageRequest;
 
 import java.util.List;
 
@@ -19,5 +20,5 @@ public interface IService<T extends IAbstractEntity<T, DTO>, DTO extends IAbstra
 
     DTO save(DTO dto) throws BusinessRuleException, AccessDeniedRuleException;
 
-    List<DTO> select(DTO dto) throws BusinessRuleException, ObjectNotFoundException;
+    List<DTO> select(FilteredPageRequest<DTO> dto) throws BusinessRuleException, ObjectNotFoundException;
 }

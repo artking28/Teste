@@ -40,7 +40,7 @@ export class LoaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnInit(): void {
         this.subscription = this.loaderService.loaderState.subscribe((state: LoaderState) => {
-            console.log(state.show)
+            // console.log(state.show)
             this.show = state.show;
 
             this.loadingTopPosition = window.scrollY;

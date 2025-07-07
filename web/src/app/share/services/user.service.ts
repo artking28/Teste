@@ -1,6 +1,9 @@
 import {Injectable} from "@angular/core";
 import {IRootService} from "@app/share/IService.service";
 import {User} from "@app/share/models/User";
+import {GenericResponse} from "@app/share/models/generic-response";
+import {Address} from "@app/share/models/Address";
+import {map} from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root'
@@ -21,5 +24,10 @@ export class UserService extends IRootService<User> {
 
     prepareSave(newObj: User): User {
         return newObj
+    }
+
+    findChildren() {
+        return this.httpService.get<GenericResponse<User[]>>(`/proxy${this.getServiceUrl()}/findChildren`)
+            .pipe(map(response => GenericResponse.adapt(response)))
     }
 }

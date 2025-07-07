@@ -10,6 +10,7 @@ import org.tokio.teste.arthur.domain.interfaces.IAbstractDTO;
 import org.tokio.teste.arthur.domain.interfaces.IAbstractEntity;
 import org.tokio.teste.arthur.domain.noData.GenericResponse;
 import org.tokio.teste.arthur.service.IService;
+import org.tokio.teste.arthur.utils.FilteredPageRequest;
 
 import static org.tokio.teste.arthur.domain.enums.ResponseCodeEnum.TYPE_ERROR;
 
@@ -36,9 +37,9 @@ public abstract class AbstractController<T extends IAbstractEntity<T, DTO>, DTO 
     }
 
     @PostMapping("select")
-    public ResponseEntity<GenericResponse> list(@Nullable @RequestBody DTO dto) throws BusinessRuleException {
-        var ret = getService().select(dto);
-        return ResponseEntity.ok(new GenericResponse(ret));
+    public ResponseEntity<GenericResponse> list(@Nullable @RequestBody FilteredPageRequest<DTO> request) throws BusinessRuleException {
+        var result = getService().select(request);
+        return ResponseEntity.ok(new GenericResponse(result));
     }
 
     @PostMapping("save")

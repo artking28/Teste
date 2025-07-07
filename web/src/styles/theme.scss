@@ -47,11 +47,18 @@
         padding: 8px;
     }
 
-    mat-option {
-        border-radius: 6px;
+    input,
+    mat-select {
+        //transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        //border: 1px solid #d1d5db;
+        box-sizing: border-box;
+        //border-radius: 8px;
+        //font-size: 16px;
+        //padding: 12px;
+        width: 100%;
     }
 
-    .mdc-layout-grid__inner {
-        grid-gap: 5px;
+    mat-option {
+        border-radius: 6px;
     }
 }

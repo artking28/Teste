@@ -7,6 +7,7 @@ import {RequestOptions} from "@app/share/models/utility/RequestOptions";
 import {HttpClient} from "@angular/common/http";
 import {Response} from "@app/share/models/utility/Response";
 import {HttpService} from "@app/share/founding-files/http.service";
+import {FilteredPageRequest} from "@app/share/models/utility/FilteredPageRequest";
 
 @Injectable({
     providedIn: 'root'
@@ -53,16 +54,16 @@ export abstract class IRootService<T extends Indexable<T>> extends Service {
         ))
     }
 
-    list(/*fltr: FilterObject<T> | null*/): Observable<Response<T[]>> {
+    list(fltr: FilteredPageRequest<T> | null): Observable<Response<T[]>> {
         let pub: string = this.isListPublic() ? "/api" : ""
-        let obs: Observable<Response> = this.httpService.post<Response>('/proxy' + this.getServiceUrl() + pub + '/select', null)
+        let obs: Observable<Response> = this.httpService.post<Response>('/proxy' + this.getServiceUrl() + pub + '/select', fltr)
         return obs.pipe(map((data) =>
             Response.adapt(data)
         ))
     }
 
-    getFirst(/*fltr: FilterObject<T> | null*/): Observable<Response<T>> {
-        return this.list(/*fltr*/).pipe(map((data: Response<T[]>): Response<T> => {
+    getFirst(fltr: FilteredPageRequest<T> | null): Observable<Response<T>> {
+        return this.list(fltr).pipe(map((data: Response<T[]>): Response<T> => {
             let res = Response.adapt<T[]>(data)
             let newRes = new Response<T>()
             newRes.messages = res.messages

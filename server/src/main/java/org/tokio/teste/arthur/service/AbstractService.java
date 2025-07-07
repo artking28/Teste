@@ -1,7 +1,7 @@
 package org.tokio.teste.arthur.service;
 
 import org.hibernate.ObjectNotFoundException;
-import org.springframework.data.domain.Example;
+import org.springframework.data.domain.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +12,7 @@ import org.tokio.teste.arthur.domain.exception.BusinessRuleException;
 import org.tokio.teste.arthur.domain.interfaces.IAbstractDTO;
 import org.tokio.teste.arthur.domain.interfaces.IAbstractEntity;
 import org.tokio.teste.arthur.domain.noData.JsonMessage;
+import org.tokio.teste.arthur.utils.FilteredPageRequest;
 
 import java.util.List;
 
@@ -42,6 +43,21 @@ public abstract class AbstractService<T extends IAbstractEntity<T, DTO>, DTO ext
         }
 
         return ret.stream().map(IAbstractEntity::toDTO).toList();
+    }
+
+    public List<DTO> select(FilteredPageRequest<DTO> request) throws BusinessRuleException {
+        var pageable = request.toSpringPageRequest();
+        DTO filter = request.getContent();
+
+        Page<T> page;
+        if (filter == null) {
+            page = this.getRepository().findAll(pageable);
+        } else {
+            Example<T> example = Example.of(filter.toEntity());
+            page = this.getRepository().findAll(example, pageable);
+        }
+
+        return page.getContent().stream().map(IAbstractEntity::toDTO).toList();
     }
 
     @Transactional(rollbackFor = Exception.class)
