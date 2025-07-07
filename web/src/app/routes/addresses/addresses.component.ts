@@ -10,13 +10,14 @@ import {UserService} from "@app/share/services/user.service";
 import {AddressService} from "@app/share/services/address.service";
 import {AddressEditorComponent} from "@app/share/components/editors/addressEditor/addressEditor.component";
 import {StructsModule} from "@app/share/components/structs.module";
+import {MatSort, MatSortHeader} from "@angular/material/sort";
 
 
 @Component({
     selector: 'addresses-component',
     templateUrl: '../../share/components/utils/abstract-listar/abstract-listar.component.html',
     styleUrls: ['users.component.scss', '../../share/components/utils/abstract-listar/abstract-listar.component.scss'],
-    imports: [StructsModule,]
+    imports: [StructsModule, MatSortHeader, MatSort,]
 })
 export class AddressesComponent extends AbstractListarComponent<Address> {
 
