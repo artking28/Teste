@@ -12,6 +12,7 @@ import {RegisterDialogComponent} from "@app/share/components/register-dialog/reg
 import {AddressEditorComponent} from "@app/share/components/editors/addressEditor/addressEditor.component";
 import {LoaderService} from "@app/share/components/utils/loader/loader.service";
 import {LoaderComponent} from "@app/share/components/utils/loader/loader.component";
+import {RouterLink} from "@angular/router";
 
 const selectors: any[] = [
     // GeneralSelector
@@ -47,6 +48,7 @@ const all: any[] = [
         TranslateModule,
         MatSlideToggle,
         FormsModule,
+        RouterLink,
     ],
     providers: [
         // {provide: LoaderService}

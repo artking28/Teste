@@ -1,3 +1,4 @@
+@import "src/styles.scss";
 
 nav#sidebar {
     height: 100%;
@@ -19,7 +20,7 @@ nav#sidebar {
         display: grid;
         gap: 15px;
 
-        li {
+        a li {
             align-items: center;
             border-radius: 8px;
             padding: 7px 15px;
@@ -27,6 +28,22 @@ nav#sidebar {
             display: flex;
             gap: 10px;
 
+            @extend .pointCursor;
+
+            label {
+                font-family: redditmono, serif;
+                letter-spacing: 1.5px;
+                font-weight: 300;
+                font-size: 13pt;
+            }
+        }
+
+        a.disabled:hover,
+        a.disabled:hover inner-icon {
+            @extend .blockCursor;
+        }
+
+        a:not(.disabled) li {
             &.active {
                 background: var(--highlight-100);
                 color: white;
@@ -35,13 +52,6 @@ nav#sidebar {
             &:hover:not(.active) {
                 background: var(--highlight-030);
                 color: white;
-            }
-
-            label {
-                font-family: redditmono, serif;
-                letter-spacing: 1.5px;
-                font-weight: 300;
-                font-size: 13pt;
             }
         }
     }

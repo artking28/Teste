@@ -76,7 +76,7 @@ export class HttpService {
             'contentType': 'application/json',
             'timeout': `${Utils.minutes(10)}`,
         }
-        if(UserCache.isUserOk()) {
+        if(UserCache.getInstance().ok) {
             l["Authorization"] = 'Bearer ' + UserCache.getInstance()!.token;
         }
         options.headers.keys().forEach((key) => {

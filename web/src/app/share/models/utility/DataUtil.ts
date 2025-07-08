@@ -3,9 +3,10 @@ export class DataUtil<T> {
     start?: T
     adds: Map<string, any>
     returns: Map<string, any> = new Map()
+    forceEditMode: boolean = false
 
     constructor(start: T | null, adds: Map<string, any> = new Map()) {
-        if (start) {
+        if(start) {
             this.start = start;
         }
         this.adds = adds

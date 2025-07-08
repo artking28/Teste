@@ -101,10 +101,14 @@ app-root {
 a {
     text-decoration: none;
     color: var(--highlight);
-}
 
-a:not([link]) {
-    color: unset;
+    &:not([link]) {
+        color: unset;
+    }
+
+    &.disabled {
+        color: var(--extra2);
+    }
 }
 
 h1, h2, h3, h4, h5, h6, label {
@@ -140,6 +144,15 @@ h1, h2, h3, h4, h5, h6, label {
 
     * {
         cursor: pointer;
+    }
+}
+
+[blockCursor],
+.blockCursor {
+    cursor: not-allowed;
+
+    * {
+        cursor: not-allowed;
     }
 }
 

@@ -5,6 +5,8 @@ import {firstValueFrom} from "rxjs";
 import {GlobalsVars} from "@app/share/globalsVars";
 import {Color} from "@app/share/models/utility/Color";
 import {ToastrService} from "ngx-toastr";
+import {LoginResponseDTO} from "@app/share/models/utility/LoginResponseDTO";
+import {UserCache} from "@app/share/cache/UserCache";
 
 export default class Utils {
 
@@ -167,6 +169,11 @@ export default class Utils {
             background: Color.WHITE.toString(),
         })
         return result.isConfirmed
+    }
+
+    public static isVisible(...permissionsRequired: string[]): boolean {
+        let loginAtual: LoginResponseDTO = UserCache.getInstance()
+        return !permissionsRequired || permissionsRequired.length <= 0 || (loginAtual.ok && loginAtual.kind == 'admin');
     }
 
     static inspectFormErrors(form: UntypedFormGroup) {

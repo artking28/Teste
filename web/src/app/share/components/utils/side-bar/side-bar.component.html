@@ -1,28 +1,34 @@
 
 
 <nav desktopOnly id="sidebar">
-   <a href="#"><h1 desktopOnly>TokioTeste</h1></a>
+   <a href="#" title="reload"><h1 desktopOnly>TokioTeste</h1></a>
    <ul>
-       <a href="/profile">
-           <li pointCursor [ngClass]="{'active': this.isThisActive('profile')}">
+       <a pointCursor>
+           <li (click)="this.editSelf()">
                <inner-icon origin="google" identifier="account_circle"></inner-icon>
                <label>{{ "my.profile" | translate }}</label>
            </li>
        </a>
-       <a href="/users">
-           <li pointCursor [ngClass]="{'active': this.isThisActive('users')}">
+       <a [routerLink]="Utils.isVisible('admin') ? '/users' : null"
+          [class.disabled]="!Utils.isVisible('admin')"
+          [title]="!Utils.isVisible('admin') ? 'Você não pode acessar este módulo pois não é um administrador.' : ''"
+          (click)="!Utils.isVisible('admin') && $event.preventDefault()">
+           <li>
                <inner-icon origin="google" identifier="group"></inner-icon>
                <label>{{ "my.users" | translate }}</label>
+               <inner-icon origin="google" identifier="lock"></inner-icon>
            </li>
        </a>
-       <a href="/addresses">
-           <li pointCursor [ngClass]="{'active': this.isThisActive('addresses')}">
+       <a [routerLink]="Utils.isVisible() ? '/addresses' : null"
+          [class.disabled]="!Utils.isVisible()"
+          (click)="!Utils.isVisible() && $event.preventDefault()">
+           <li>
                <inner-icon origin="google" identifier="distance"></inner-icon>
                <label>{{ "my.addresses" | translate }}</label>
            </li>
        </a>
-       <a href="#">
-         <li id="logout" pointCursor (click)="UserCache.signOutCache()">
+       <a pointCursor href="#">
+         <li id="logout" (click)="UserCache.signOutCache()">
             <inner-icon origin="google" identifier="chip_extraction"></inner-icon>
             <label>Logout</label>
          </li>

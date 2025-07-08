@@ -3,11 +3,11 @@
 <section id="root">
 
    <!-- Menu bar -->
-   <side-bar z3 *ngIf="UserCache.isUserOk()"></side-bar>
+   <side-bar z3 *ngIf="UserCache.getInstance().ok"></side-bar>
 
    <section>
 
-      <div id="upperBar" *ngIf="UserCache.isUserOk()">
+      <div id="upperBar" *ngIf="UserCache.getInstance().ok">
          <h1>{{ this.title | translate }}</h1>
          <section id="rightIcons">
             <inner-icon pointCursor origin="google" identifier="routine"

@@ -64,14 +64,26 @@ export class Interceptor implements HttpInterceptor {
                             UserCache.signOutCache()
                             return
                         }
+                        if(!error.error) {
+                            this.toastrService.error(error.message, "Unknown error")
+                            return
+                        }
                         Utils.showMessages(error.error.messages, this.toastrService);
                         break;
                     case 409:
                         this.toastrService.clear();
+                        if(!error.error) {
+                            this.toastrService.error(error.message, "Unknown error")
+                            return
+                        }
                         Utils.showMessages(error.error.messages, this.toastrService);
                         break;
                     case 500:
                         this.toastrService.clear();
+                        if(!error.error) {
+                            this.toastrService.error(error.message, "Unknown error")
+                            return
+                        }
                         Utils.showMessages(error.error.messages, this.toastrService);
                         break;
                     case 503:

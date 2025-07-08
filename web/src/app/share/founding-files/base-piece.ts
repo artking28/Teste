@@ -128,7 +128,7 @@ export abstract class ModalEditor<T extends Indexable<T>> extends Modal<DataUtil
 
         if(this.data && this.data.start) {
             this.object = clone(this.data.start)
-            if((this.data.start instanceof IndexableID || this.data.start instanceof  IndexableUUID) && !this.data.start.id) {
+            if((this.data.start instanceof IndexableID || this.data.start instanceof  IndexableUUID) && !this.data.start.isValidID() && !this.data.forceEditMode) {
                 return
             }
             this.isEditing = true

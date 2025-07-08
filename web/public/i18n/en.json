@@ -47,7 +47,7 @@
    "no": "No",
    "none": "None",
 
-   "login.invalid_credentials": "Login failed. Please try again.",
+   "auth.invalid_credentials": "Login failed. Please try again.",
 
    "success": "Success",
    "success.entity.saved": "Successfully saved",

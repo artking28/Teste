@@ -18,16 +18,12 @@ export class UserCache {
         location.reload()
     }
 
-    static getInstance(): LoginResponseDTO | undefined {
+    static getInstance(): LoginResponseDTO {
         const cache = localStorage.getItem(this.USER_INFO)
         if(cache) {
-            return Object.assign(JSON.parse(cache), LoginResponseDTO);
+            return Object.assign(new LoginResponseDTO(), JSON.parse(cache));
         }
-        return undefined
-    }
-
-    static isUserOk(): boolean {
-        return this.getInstance() != undefined
+        return new LoginResponseDTO()
     }
 
     static changeTheme() {

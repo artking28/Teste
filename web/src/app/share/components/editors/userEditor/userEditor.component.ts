@@ -18,6 +18,9 @@ export class UserEditorComponent extends ModalEditor<User> {
         this.form = this.object.toFormGroup()
 
         if (this.isEditing) {
+            this.form.removeControl("password")
+            this.form.removeControl("confirm")
+            this.form.removeControl("kind")
             return
         }
 

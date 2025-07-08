@@ -66,7 +66,7 @@ export class AppComponent {
         // Define a listener to browser theme changes, if user is null, match browser theme
         // #################################################################################################
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (_) => {
-            if (!UserCache.isUserOk()) {
+            if (!UserCache.getInstance().ok) {
                 GlobalsVars.ANGULAR_THEME_CONTROL.emit(Utils.isBrowserThemeDark() ? 'angular-dark' : 'angular-light')
             }
         });

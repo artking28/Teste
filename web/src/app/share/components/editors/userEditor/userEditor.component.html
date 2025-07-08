@@ -27,28 +27,30 @@
                     </div>
                 </div>
             </div>
-            <div class="inputGrid" *ngIf="!this.isEditing">
-                <div class="inputBox-50">
-                    <label class="inputLabel">{{ 'password' | translate }}</label>
-                    <div class="divInput"><input formControlName="password" class="textInput" type="password" autocomplete="off"></div>
-                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'password')">
-                        {{ Utils.getFieldError(form, translateService, 'password') }}.
+            <ng-container  *ngIf="!this.isEditing">
+                <div class="inputGrid">
+                    <div class="inputBox-50">
+                        <label class="inputLabel">{{ 'password' | translate }}</label>
+                        <div class="divInput"><input formControlName="password" class="textInput" type="password" autocomplete="off"></div>
+                        <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'password')">
+                            {{ Utils.getFieldError(form, translateService, 'password') }}.
+                        </div>
+                    </div>
+                    <div class="inputBox-50">
+                        <label class="inputLabel">{{ 'confirm' | translate }}</label>
+                        <div class="divInput"><input formControlName="confirm" class="textInput" type="password" autocomplete="off"></div>
+                        <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'confirm')">
+                            {{ Utils.getFieldError(form, translateService, 'confirm') }}.
+                        </div>
                     </div>
                 </div>
-                <div class="inputBox-50">
-                    <label class="inputLabel">{{ 'confirm' | translate }}</label>
-                    <div class="divInput"><input formControlName="confirm" class="textInput" type="password" autocomplete="off"></div>
-                    <div class="inputDivError" *ngIf="Utils.getFieldError(form, translateService, 'confirm')">
-                        {{ Utils.getFieldError(form, translateService, 'confirm') }}.
-                    </div>
+                <div>
+                    <mat-button-toggle-group [multiple]=false formControlName="kind">
+                        <mat-button-toggle [value]="'admin'">{{ 'admin' | translate }}</mat-button-toggle>
+                        <mat-button-toggle [value]="'member'">{{ 'member' | translate }}</mat-button-toggle>
+                    </mat-button-toggle-group>
                 </div>
-            </div>
-            <div>
-                <mat-button-toggle-group [multiple]=false formControlName="kind">
-                    <mat-button-toggle [value]="'admin'">{{ 'admin' | translate }}</mat-button-toggle>
-                    <mat-button-toggle [value]="'member'">{{ 'member' | translate }}</mat-button-toggle>
-                </mat-button-toggle-group>
-            </div>
+            </ng-container>
         </form>
     </div>
     <div class="button-group">

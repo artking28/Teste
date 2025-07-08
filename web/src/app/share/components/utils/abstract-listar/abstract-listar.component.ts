@@ -295,9 +295,9 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
         // Furthermore, you can customize the message to add additional
         // details about the values being sorted.
         if (sortState.direction) {
-            this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+            console.log(`Sorted ${sortState.direction} ending`);
         } else {
-            this._liveAnnouncer.announce('Sorting cleared');
+            console.log('Sorting cleared')
         }
     }
 

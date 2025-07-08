@@ -32,6 +32,11 @@ export class UserService extends IRootService<User> {
             .pipe(map(response => GenericResponse.adapt(response)))
     }
 
+    quickUpdate(user: User) {
+        return this.httpService.post<GenericResponse<string>>(`/proxy${this.getServiceUrl()}/quickUpdate`, user)
+            .pipe(map(response => GenericResponse.adapt(response)))
+    }
+
     changeTheme() {
         return this.httpService.get<GenericResponse<User[]>>(`/proxy${this.getServiceUrl()}/changeTheme`)
             .pipe(map(response => GenericResponse.adapt(response)))
