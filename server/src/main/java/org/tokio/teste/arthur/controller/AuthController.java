@@ -34,16 +34,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<GenericResponse> login(@RequestBody LoginRequestDTO loginRequest) throws BusinessRuleException {
+    public ResponseEntity<GenericResponse> login(@RequestBody LoginRequestDTO loginRequest) throws BadCredentialsException {
 
-        try {
-            UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(loginRequest.getNickname(), loginRequest.getPassword());
-            authenticationManager.authenticate(upat);
-            SecurityContextHolder.getContext().setAuthentication(upat);
-        } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GenericResponse("login.invalid_credentials"));
-        }
-
+        UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(loginRequest.getNickname(), loginRequest.getPassword());
+        authenticationManager.authenticate(upat);
+        SecurityContextHolder.getContext().setAuthentication(upat);
         String token = JwtHelper.generateToken(loginRequest.getNickname());
         UserDTO user = userService.findByNickname(loginRequest.getNickname());
 

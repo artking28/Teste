@@ -4,6 +4,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +17,7 @@ import org.tokio.teste.arthur.domain.entity.User;
 import org.tokio.teste.arthur.domain.exception.AccessDeniedRuleException;
 import org.tokio.teste.arthur.domain.exception.BusinessRuleException;
 import org.tokio.teste.arthur.repository.IUserRepository;
+import org.tokio.teste.arthur.security.JwtHelper;
 
 
 import java.util.ArrayList;
@@ -32,13 +37,17 @@ public class UserService extends AbstractService<User, UserDTO> {
 
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(IUserRepository repository,
+	private final UserDetailsService userDetailsService;
+
+	public UserService(IUserRepository repository,
                        AuthenticationManager authenticationManager,
-                       PasswordEncoder passwordEncoder) {
+                       PasswordEncoder passwordEncoder,
+                       UserDetailsService userDetailsService) {
         this.repository = repository;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
-    }
+		this.userDetailsService = userDetailsService;
+	}
 
     @Transactional(rollbackFor = Exception.class)
     public UserDTO save(UserDTO dto) throws BusinessRuleException, AccessDeniedRuleException {
@@ -53,6 +62,27 @@ public class UserService extends AbstractService<User, UserDTO> {
         }
         return getRepository().save(entity).toDTO();
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public String quickUpdate(String originalNick, UserDTO dto) throws BusinessRuleException, AccessDeniedRuleException {
+        User entity = repository.findByNickname(originalNick).orElse(null);
+        if(entity == null) {
+            throw new BusinessRuleException("error.resource.not.found", TYPE_ERROR);
+        }
+
+        entity.setEmail(dto.getEmail());
+        entity.setNickname(dto.getNickname());
+        entity.setName(dto.getName());
+
+        UserDTO nEntity = this.save(entity.toDTO());
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(nEntity.getNickname());
+        UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(upat);
+
+        return JwtHelper.generateToken(nEntity.getNickname());
+    }
+
 
     @Transactional(rollbackFor = Exception.class)
     public UserDTO findByNickname(String nickname) {

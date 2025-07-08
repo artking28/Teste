@@ -72,8 +72,11 @@ public class UserDTO extends AbstractObject implements IAbstractDTO<User> {
         LoginResponseDTO ret = new LoginResponseDTO();
         ret.setToken(token);
         ret.setName(this.name);
+        ret.setEmail(this.email);
+        ret.setNickname(this.nickname);
         ret.setLanguage(this.language);
         ret.setDark(this.darkTheme);
+        ret.setKind(this.kind);
         ret.setLoginAt(new Date());
         return ret;
     }

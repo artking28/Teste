@@ -9,6 +9,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -43,7 +44,10 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.CONFLICT, e.getMessage(), e);
     }
 
-    @ExceptionHandler({AccessDeniedRuleException.class, AccessDeniedException.class})
+    @ExceptionHandler({
+            AccessDeniedRuleException.class,
+            AccessDeniedException.class
+    })
     public ResponseEntity<GenericResponse> handleAccessDenied(Exception e) {
         return buildResponse(HttpStatus.FORBIDDEN, "error.accessDenied", e);
     }
@@ -76,7 +80,10 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.CONFLICT, "error.user.already_exists", e);
     }
 
-    @ExceptionHandler(InternalAuthenticationServiceException.class)
+    @ExceptionHandler({
+            InternalAuthenticationServiceException.class,
+            BadCredentialsException.class
+    })
     public ResponseEntity<GenericResponse> handleInternalAuthenticationServiceException(Exception e) {
         return buildResponse(HttpStatus.UNAUTHORIZED, "auth.bad_credentials", e);
     }
