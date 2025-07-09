@@ -42,6 +42,8 @@
 
    "already.user": "Já tenho uma conta",
    "im.not.user": "Não tenho uma conta",
+   "areYouSure": "Você tem certeza?",
+   "youCannotRevertThisAction": "Você não pode reverter esta ação.",
 
    "yes": "Sim",
    "no": "Não",

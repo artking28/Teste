@@ -42,6 +42,8 @@
 
    "already.user": "Already a user?",
    "im.not.user": "I'm not a user",
+   "areYouSure": "Are you sure?",
+   "youCannotRevertThisAction": "You cannot revert this action.",
 
    "yes": "Yes",
    "no": "No",
