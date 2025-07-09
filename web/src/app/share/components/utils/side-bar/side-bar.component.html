@@ -3,35 +3,47 @@
 <nav desktopOnly id="sidebar">
    <a href="#" title="reload"><h1 desktopOnly>TokioTeste</h1></a>
    <ul>
-       <a pointCursor>
-           <li (click)="this.editSelf()">
-               <inner-icon origin="google" identifier="account_circle"></inner-icon>
-               <label>{{ "my.profile" | translate }}</label>
-           </li>
-       </a>
-       <a [routerLink]="Utils.isVisible('admin') ? '/users' : null"
-          [class.disabled]="!Utils.isVisible('admin')"
-          [title]="!Utils.isVisible('admin') ? 'Você não pode acessar este módulo pois não é um administrador.' : ''"
-          (click)="!Utils.isVisible('admin') && $event.preventDefault()">
-           <li>
-               <inner-icon origin="google" identifier="group"></inner-icon>
-               <label>{{ "my.users" | translate }}</label>
-               <inner-icon origin="google" identifier="lock"></inner-icon>
-           </li>
-       </a>
-       <a [routerLink]="Utils.isVisible() ? '/addresses' : null"
-          [class.disabled]="!Utils.isVisible()"
-          (click)="!Utils.isVisible() && $event.preventDefault()">
-           <li>
-               <inner-icon origin="google" identifier="distance"></inner-icon>
-               <label>{{ "my.addresses" | translate }}</label>
-           </li>
-       </a>
-       <a pointCursor href="#">
-         <li id="logout" (click)="UserCache.signOutCache()">
-            <inner-icon origin="google" identifier="chip_extraction"></inner-icon>
-            <label>Logout</label>
-         </li>
-      </a>
+       <ng-container *ngFor="let mn of this.menus">
+           <a [routerLink]="Utils.isVisible(mn.permissions) ? mn.route : null"
+              [class.disabled]="!Utils.isVisible(mn.permissions)"
+              [title]="!Utils.isVisible(mn.permissions) ? 'Você não pode acessar este módulo pois não é um administrador.' : ''"
+              (click)="!Utils.isVisible(mn.permissions) && $event.preventDefault()">
+               <li id="{{mn.id}}" (click)="mn.proc?.()">
+                   <inner-icon origin="google" identifier="{{mn.icon}}"></inner-icon>
+                   <label>{{ mn.label | translate }}</label>
+                   <inner-icon *ngIf="!Utils.isVisible(mn.permissions)" origin="google" identifier="lock"></inner-icon>
+               </li>
+           </a>
+       </ng-container>
+<!--       <a pointCursor>-->
+<!--           <li (click)="this.editSelf()">-->
+<!--               <inner-icon origin="google" identifier="account_circle"></inner-icon>-->
+<!--               <label>{{ "my.profile" | translate }}</label>-->
+<!--           </li>-->
+<!--       </a>-->
+<!--       <a [routerLink]="Utils.isVisible('admin') ? '/users' : null"-->
+<!--          [class.disabled]="!Utils.isVisible('admin')"-->
+<!--          [title]="!Utils.isVisible('admin') ? 'Você não pode acessar este módulo pois não é um administrador.' : ''"-->
+<!--          (click)="!Utils.isVisible('admin') && $event.preventDefault()">-->
+<!--           <li>-->
+<!--               <inner-icon origin="google" identifier="group"></inner-icon>-->
+<!--               <label>{{ "my.users" | translate }}</label>-->
+<!--               <inner-icon origin="google" identifier="lock"></inner-icon>-->
+<!--           </li>-->
+<!--       </a>-->
+<!--       <a [routerLink]="Utils.isVisible() ? '/addresses' : null"-->
+<!--          [class.disabled]="!Utils.isVisible()"-->
+<!--          (click)="!Utils.isVisible() && $event.preventDefault()">-->
+<!--           <li>-->
+<!--               <inner-icon origin="google" identifier="distance"></inner-icon>-->
+<!--               <label>{{ "my.addresses" | translate }}</label>-->
+<!--           </li>-->
+<!--       </a>-->
+<!--       <a pointCursor href="#">-->
+<!--         <li id="logout" (click)="UserCache.signOutCache()">-->
+<!--            <inner-icon origin="google" identifier="chip_extraction"></inner-icon>-->
+<!--            <label>Logout</label>-->
+<!--         </li>-->
+<!--      </a>-->
    </ul>
 </nav>

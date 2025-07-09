@@ -9,6 +9,7 @@ import {Err, Some} from "@app/share/models/utility/Result";
 import {DataUtil} from "@app/share/models/utility/DataUtil";
 import {GlobalsVars} from "@app/share/globalsVars";
 import {LoginResponseDTO} from "@app/share/models/utility/LoginResponseDTO";
+import {Proc} from "@app/share/components/utils/abstract-listar/abstract-listar.component";
 
 
 @Component({
@@ -18,6 +19,41 @@ import {LoginResponseDTO} from "@app/share/models/utility/LoginResponseDTO";
     styleUrls: ['side-bar.components.scss']
 })
 export class SideBarComponent extends BasePiece {
+
+    menus: any[] = [
+        {
+            id: "profile",
+            label: 'my.profile',
+            icon: 'account_circle',
+            route: null,
+            permissions: [],
+            proc: () => this.editSelf()
+        },
+        {
+            id: "users",
+            label: 'my.users',
+            icon: 'group',
+            route: '/users',
+            permissions: ['admin'],
+            proc: null
+        },
+        {
+            id: "addresses",
+            label: 'my.addresses',
+            icon: 'distance',
+            route: '/addresses',
+            permissions: [],
+            proc: null
+        },
+        {
+            id: "logout",
+            label: 'Logout',
+            icon: 'chip_extraction',
+            route: null,
+            permissions: [],
+            proc: () => this.UserCache.signOutCache()
+        }
+    ];
 
     emitterSelfEditor: Signal = new Signal((result) => {
         switch (result.constructor) {

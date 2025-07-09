@@ -19,5 +19,6 @@ export class GlobalsVars {
         ['cancel', 'cancel'],
         ['youCannotRevertThisAction', 'youCannotRevertThisAction'],
     ])
+    static MENUS: any[];
 
 }

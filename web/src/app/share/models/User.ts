@@ -9,8 +9,8 @@ export class User extends IndexableID<User> {
     public name: string;
     public email: string;
     public password: string;
-    public language: string;
-    public darkTheme: boolean;
+    public language: string = "pt"
+    public darkTheme: boolean = false
     public kind: 'member' | 'admin' = 'member';
 
     constructor(nickname?: string) {

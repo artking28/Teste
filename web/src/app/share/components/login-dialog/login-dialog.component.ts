@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {BasePiece, Modal} from "@app/share/founding-files/base-piece";
+import {Modal} from "@app/share/founding-files/base-piece";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "@app/share/services/auth.service";
 import {UserCache} from "@app/share/cache/UserCache";

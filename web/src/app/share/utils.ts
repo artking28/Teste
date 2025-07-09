@@ -171,9 +171,9 @@ export default class Utils {
         return result.isConfirmed
     }
 
-    public static isVisible(...permissionsRequired: string[]): boolean {
+    public static isVisible(permissionsRequired: string[]): boolean {
         let loginAtual: LoginResponseDTO = UserCache.getInstance()
-        return !permissionsRequired || permissionsRequired.length <= 0 || (loginAtual.ok && loginAtual.kind == 'admin');
+        return permissionsRequired == null || permissionsRequired.length <= 0 || (loginAtual.ok && loginAtual.kind == 'admin');
     }
 
     static inspectFormErrors(form: UntypedFormGroup) {

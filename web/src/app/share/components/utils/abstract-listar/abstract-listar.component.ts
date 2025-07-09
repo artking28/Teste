@@ -17,9 +17,9 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 
 
-type Proc = (...args: any) => any;
+export type Proc = (...args: any) => any;
 
-type Constructor<T> = new () => T
+export type Constructor<T> = new () => T
 
 abstract class IAbstractListarComponent<T extends Indexable<T>> {
 

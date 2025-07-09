@@ -9,7 +9,7 @@ export class UserCache {
     static signInCache(lrd: LoginResponseDTO,  reload: boolean): void {
         localStorage.setItem(this.USER_INFO, JSON.stringify(lrd));
         if(reload) {
-            location.assign('/users')
+            location.assign(lrd.kind == "admin" ? '/users' : '/addresses');
         }
     }
 
