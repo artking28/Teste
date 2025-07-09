@@ -39,8 +39,8 @@ public class AuthController {
         UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(loginRequest.getNickname(), loginRequest.getPassword());
         authenticationManager.authenticate(upat);
         SecurityContextHolder.getContext().setAuthentication(upat);
-        String token = JwtHelper.generateToken(loginRequest.getNickname());
         UserDTO user = userService.findByNickname(loginRequest.getNickname());
+        String token = JwtHelper.generateToken(user.getUuid().toString());
 
         return ResponseEntity.ok(new GenericResponse(user.toLoginResponseDTO(token)));
     }
@@ -51,9 +51,9 @@ public class AuthController {
             throw new DuplicateKeyException("");
         }
 
-        UserDTO savedUser = userService.save(userDTO);
+        UserDTO savedUser = userService.save(userDTO, true);
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userDTO.getNickname(), userDTO.getPassword()));
-        String token = JwtHelper.generateToken(savedUser.getNickname());
+        String token = JwtHelper.generateToken(savedUser.getUuid().toString());
         return ResponseEntity.status(HttpStatus.CREATED).body(new GenericResponse(savedUser.toLoginResponseDTO(token)));
     }
 }

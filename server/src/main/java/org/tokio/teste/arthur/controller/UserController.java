@@ -11,6 +11,7 @@ import org.tokio.teste.arthur.domain.dto.UserDTO;
 import org.tokio.teste.arthur.domain.entity.User;
 import org.tokio.teste.arthur.domain.exception.BusinessRuleException;
 import org.tokio.teste.arthur.domain.noData.GenericResponse;
+import org.tokio.teste.arthur.security.CustomUserDetails;
 import org.tokio.teste.arthur.service.IService;
 import org.tokio.teste.arthur.service.UserService;
 
@@ -48,7 +49,7 @@ public class UserController extends AbstractController<User, UserDTO> {
     @GetMapping("/changeTheme")
     public ResponseEntity<GenericResponse> changeTheme() {
         Object cache = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String nickname = ((org.springframework.security.core.userdetails.User) cache).getUsername();
+        String nickname = ((CustomUserDetails) cache).getUsername();
         this.userService.changeTheme(nickname);
         return ResponseEntity.ok(new GenericResponse());
     }
@@ -56,7 +57,7 @@ public class UserController extends AbstractController<User, UserDTO> {
     @PostMapping("/quickUpdate")
     public ResponseEntity<GenericResponse> changeTheme(@RequestBody UserDTO content) throws BusinessRuleException {
         Object cache = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String originalNick = ((org.springframework.security.core.userdetails.User) cache).getUsername();
+        String originalNick = ((CustomUserDetails) cache).getUsername();
         var ret = this.userService.quickUpdate(originalNick, content);
         return ResponseEntity.ok(new GenericResponse(ret));
     }
@@ -64,7 +65,7 @@ public class UserController extends AbstractController<User, UserDTO> {
     @GetMapping("/findChildren")
     public ResponseEntity<GenericResponse> findChildren() {
         Object cache = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String nickname = ((org.springframework.security.core.userdetails.User) cache).getUsername();
+        String nickname = ((CustomUserDetails) cache).getUsername();
         var ret = this.userService.findChildren(nickname);
         ret.forEach((o) -> o.setPassword(null));
         return ResponseEntity.ok(new GenericResponse(ret));

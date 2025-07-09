@@ -65,6 +65,8 @@ export class SideBarComponent extends BasePiece {
                         if (res.isOk(true)) {
                             let lro = someObj.value.toLRO(someObj.adds.get("loginAt"))
                             lro.token = res.result
+                            lro.ok = true
+                            lro.kind = someObj.value.kind
                             UserCache.signInCache(lro, true)
                         }
                     },

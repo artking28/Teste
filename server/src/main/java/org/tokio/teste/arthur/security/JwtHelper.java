@@ -12,7 +12,6 @@ import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public class JwtHelper {
 
@@ -20,23 +19,27 @@ public class JwtHelper {
 
     private static final int MINUTES = 60;
 
-    public static String generateToken(String email) {
+    public static String generateToken(String userUuid) {
         var now = Instant.now();
         return Jwts.builder()
-                .subject(email)
+                .subject(userUuid)
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(now.plus(MINUTES, ChronoUnit.MINUTES)))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
 
-    public static String extractUsername(String token) throws AccessDeniedException {
+    public static String extractUuid(String token) throws AccessDeniedException {
         return getTokenBody(token).getSubject();
     }
 
-    public static Boolean validateToken(String token, UserDetails userDetails) throws AccessDeniedException {
-        final String username = extractUsername(token);
-        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+    public static Boolean validateToken(String token, CustomUserDetails userDetails) throws AccessDeniedException {
+        final String uuid = extractUuid(token);
+        var ret = uuid.equals(userDetails.getUuid()) && !isTokenExpired(token);
+        if (!ret) {
+            System.out.println("Entrou aqui");
+        }
+        return ret;
     }
 
     private static Claims getTokenBody(String token) throws AccessDeniedException {

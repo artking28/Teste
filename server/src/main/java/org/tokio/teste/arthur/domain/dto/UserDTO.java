@@ -13,12 +13,15 @@ import org.tokio.teste.arthur.utils.LoginResponseDTO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
 public class UserDTO extends AbstractObject implements IAbstractDTO<User> {
 
     private Long id;
+
+    private UUID uuid;
 
     private String name;
 
@@ -44,6 +47,7 @@ public class UserDTO extends AbstractObject implements IAbstractDTO<User> {
     public User toEntity() {
         User ret = new User();
         ret.setId(this.id);
+        ret.setUuid(this.uuid);
         ret.setName(this.getName());
         ret.setNickname(this.getNickname());
         ret.setEmail(this.getEmail());

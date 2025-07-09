@@ -17,6 +17,8 @@ import org.tokio.teste.arthur.domain.entity.User;
 import org.tokio.teste.arthur.domain.exception.AccessDeniedRuleException;
 import org.tokio.teste.arthur.domain.exception.BusinessRuleException;
 import org.tokio.teste.arthur.repository.IUserRepository;
+import org.tokio.teste.arthur.security.CustomUserDetails;
+import org.tokio.teste.arthur.security.CustomUserDetailsService;
 import org.tokio.teste.arthur.security.JwtHelper;
 
 
@@ -37,12 +39,12 @@ public class UserService extends AbstractService<User, UserDTO> {
 
     private final PasswordEncoder passwordEncoder;
 
-	private final UserDetailsService userDetailsService;
+	private final CustomUserDetailsService userDetailsService;
 
 	public UserService(IUserRepository repository,
                        AuthenticationManager authenticationManager,
                        PasswordEncoder passwordEncoder,
-                       UserDetailsService userDetailsService) {
+                       CustomUserDetailsService userDetailsService) {
         this.repository = repository;
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
@@ -50,12 +52,12 @@ public class UserService extends AbstractService<User, UserDTO> {
 	}
 
     @Transactional(rollbackFor = Exception.class)
-    public UserDTO save(UserDTO dto, Boolean isLogin) throws BusinessRuleException, AccessDeniedRuleException {
+    public UserDTO save(UserDTO dto, Boolean isSignUp) throws BusinessRuleException, AccessDeniedRuleException {
 
         User entity = dto.toEntity();
-        if(!isLogin) {
+        if(!isSignUp) {
             Object cache = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String nickname = ((org.springframework.security.core.userdetails.User) cache).getUsername();
+            String nickname = ((CustomUserDetails) cache).getUsername();
 
             User father = this.findByNickname(nickname).toEntity();
             entity.setFather(father);
@@ -84,11 +86,11 @@ public class UserService extends AbstractService<User, UserDTO> {
 
         UserDTO nEntity = this.save(entity.toDTO());
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(nEntity.getNickname());
+        UserDetails userDetails = userDetailsService.loadUserUuid(nEntity.getUuid().toString());
         UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(upat);
 
-        return JwtHelper.generateToken(nEntity.getNickname());
+        return JwtHelper.generateToken(entity.getUuid().toString());
     }
 
 

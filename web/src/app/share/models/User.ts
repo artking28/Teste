@@ -3,8 +3,10 @@ import {ValidatorsMap} from "@app/share/models/utility/validation-map";
 import {IndexableID} from "@app/share/models/utility/Indexable";
 import {GlobalsVars} from "@app/share/globalsVars";
 import {LoginResponseDTO} from "@app/share/models/utility/LoginResponseDTO";
+import {Uuid} from "@app/share/models/utility/Uuid";
 
 export class User extends IndexableID<User> {
+    public uuid: string = new Uuid().toString()
     public nickname: string;
     public name: string;
     public email: string;
@@ -54,6 +56,7 @@ export class User extends IndexableID<User> {
         ret.language = this.language
         ret.dark = this.darkTheme
         ret.loginAt = time
+        ret.kind = this.kind
         return ret
     }
 }

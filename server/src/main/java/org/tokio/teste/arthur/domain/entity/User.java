@@ -7,10 +7,7 @@ import org.hibernate.Hibernate;
 import org.tokio.teste.arthur.domain.dto.UserDTO;
 import org.tokio.teste.arthur.domain.interfaces.IAbstractEntity;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Getter
 @Setter
@@ -26,7 +23,10 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "nickname", nullable = false)
+    @Column(name = "uuid", unique = true, nullable = false)
+    private UUID uuid = UUID.randomUUID();
+
+    @Column(name = "nickname", unique = true, nullable = false)
     private String nickname;
 
     @Column(name = "createdAt", nullable = false)
@@ -67,6 +67,7 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
     public UserDTO toDTO() {
         UserDTO ret = new UserDTO();
         ret.setId(this.id);
+        ret.setUuid(this.uuid);
         ret.setName(this.getName());
         ret.setNickname(this.getNickname());
         ret.setEmail(this.getEmail());
