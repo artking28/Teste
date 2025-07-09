@@ -126,6 +126,8 @@ public class UserService extends AbstractService<User, UserDTO> {
 
     @Override
     protected void beforeSave(User user) {
+        User u = this.repository.getReferenceById(user.getId());
+        user.setPassword(u.getPassword());
     }
 
     public void commonValidations(User user) throws BusinessRuleException {

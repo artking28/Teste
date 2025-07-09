@@ -19,6 +19,8 @@ export class UserEditorComponent extends ModalEditor<User> {
         this.form.patchValue({'kind': this.object.kind})
 
         if (this.isEditing) {
+            // this.form.controls['password'].setValidators([])
+            // this.form.controls['confirm'].setValidators([])
             this.form.removeControl("password")
             this.form.removeControl("confirm")
             return

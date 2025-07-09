@@ -34,20 +34,20 @@ export class AddressEditorComponent extends ModalEditor<Address> {
         this.form.setControl("stateId", new FormControl(-1, [Validators.required]));
 
         this.httpUtils.httpService.showLoader()
-        // this.stateService.list().subscribe({
-        //     next: (res) => {
-        //         this.httpUtils.httpService.hideLoader()
-        //         if (res.isOk(true)) {
-        //             res.result.forEach((state) => {
-        //                 this.states.set(state.id, state)
-        //                 state.cities.forEach((city) => {
-        //                     this.cities.set(city.id, city)
-        //                 })
-        //             })
-        //         }
-        //     },
-        //     error: _ => this.httpUtils.httpService.hideLoader()
-        // })
+        this.stateService.list().subscribe({
+            next: (res) => {
+                this.httpUtils.httpService.hideLoader()
+                if (res.isOk(true)) {
+                    res.result.forEach((state) => {
+                        this.states.set(state.id, state)
+                        state.cities.forEach((city) => {
+                            this.cities.set(city.id, city)
+                        })
+                    })
+                }
+            },
+            error: _ => this.httpUtils.httpService.hideLoader()
+        })
 
         this.triggerSearch(this.object.postalCode)
         if (this.form.controls.postalCode.value != null) {
