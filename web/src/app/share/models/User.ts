@@ -8,6 +8,7 @@ export class User extends IndexableID<User> {
     public nickname: string;
     public name: string;
     public email: string;
+    public father: number;
     public password: string;
     public language: string = "pt"
     public darkTheme: boolean = false
@@ -36,6 +37,7 @@ export class User extends IndexableID<User> {
             id: new FormControl(this.id, validators.fields.get("id")),
             name: new FormControl(this.name, validators.fields.get("name") ?? [Validators.required]),
             nickname: new FormControl(this.nickname, validators.fields.get("nickname") ?? [Validators.required]),
+            father: new FormControl(this.father, validators.fields.get("father") ?? []),
             email: new FormControl(this.email, validators.fields.get("email") ?? [Validators.required, Validators.email, Validators.pattern(GlobalsVars.EMAIL_PATTERN)]),
             password: new FormControl(this.password, validators.fields.get("password") ?? [Validators.required]),
             language: new FormControl(this.language, validators.fields.get("language") ?? [Validators.required]),

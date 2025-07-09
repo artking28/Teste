@@ -16,6 +16,7 @@ export class UserEditorComponent extends ModalEditor<User> {
     ngOnInit(): void {
         this.object = User.adapt(this.object)
         this.form = this.object.toFormGroup()
+        this.form.patchValue({'kind': 'member'})
 
         if (this.isEditing) {
             this.form.removeControl("password")

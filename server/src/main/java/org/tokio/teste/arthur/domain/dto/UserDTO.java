@@ -36,8 +36,6 @@ public class UserDTO extends AbstractObject implements IAbstractDTO<User> {
 
     private Date createdAt = new Date();
 
-    private UserDTO father;
-
     private List<UserDTO> children = new ArrayList<>();
 
     private List<AddressDTO> addresses = new ArrayList<>();
@@ -57,13 +55,12 @@ public class UserDTO extends AbstractObject implements IAbstractDTO<User> {
         ret.setUuidCheck(getUuidCheck());
         ret.setCheckAccessControl(getCheckAccessControl());
         if(this.children != null) {
-            ret.setChildren(this.children.stream().map(UserDTO::toEntity).toList());
+            var c = this.children.stream().map(UserDTO::toEntity).toList();
+            c.forEach((u) -> u.setFather(null));
+            ret.setChildren(c);
         }
         if(this.addresses != null) {
             ret.setAddresses(this.addresses.stream().map(AddressDTO::toEntity).toList());
-        }
-        if(this.father != null) {
-            ret.setFather(this.father.toEntity());
         }
         return ret;
     }

@@ -50,9 +50,17 @@ public class UserService extends AbstractService<User, UserDTO> {
 	}
 
     @Transactional(rollbackFor = Exception.class)
-    public UserDTO save(UserDTO dto) throws BusinessRuleException, AccessDeniedRuleException {
+    public UserDTO save(UserDTO dto, Boolean isLogin) throws BusinessRuleException, AccessDeniedRuleException {
 
         User entity = dto.toEntity();
+        if(!isLogin) {
+            Object cache = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String nickname = ((org.springframework.security.core.userdetails.User) cache).getUsername();
+
+            User father = this.findByNickname(nickname).toEntity();
+            entity.setFather(father);
+        }
+
         commonValidations(entity);
         if(entity.getId() == null) {
             beforeCreate(entity);

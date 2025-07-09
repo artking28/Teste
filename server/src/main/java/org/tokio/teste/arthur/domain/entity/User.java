@@ -84,9 +84,6 @@ public class User extends AbstractObject implements IAbstractEntity<User, UserDT
         if(this.addresses != null) {
             ret.setAddresses(this.addresses.stream().map(Address::toDTO).toList());
         }
-        if(this.getFather() != null) {
-            ret.setFather(this.getFather().toDTO());
-        }
         return ret;
     }
 
