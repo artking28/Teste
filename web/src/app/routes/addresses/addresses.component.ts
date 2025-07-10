@@ -9,6 +9,8 @@ import {AddressService} from "@app/share/services/address.service";
 import {AddressEditorComponent} from "@app/share/components/editors/addressEditor/addressEditor.component";
 import {StructsModule} from "@app/share/components/structs.module";
 import {MatSort, MatSortHeader} from "@angular/material/sort";
+import {Observable} from "rxjs";
+import {GenericResponse} from "@app/share/models/generic-response";
 
 
 @Component({
@@ -20,12 +22,16 @@ import {MatSort, MatSortHeader} from "@angular/material/sort";
 export class AddressesComponent extends AbstractListarComponent<Address> {
 
     constructor(private addressService: AddressService) {//398a40
-        super(Address, addressService);
+        super(Address.adapt, addressService);
         GlobalsVars.PAGE_TITLE_CONTROL.emit("my.addresses")
     }
 
     public override getTableColumns(): string[] {
         return ['id', 'name', 'postalCode', 'street', 'number']
+    }
+
+    public override getDefaultListObservable(): Observable<GenericResponse<Address[]>> {
+        return this.addressService.getMyAddresses();
     }
 
     public beforeEdit(obj: Address): Address {

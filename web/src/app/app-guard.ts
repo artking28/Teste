@@ -19,7 +19,7 @@ export class AppGuard implements CanActivate {
             location.replace('/login')
         }
 
-        if(user.kind == 'admin' && location.pathname == '/users') {
+        if(user.kind != 'admin' && location.pathname == '/users') {
             location.replace('/addresses')
         }
 

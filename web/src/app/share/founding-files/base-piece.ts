@@ -89,8 +89,7 @@ export abstract class Modal<T> extends BasePiece implements OnInit  {
                 cancelButtonText: 'Cancel',
                 showCancelButton: true,
                 cancelButtonColor: document.documentElement.style.getPropertyValue('--mid_gray_color'),
-
-                background: document.documentElement.style.getPropertyValue('--light_gray_color'),
+                background: document.documentElement.style.getPropertyValue('--background'),
             }).then((result: any) => {
                 resolve(result.isConfirmed);
             })

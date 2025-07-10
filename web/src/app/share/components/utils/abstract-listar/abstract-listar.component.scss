@@ -92,6 +92,6 @@ label#noContent {
 }
 
 tr.row:hover {
-    background-color: white;
+    background-color: var(--opaque-030_color);
     filter: brightness(.9);
 }

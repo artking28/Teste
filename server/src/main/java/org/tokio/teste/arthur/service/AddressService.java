@@ -2,25 +2,24 @@ package org.tokio.teste.arthur.service;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.ObjectNotFoundException;
-import org.springframework.data.domain.Example;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.tokio.teste.arthur.domain.dto.AddressDTO;
+import org.tokio.teste.arthur.domain.dto.UserDTO;
 import org.tokio.teste.arthur.domain.entity.Address;
 import org.tokio.teste.arthur.domain.entity.User;
 import org.tokio.teste.arthur.domain.exception.AccessDeniedRuleException;
 import org.tokio.teste.arthur.domain.exception.BusinessRuleException;
-import org.tokio.teste.arthur.domain.interfaces.IAbstractEntity;
 import org.tokio.teste.arthur.repository.IAddressRepository;
 import org.tokio.teste.arthur.repository.ICityRepository;
-import org.tokio.teste.arthur.repository.IStateRepository;
 import org.tokio.teste.arthur.repository.IUserRepository;
 
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.tokio.teste.arthur.domain.enums.ResponseCodeEnum.TYPE_ERROR;
@@ -47,6 +46,11 @@ public class AddressService extends AbstractService<Address, AddressDTO> {
         this.cityRepository = cityRepository;
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
+    }
+
+    public List<AddressDTO> getUserAddresses(Long userId) {
+        var res = this.repository.findAddressesByUserId(userId);
+        return res.stream().map(Address::toDTO).toList();
     }
 
     @Override

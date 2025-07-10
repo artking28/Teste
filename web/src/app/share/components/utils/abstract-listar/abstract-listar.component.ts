@@ -19,7 +19,7 @@ import {MatPaginator} from "@angular/material/paginator";
 
 export type Proc = (...args: any) => any;
 
-export type Constructor<T> = new () => T
+type Adapter<T> = (object: T) => T
 
 abstract class IAbstractListarComponent<T extends Indexable<T>> {
 
@@ -70,7 +70,7 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
 
     refreshTable: Observable<any>;
 
-    constructor(private zeroValueObj: Constructor<T>, private service: IRootService<T>) {
+    constructor(private adapter: Adapter<T>, private service: IRootService<T>) {
         super();
         // this.httpUtils.httpService
         //     .get<any>(`https://jsonplaceholder.typicode.com/users`)
@@ -99,14 +99,6 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
 
     ngAfterViewInit() {
         this.list()
-    }
-
-    getClassName(upper: boolean = false): string {
-        if(upper) {
-            return this.zeroValueObj.name
-        }
-        let ret = this.zeroValueObj.name
-        return ret[0] + ret.substring(1)
     }
 
     public getDefaultListObservable(): Observable<GenericResponse<T[]>> {
@@ -147,7 +139,7 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
             next: (res) => {
                 this.httpUtils.httpService.hideLoader();
                 if (res.isOk(true)) {
-                    this.defineNewData(res.result)
+                    this.defineNewData(res.result.map((one) => this.adapter(one)))
                 }
 
             }, error: (_) => this.httpUtils.httpService.hideLoader()
@@ -248,24 +240,7 @@ export class AbstractListarComponent<T extends Indexable<T>> extends BasePiece i
             return
         }
 
-        let okDelete: boolean = false;
-        await Swal.fire<boolean>({
-            title: this.translatedWords.get('areYouSure'),
-            text: this.translatedWords.get('youCannotRevertThisAction'),
-            icon: 'warning',
-            iconColor: Color.YELLOW.toString(),
-            reverseButtons: true,
-            showConfirmButton: true,
-            showCancelButton: true,
-            customClass: {
-                confirmButton: 'swal-confirm-btn',
-                cancelButton: 'swal-cancel-btn'
-            },
-            background: Color.WHITE.toString(),
-        }).then((result) => {
-            okDelete = result.isConfirmed
-        })
-
+        let okDelete: boolean = await Utils.callConfirm();
         if(!okDelete) {
             return
         }

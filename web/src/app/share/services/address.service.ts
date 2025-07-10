@@ -19,6 +19,11 @@ export class AddressService extends IRootService<Address> {
             .pipe(map(response => GenericResponse.adapt(response)))
     }
 
+    getMyAddresses(): Observable<GenericResponse<Address[]>> {
+        return this.httpService.get<GenericResponse<Address[]>>(`/proxy${this.getServiceUrl()}/myAddresses`)
+            .pipe(map(response => GenericResponse.adapt(response)))
+    }
+
     isGetByIdPublic(): boolean {
         return false
     }

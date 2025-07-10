@@ -35,11 +35,10 @@ public class JwtHelper {
 
     public static Boolean validateToken(String token, CustomUserDetails userDetails) throws AccessDeniedException {
         final String uuid = extractUuid(token);
-        var ret = uuid.equals(userDetails.getUuid()) && !isTokenExpired(token);
-        if (!ret) {
-            System.out.println("Entrou aqui");
-        }
-        return ret;
+//        if (!ret) {
+//            System.out.println("Entrou aqui");
+//        }
+        return uuid.equals(userDetails.getUuid()) && !isTokenExpired(token);
     }
 
     private static Claims getTokenBody(String token) throws AccessDeniedException {

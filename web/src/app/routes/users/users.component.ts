@@ -21,7 +21,7 @@ import {GenericResponse} from "@app/share/models/generic-response";
 export class UsersComponent extends AbstractListarComponent<User> {
 
     constructor(private userService: UserService) {//398a40
-        super(User, userService);
+        super(User.adapt, userService);
         GlobalsVars.PAGE_TITLE_CONTROL.emit("my.users")
     }
 

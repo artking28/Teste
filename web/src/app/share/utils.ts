@@ -166,7 +166,7 @@ export default class Utils {
                 confirmButton: 'swal-confirm-btn',
                 cancelButton: 'swal-cancel-btn',
             },
-            background: Color.WHITE.toString(),
+            background: document.documentElement.style.getPropertyValue('--background'),
         })
         return result.isConfirmed
     }

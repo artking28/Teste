@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.tokio.teste.arthur.domain.dto.AddressDTO;
 import org.tokio.teste.arthur.domain.entity.Address;
 import org.tokio.teste.arthur.domain.entity.City;
 import org.tokio.teste.arthur.domain.noData.GenericResponse;
+import org.tokio.teste.arthur.security.CustomUserDetails;
 import org.tokio.teste.arthur.service.AddressService;
 import org.tokio.teste.arthur.service.CityService;
 import org.tokio.teste.arthur.service.IService;
@@ -42,6 +44,14 @@ public class AddressController extends AbstractController<Address, AddressDTO> {
     @Override
     protected IService<Address, AddressDTO> getService() {
         return this.addressService;
+    }
+
+    @GetMapping("/myAddresses")
+    public ResponseEntity<GenericResponse> findChildren() {
+        Object cache = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = ((CustomUserDetails) cache).getId();
+        var ret = this.addressService.getUserAddresses(userId);
+        return ResponseEntity.ok(new GenericResponse(ret));
     }
 
     @GetMapping("/cep/{cep}")
